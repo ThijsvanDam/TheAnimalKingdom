@@ -28,7 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this._dbPanel1 = new TheAnimalKingdom.DBPanel();
             this.SuspendLayout();
+            // 
+            // dbPanel1
+            // 
+            this._dbPanel1.BackColor = System.Drawing.Color.White;
+            this._dbPanel1.Location = new System.Drawing.Point(0, 0);
+            this._dbPanel1.Name = "dbPanel1";
+            this._dbPanel1.Size = new System.Drawing.Size(611, 436);
+            this._dbPanel1.TabIndex = 0;
+            this._dbPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this._dbPanel1_Paint);
+            this._dbPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this._dbPanel1_MouseClick);
             // 
             // Form1
             // 
@@ -44,6 +55,8 @@
         }
 
         #endregion
+
+        private DBPanel _dbPanel1;
     }
 }
 

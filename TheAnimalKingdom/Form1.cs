@@ -10,6 +10,7 @@ using System.Timers;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using Microsoft.Win32;
+using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom
 {
@@ -41,6 +42,16 @@ namespace TheAnimalKingdom
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void _dbPanel1_Paint(object sender, PaintEventArgs e)
+        {
+            //ToDo: Implement
+        }
+
+        private void _dbPanel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            //ToDo: Implement
         }
     }
 }
