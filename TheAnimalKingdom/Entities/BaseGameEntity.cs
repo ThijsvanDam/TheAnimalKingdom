@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Entities
 {
-    class BaseGameEntity
+    public abstract class BaseGameEntity
     {
         private static int NextValidID;
 
-        private int _ID;
-        public int ID => _ID;
+        public int ID { get; private set; }
+        public Vector2D Pos { get; }
+        public float Scale { get; }
+        public float Bradius { get; }
 
 
         public BaseGameEntity(int id)
@@ -23,14 +28,14 @@ namespace TheAnimalKingdom.Entities
         {
             if (id >= NextValidID)
             {
-                _ID = id;
+                ID = id;
                 NextValidID++;
             }
-            
-        }
-        public virtual void Update()
-        {
 
         }
+
+        public abstract void Update(double time_elapsed);
+
+        public abstract void Render();
     }
 }

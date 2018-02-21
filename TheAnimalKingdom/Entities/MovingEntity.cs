@@ -5,16 +5,23 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Entities
 {
     public abstract class MovingEntity : BaseGameEntity
     {
-        protected Vector2 VVelocity;
+
+        public MovingEntity(int id) : base(id)
+        {
+
+        }
+
+        protected Vector2D VVelocity;
         //a normalized vector pointing in the direction the enity is heading.
-        protected Vector2 VHeading;
+        protected Vector2D VHeading;
         //a vector perpendicular to the heading vector
-        protected Vector2 VSide;
+        protected Vector2D VSide;
 
         protected double DMass;
 
