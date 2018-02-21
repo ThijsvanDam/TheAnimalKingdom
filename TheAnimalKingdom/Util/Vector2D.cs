@@ -32,20 +32,19 @@ namespace TheAnimalKingdom.Util
             return (X * X) + (Y * Y);
         }
 
-        public static Vector2D operator +(Vector2D left, Vector2D right)
-        {
-            return new Vector2D(left.X + right.X, left.Y + right.Y);
-        }
-
-        public void Add(Vector2D v)
+        public Vector2D Add(Vector2D v)
         {
             X += v.X;
             Y += v.Y;
+
+            return this;
         }
-        public void Substract(Vector2D v)
+        public Vector2D Substract(Vector2D v)
         {
             X -= v.X;
             Y -= v.Y;
+
+            return this;
         }
 
         public Vector2D Multiply(double value)
@@ -64,17 +63,16 @@ namespace TheAnimalKingdom.Util
 
         public Vector2D Normalize()
         {
-            return this.Divide(Length());
+            return Divide(Length());
         }
 
         public Vector2D Truncate(double max)
         {
             if (Length() > max)
             {
-                Vector2D normalized = Normalize();
-                return normalized.Multiply(max);
+                Normalize();
+                Multiply(max);
             }
-
             return this;
         }
 

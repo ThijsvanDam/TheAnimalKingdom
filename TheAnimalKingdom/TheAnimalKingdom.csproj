@@ -52,6 +52,7 @@
     <Compile Include="Behaviours\FleeBehaviour.cs" />
     <Compile Include="Behaviours\SeekBehaviour.cs" />
     <Compile Include="Behaviours\SteeringBehaviour.cs" />
+    <Compile Include="Behaviours\SteeringBehaviours.cs" />
     <Compile Include="Behaviours\StraightWalkingBehaviour.cs" />
     <Compile Include="Behaviours\WanderBehaviour.cs" />
     <Compile Include="DBPanel.cs">
@@ -61,6 +62,7 @@
     <Compile Include="Entities\BaseGameEntity.cs" />
     <Compile Include="Entities\Gazelle.cs" />
     <Compile Include="Entities\MovingEntity.cs" />
+    <Compile Include="Entities\StaticEntity.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

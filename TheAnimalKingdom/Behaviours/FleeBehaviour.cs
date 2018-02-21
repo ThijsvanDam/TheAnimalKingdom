@@ -8,15 +8,18 @@ using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Behaviours
 {
-    class FleeBehaviour : SteeringBehaviour
+    public class FleeBehaviour : SteeringBehaviour
     {
-        public FleeBehaviour(MovingEntity movingEntity) : base(movingEntity)
+        public BaseGameEntity Enemy;
+
+        public FleeBehaviour(MovingEntity movingEntity, BaseGameEntity enemy) : base(movingEntity)
         {
+            Enemy = enemy;
         }
 
         public override Vector2D Calculate()
         {
-            throw new NotImplementedException();
+            return new Vector2D(Enemy.VPos.X + MovingEntity.VVelocity.X, Enemy.VPos.Y + MovingEntity.VVelocity.Y);
         }
     }
 }

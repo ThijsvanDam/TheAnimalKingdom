@@ -8,16 +8,30 @@ using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Behaviours
 {
-    class SeekBehaviour : SteeringBehaviour
-
+    public class SeekBehaviour : SteeringBehaviour
     {
-        public SeekBehaviour(MovingEntity movingEntity) : base(movingEntity)
+        public BaseGameEntity Goal;
+
+        public SeekBehaviour(MovingEntity movingEntity, BaseGameEntity goal) : base(movingEntity)
         {
+            Goal = goal;
         }
 
         public override Vector2D Calculate()
         {
-            throw new NotImplementedException();
+//            Console.WriteLine();
+
+//            string x = (MovingEntity.VPos.X - Goal.VPos.X).ToString();
+//            string y = (MovingEntity.VPos.Y - Goal.VPos.Y).ToString();
+//            Console.WriteLine("FORCE:" + x + " + " + y);
+//
+//            return new Vector2D(-MovingEntity.VPos.X + Goal.VPos.X, -MovingEntity.VPos.Y + Goal.VPos.Y);
+
+            Vector2D currentVelocity = MovingEntity.VVelocity;
+
+            Vector2D desiredVelocity = new Vector2D(Goal.VPos.X - MovingEntity.VPos.X, Goal.VPos.Y - MovingEntity.VPos.Y).Normalize();
+            desiredVelocity.Multiply(MovingEntity.DMaxSpeed);
+            return desiredVelocity.Substract(currentVelocity);
         }
     }
 }

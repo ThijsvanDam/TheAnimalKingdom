@@ -8,7 +8,7 @@ using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Behaviours
 {
-    class WanderBehaviour : SteeringBehaviour
+    public class WanderBehaviour : SteeringBehaviour
     {
         public WanderBehaviour(MovingEntity movingEntity) : base(movingEntity)
         {

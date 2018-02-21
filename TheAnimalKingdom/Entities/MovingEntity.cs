@@ -12,14 +12,14 @@ namespace TheAnimalKingdom.Entities
 {
     public abstract class MovingEntity : BaseGameEntity
     {
-        public SteeringBehaviour Steering { get; set; }
+        public SteeringBehaviours SteeringBehaviours{ get; set; }
 
         public MovingEntity(Vector2D position, World world) : base(position, world)
         {
-
+            SteeringBehaviours = new SteeringBehaviours(this);
         }
 
-        protected Vector2D VVelocity;
+        public Vector2D VVelocity;
         //a normalized vector pointing in the direction the enity is heading.
         protected Vector2D VHeading;
         //a vector perpendicular to the heading vector
@@ -27,18 +27,22 @@ namespace TheAnimalKingdom.Entities
 
         protected double DMass;
 
-        protected double DMaxSpeed;
+        public double DMaxSpeed;
 
-        protected double DMaxForce;
+        public double DMaxForce;
 
         protected double DMaxTurnRate;
 
         private World _world;
 
-
         public override void Update(float time_elapsed)
         {
-            Vector2D steeringForce = Steering.Calculate();
+
+            Vector2D steeringForce = SteeringBehaviours.Calculate();
+            if (ID == 0)
+            {
+                Console.WriteLine(steeringForce);
+            }
             Vector2D acceleration = steeringForce.Divide(DMass);
 
             VVelocity.Add(acceleration.Multiply(time_elapsed));
@@ -46,13 +50,38 @@ namespace TheAnimalKingdom.Entities
             VVelocity.Truncate(DMaxSpeed);
 
             VPos.Add(VVelocity.Multiply(time_elapsed));
+            if (ID == 0)
+            {
+                Console.WriteLine("VELOC: " + VVelocity);
+            }
 
             if (VVelocity.LengthSquared() > 0.00000001)
             {
-                VHeading = VVelocity.Normalize();
+                VHeading = VVelocity.Clone().Normalize();
                 VSide = VHeading.Perpendicular();
             }
+
+            CheckOutOfScreen();
         }
 
+        private void CheckOutOfScreen()
+        {
+            if (VPos.X < 0)
+            {
+                VPos.X = 600;
+            }
+            if (VPos.X > 600)
+            {
+                VPos.X = 0;
+            }
+            if (VPos.Y < 0)
+            {
+                VPos.Y = 800;
+            }
+            if (VPos.Y > 800)
+            {
+                VPos.Y = 0;
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace TheAnimalKingdom.Behaviours
 
         public override Vector2D Calculate()
         {
-            return new Vector2D(1, 0);
+            return new Vector2D(1 + World.Intensity, 0);
         }
     }
 }

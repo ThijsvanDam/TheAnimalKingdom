@@ -36,7 +36,8 @@ namespace TheAnimalKingdom
         private void timerTick(object sender, ElapsedEventArgs e)
         {
             _world.Update(timeDelta);
-            
+            _dbPanel1.Invalidate();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -51,11 +52,28 @@ namespace TheAnimalKingdom
 
         private void _dbPanel1_MouseClick(object sender, MouseEventArgs e)
         {
-            //ToDo: Implement
+            World.MouseX = e.X;
+            World.MouseY = e.Y;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyValue)
+            {
+                case 107:
+                    // NumPlus
+                    World.Intensity += 10;
+                    break;
+                case 109:
+                    // NumMin
+                    World.Intensity -= 10;
+                    break;
+            }
+            Console.WriteLine(@"Intensity: " + World.Intensity);
         }
     }
 }

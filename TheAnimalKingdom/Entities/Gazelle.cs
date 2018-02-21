@@ -16,10 +16,9 @@ namespace TheAnimalKingdom.Entities
             Color = Color.Coral;
             Scale = 5;
             VVelocity = new Vector2D(0, 0);
-            DMass = 30;
-            DMaxSpeed = 150;
-            
-            Steering = new StraightWalkingBehaviour(this);
+            DMass = 1;
+            DMaxSpeed = 20;
+            DMaxForce = 1;
         }
 
         public override void Render(Graphics g)

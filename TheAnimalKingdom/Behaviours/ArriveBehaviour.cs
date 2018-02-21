@@ -8,10 +8,13 @@ using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Behaviours
 {
-    class ArriveBehaviour : SteeringBehaviour
+    public class ArriveBehaviour : SteeringBehaviour
     {
-        public ArriveBehaviour(MovingEntity movingEntity) : base(movingEntity)
+        public BaseGameEntity Goal;
+
+        public ArriveBehaviour(MovingEntity movingEntity, BaseGameEntity goal) : base(movingEntity)
         {
+            Goal = goal;
         }
 
         public override Vector2D Calculate()

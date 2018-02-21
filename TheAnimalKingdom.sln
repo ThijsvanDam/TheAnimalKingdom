@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheAnimalKingdom", "TheAnimalKingdom\TheAnimalKingdom.csproj", "{D4F2543D-39BC-4800-B953-17E89883580E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheAnimalKingdomUT", "TheAnimalKingdomUT\TheAnimalKingdomUT.csproj", "{45C9D72A-8E24-4D95-9BE0-843391FAF48F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D4F2543D-39BC-4800-B953-17E89883580E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4F2543D-39BC-4800-B953-17E89883580E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4F2543D-39BC-4800-B953-17E89883580E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45C9D72A-8E24-4D95-9BE0-843391FAF48F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45C9D72A-8E24-4D95-9BE0-843391FAF48F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45C9D72A-8E24-4D95-9BE0-843391FAF48F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45C9D72A-8E24-4D95-9BE0-843391FAF48F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

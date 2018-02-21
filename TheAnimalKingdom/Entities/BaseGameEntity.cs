@@ -18,6 +18,7 @@ namespace TheAnimalKingdom.Entities
         public Vector2D VPos { get; }
         public float Scale { get; set; }
         public float Bradius { get; }
+        public Color Color;
 
 
         public BaseGameEntity(Vector2D position, World world)
