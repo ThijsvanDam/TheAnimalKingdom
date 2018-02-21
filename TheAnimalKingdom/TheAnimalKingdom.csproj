@@ -48,8 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBPanel.cs" />
+    <Compile Include="Behaviours\ArriveBehaviour.cs" />
+    <Compile Include="Behaviours\FleeBehaviour.cs" />
+    <Compile Include="Behaviours\SeekBehaviour.cs" />
+    <Compile Include="Behaviours\SteeringBehaviour.cs" />
+    <Compile Include="Behaviours\StraightWalkingBehaviour.cs" />
+    <Compile Include="Behaviours\WanderBehaviour.cs" />
+    <Compile Include="DBPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Entities\Animal.cs" />
     <Compile Include="Entities\BaseGameEntity.cs" />
+    <Compile Include="Entities\Gazelle.cs" />
     <Compile Include="Entities\MovingEntity.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -63,6 +73,7 @@
     <Compile Include="World.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -86,5 +97,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

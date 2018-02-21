@@ -31,12 +31,12 @@
             this._dbPanel1 = new TheAnimalKingdom.DBPanel();
             this.SuspendLayout();
             // 
-            // dbPanel1
+            // _dbPanel1
             // 
             this._dbPanel1.BackColor = System.Drawing.Color.White;
-            this._dbPanel1.Location = new System.Drawing.Point(0, 0);
-            this._dbPanel1.Name = "dbPanel1";
-            this._dbPanel1.Size = new System.Drawing.Size(611, 436);
+            this._dbPanel1.Location = new System.Drawing.Point(8, 6);
+            this._dbPanel1.Name = "_dbPanel1";
+            this._dbPanel1.Size = new System.Drawing.Size(800, 600);
             this._dbPanel1.TabIndex = 0;
             this._dbPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this._dbPanel1_Paint);
             this._dbPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this._dbPanel1_MouseClick);
@@ -45,11 +45,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 553);
+            this.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.ClientSize = new System.Drawing.Size(817, 613);
+            this.Controls.Add(this._dbPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.Name = "Form1";
             this.Text = "The animal kingdom";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.ResumeLayout(false);
 
         }

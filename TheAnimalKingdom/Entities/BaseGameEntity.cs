@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,31 +11,30 @@ namespace TheAnimalKingdom.Entities
 {
     public abstract class BaseGameEntity
     {
-        private static int NextValidID;
+        private static int NextValidID = 0;
 
         public int ID { get; private set; }
-        public Vector2D Pos { get; }
-        public float Scale { get; }
+        public World World { get; set; }
+        public Vector2D VPos { get; }
+        public float Scale { get; set; }
         public float Bradius { get; }
 
 
-        public BaseGameEntity(int id)
+        public BaseGameEntity(Vector2D position, World world)
         {
-            _setID(id);
+            _setID();
+            VPos = position;
+            World = world;
         }
 
-        private void _setID(int id)
+        private void _setID()
         {
-            if (id >= NextValidID)
-            {
-                ID = id;
-                NextValidID++;
-            }
-
+            ID = NextValidID;
+            NextValidID++;
         }
 
-        public abstract void Update(double time_elapsed);
-
-        public abstract void Render();
+        public abstract void Update(float time_elapsed);
+        
+        public abstract void Render(Graphics g);
     }
 }

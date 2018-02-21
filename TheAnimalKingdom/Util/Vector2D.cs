@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,51 +24,63 @@ namespace TheAnimalKingdom.Util
 
         public double Length()
         {
-            throw new NotImplementedException();
+            return Math.Sqrt(LengthSquared());
         }
 
         public double LengthSquared()
         {
-            throw new NotImplementedException();
+            return (X * X) + (Y * Y);
         }
 
-        public Vector2D Add(Vector2D v)
+        public static Vector2D operator +(Vector2D left, Vector2D right)
         {
-            throw new NotImplementedException();
+            return new Vector2D(left.X + right.X, left.Y + right.Y);
         }
 
-        public Vector2D Sub(Vector2D v)
+        public void Add(Vector2D v)
         {
-            this.X -= v.X;
-            this.Y -= v.Y;
-            return this;
+            X += v.X;
+            Y += v.Y;
+        }
+        public void Substract(Vector2D v)
+        {
+            X -= v.X;
+            Y -= v.Y;
         }
 
         public Vector2D Multiply(double value)
         {
-            this.X *= value;
-            this.Y *= value;
+            X *= value;
+            Y *= value;
             return this;
         }
 
-        public Vector2D divide(double value)
+        public Vector2D Divide(double value)
         {
-            throw new NotImplementedException();
+            X /= value;
+            Y /= value;
+            return this;
         }
 
         public Vector2D Normalize()
         {
-            throw new NotImplementedException();
+            return this.Divide(Length());
         }
 
-        public Vector2D truncate(double maX)
+        public Vector2D Truncate(double max)
         {
-            if (Length() > maX)
+            if (Length() > max)
             {
-                Normalize();
-                Multiply(maX);
+                Vector2D normalized = Normalize();
+                return normalized.Multiply(max);
             }
+
             return this;
+        }
+
+        public Vector2D Perpendicular()
+        {
+            return new Vector2D(-Y, X);
         }
         
         public Vector2D Clone()
@@ -79,7 +90,7 @@ namespace TheAnimalKingdom.Util
         
         public override string ToString()
         {
-            return String.Format("({0},{1})", X, Y);
+            return $"({X},{Y})";
         }
     }
 }
