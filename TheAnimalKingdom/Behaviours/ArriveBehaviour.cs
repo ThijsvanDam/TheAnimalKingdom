@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,15 @@ namespace TheAnimalKingdom.Behaviours
 
         public override Vector2D Calculate()
         {
-            throw new NotImplementedException();
+            Vector2D currentVelocity = MovingEntity.VVelocity;
+
+            Vector2D desiredVelocity = Goal.VPos.Clone().Substract(MovingEntity.VPos);
+            return desiredVelocity.Substract(currentVelocity);
+        }
+
+        public override void DrawBehavior(Graphics g)
+        {
+//            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,5 +19,7 @@ namespace TheAnimalKingdom.Behaviours
         {
             MovingEntity = movingEntity;
         }
+
+        public abstract void DrawBehavior(Graphics g);
     }
 }

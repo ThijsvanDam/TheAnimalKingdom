@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom;
+using System.Drawing;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
 
@@ -7,7 +8,7 @@ namespace TheAnimalKingdom.Behaviours
 {
     public class SteeringBehaviours
     {
-        private ArriveBehaviour Arrive;
+        private ArriveBehaviour _arrive;
         private FleeBehaviour _flee;
         private SeekBehaviour _seek;
         private StraightWalkingBehaviour _straightWalking;
@@ -37,31 +38,39 @@ namespace TheAnimalKingdom.Behaviours
         {
             Vector2D sum = new Vector2D(0, 0);
 
-            if (_instanceExists(Arrive))
+            if (_instanceExists(_arrive))
             {
-                sum.Add(Arrive.Calculate().Multiply(_dArrive));
+                Vector2D v = _arrive.Calculate().Multiply(_dArrive);
+                Console.WriteLine("Arrive: " + v);
+                sum.Add(v);
             }
             if (_instanceExists(_flee))
             {
-                sum.Add(_flee.Calculate().Multiply(_dFlee));
+                Vector2D v = _flee.Calculate().Multiply(_dFlee);
+                Console.WriteLine("Flee: " + v);
+                sum.Add(v);
             }
             if (_instanceExists(_seek))
             {
-                Vector2D v = _seek.Calculate();
-                sum.Add(v.Multiply(_dSeek));
-                Console.WriteLine(" () ==>: " + v + " MULTIPLY WITH " + _dSeek);
+                Vector2D v = _seek.Calculate().Multiply(_dSeek);
+                Console.WriteLine("Seek: " + v);
+                sum.Add(v);
             }
             if (_instanceExists(_straightWalking))
             {
-                sum.Add(_straightWalking.Calculate().Multiply(_dStraightWalking));
+                Vector2D v = _straightWalking.Calculate().Multiply(_dStraightWalking);
+                Console.WriteLine("Straight walking: " + v);
+                sum.Add(v);
             }
             if (_instanceExists(_wander))
             {
-                sum.Add(_wander.Calculate().Multiply(_dWander));
+                Vector2D v = _wander.Calculate().Multiply(_dWander);
+                Console.WriteLine("Wander: " + v);
+                sum.Add(v);
             }
 
             Vector2D a = sum.Truncate(_movingEntity.DMaxForce);
-            Console.WriteLine(" DIRECT_FORCE_GAIN (TRUNCATED): " + a + " MAXFORCE: " + _movingEntity.DMaxForce);
+//            Console.WriteLine(" DIRECT_FORCE_GAIN (TRUNCATED): " + a + " MAXFORCE: " + _movingEntity.DMaxForce);
             return a;
         }
 
@@ -116,15 +125,38 @@ namespace TheAnimalKingdom.Behaviours
 
         public void ArriveOn(BaseGameEntity goal, double intensity)
         {
-            Arrive = new ArriveBehaviour(_movingEntity, goal);
+            _arrive = new ArriveBehaviour(_movingEntity, goal);
             _dArrive = intensity;
         }
 
         public void ArriveOff()
         {
-            Arrive = null;
+            _arrive = null;
             _dArrive = 0;
         }
 
+        public void DrawBehaviors(Graphics g)
+        {
+            if (_instanceExists(_arrive))
+            {
+                _arrive.DrawBehavior(g);
+            }
+            if (_instanceExists(_flee))
+            {
+                _flee.DrawBehavior(g);
+            }
+            if (_instanceExists(_seek))
+            {
+                _seek.DrawBehavior(g);
+            }
+            if (_instanceExists(_straightWalking))
+            {
+                _straightWalking.DrawBehavior(g);
+            }
+            if (_instanceExists(_wander))
+            {
+                _wander.DrawBehavior(g);
+            }
+        }
     }
 }

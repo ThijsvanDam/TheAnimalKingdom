@@ -32,21 +32,31 @@ namespace TheAnimalKingdom
         {
             List<BaseGameEntity> allesz = new List<BaseGameEntity>();
 
-            Gazelle g1 = new Gazelle(new Vector2D(10, 10), this);
+            Gazelle g1 = new Gazelle(new Vector2D(200, 200), this);
 
             Gazelle g2 = new Gazelle(new Vector2D(30, 20), this);
 
             Gazelle g3 = new Gazelle(new Vector2D(25, 10), this);
-
+//            
+//
             StaticEntity s1 = new StaticEntity(new Vector2D(MouseX, MouseY), this);
 
-            g1.SteeringBehaviours.SeekOn(goal: s1, intensity: 100);
-//            g1.SteeringBehaviours.StraightWalkingOn(7);
+//            g1.SteeringBehaviours.SeekOn(goal: s1, intensity: 100);
+
+//            Gazelle g4 = new Gazelle(new Vector2D(40, 55), this);
+
+            g1.SteeringBehaviours.ArriveOn(s1, 10);
+//            g1.SteeringBehaviours.WanderOn(intensity: 1);
+//            g2.SteeringBehaviours.SeekOn(g1, intensity: 10);
+//            g3.SteeringBehaviours.WanderOn(intensity: 1);
+//            g4.SteeringBehaviours.SeekOn(g1, intensity: 100);
+            //            g1.SteeringBehaviours.StraightWalkingOn(7);
 
             allesz.Add(g1);
             allesz.Add(g2);
             allesz.Add(g3);
             allesz.Add(s1);
+//            allesz.Add(g4);
 
             Entities.AddRange(allesz);
         }

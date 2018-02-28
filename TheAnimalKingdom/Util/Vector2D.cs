@@ -63,7 +63,18 @@ namespace TheAnimalKingdom.Util
 
         public Vector2D Normalize()
         {
-            return Divide(Length());
+            Vector2D rtrn;
+            if (Length() > 0)
+            {
+                rtrn = Divide(Length());
+            }
+            else
+            {
+                X = 1;
+                Y = 1;
+                rtrn = this;
+            }
+            return rtrn;
         }
 
         public Vector2D Truncate(double max)
