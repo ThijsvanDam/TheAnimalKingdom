@@ -16,8 +16,7 @@ namespace TheAnimalKingdom.Entities
         public int ID { get; private set; }
         public World World { get; set; }
         public Vector2D VPos { get; }
-        public float Scale { get; set; }
-        public float Bradius { get; }
+        public float Bradius { get; set; }
         public Color Color;
 
 

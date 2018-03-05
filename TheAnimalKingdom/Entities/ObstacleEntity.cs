@@ -11,7 +11,8 @@ namespace TheAnimalKingdom.Entities
     {
         protected ObstacleEntity(Vector2D position, float size, World world) : base(position, world)
         {
-            Scale = (size * 25) / 2;
+            Bradius = (size * 25) / 2;
+            Bradius = Bradius;
             world.Obstacles.Add(this);
         }
     }

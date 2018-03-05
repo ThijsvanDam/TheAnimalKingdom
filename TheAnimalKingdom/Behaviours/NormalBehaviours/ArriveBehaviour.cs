@@ -30,8 +30,6 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
 
             double distance = toTarget.Length();
 
-
-
             if (distance > 0.05)
             {
                 const double decelerationTweaker = 1;

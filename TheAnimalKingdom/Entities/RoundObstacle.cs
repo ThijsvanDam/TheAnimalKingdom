@@ -22,9 +22,9 @@ namespace TheAnimalKingdom.Entities
 
         public override void Render(Graphics g)
         {
-            double left = VPos.X - Scale;
-            double top = VPos.Y - Scale;
-            double size = Scale * 2;
+            double left = VPos.X - Bradius;
+            double top = VPos.Y - Bradius;
+            double size = Bradius * 2;
             g.FillEllipse(new SolidBrush(Color), (int)left, (int)top, (int)size, (int)size);
         }
     }

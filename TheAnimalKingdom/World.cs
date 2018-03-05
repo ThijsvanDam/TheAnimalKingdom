@@ -48,8 +48,8 @@ namespace TheAnimalKingdom
 
 //            Gazelle g4 = new Gazelle(new Vector2D(40, 55), this);
 
+            g1.SteeringBehaviours.ArriveOn(s1, 1);
             g1.SteeringBehaviours.ObstacleAvoidanceOn(1);
-            g1.SteeringBehaviours.WanderOn(1);
             //            g1.SteeringBehaviours.ArriveOn(s1, 1);
             //            g1.SteeringBehaviours.SeekOn(s1, 1);
 

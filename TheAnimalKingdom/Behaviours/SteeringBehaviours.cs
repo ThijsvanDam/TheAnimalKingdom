@@ -59,7 +59,7 @@ namespace TheAnimalKingdom.Behaviours
             if (_instanceExists(_arrive))
             {
                 Vector2D v = _arrive.Calculate().Multiply(_dArrive);
-                Console.WriteLine("Arrive: " + v);
+//                Console.WriteLine("Arrive: " + v);
                 sum.Add(v);
             }
 
@@ -98,6 +98,8 @@ namespace TheAnimalKingdom.Behaviours
             if (_instanceExists(_obstacleAvoidance))
             {
                 Vector2D v = _obstacleAvoidance.Calculate().Multiply(_dObstacleAvoidance);
+//                Console.WriteLine("Object avoidance: " + v);
+                sum.Add(v);
             }
 
             #endregion

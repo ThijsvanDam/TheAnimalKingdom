@@ -35,11 +35,6 @@ namespace TheAnimalKingdom.Entities
         {
 
             Vector2D steeringForce = SteeringBehaviours.Calculate();
-//            Console.Write("TSF: " + steeringForce + "\t");
-//            if (ID == 0)
-//            {
-//                Console.WriteLine(steeringForce);
-//            }
             Vector2D acceleration = steeringForce.Divide(DMass);
 
             VVelocity.Add(acceleration.Multiply(time_elapsed));
@@ -47,18 +42,13 @@ namespace TheAnimalKingdom.Entities
             VVelocity.Truncate(DMaxSpeed);
 
             VPos.Add(VVelocity.Multiply(time_elapsed));
-//            if (ID == 0)
-//            {
-//                Console.WriteLine("VELOC: " + VVelocity);
-//            }
 
             if (VVelocity.LengthSquared() > 0.00000001)
             {
                 VHeading = VVelocity.Clone().Normalize();
                 VSide = VHeading.Perpendicular();
             }
-
-//            Console.WriteLine("V: " + VVelocity);
+            
             CheckOutOfScreen();
         }
 

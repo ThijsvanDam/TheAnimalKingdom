@@ -54,6 +54,12 @@ namespace TheAnimalKingdom.Util
             Y *= value;
             return this;
         }
+        public Vector2D DotMultiplication(Vector2D value)
+        {
+            X *= value.X;
+            Y *= value.Y;
+            return this;
+        }
 
         public Vector2D Divide(double value)
         {
@@ -103,9 +109,13 @@ namespace TheAnimalKingdom.Util
             return $"({X},{Y})";
         }
 
-        public Point toPoint()
+        public Point ToPoint()
         {
             return new Point((int)this.X, (int)this.Y);
+        }
+        public PointF ToPointF()
+        {
+            return new PointF((float)this.X, (float)this.Y);
         }
     }
 }

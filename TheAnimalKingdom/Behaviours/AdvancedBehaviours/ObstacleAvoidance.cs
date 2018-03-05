@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using TheAnimalKingdom.Behaviours.BaseBehaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
@@ -10,22 +12,27 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
     {
         public double RectangleDistance;
         public double RectangleWidth;
+        public double MinimumRectangleLength;
+
+        public Random r = new Random();
 
         public Vector2D rDist;
-        public Vector2D one;
-        public Vector2D two;
-        public Vector2D three;
-        public Vector2D four;
+        public List<Vector2D> Rectangle;
 
         public ObstacleAvoidance(MovingEntity movingEntity) : base(movingEntity)
         {
-            RectangleDistance = 100;
+            RectangleDistance = 0;
             RectangleWidth = 10;
+            MinimumRectangleLength = 5;
             rDist = new Vector2D(0, 0);
-            one = new Vector2D(0, 0);
-            two = new Vector2D(0, 0);
-            three = new Vector2D(0, 0);
-            four = new Vector2D(0, 0);
+
+            Rectangle = new List<Vector2D>()
+            {
+                new Vector2D(0, 0),
+                new Vector2D(0, 0),
+                new Vector2D(0, 0),
+                new Vector2D(0, 0)
+            };
         }
 
         public override Vector2D Calculate()
@@ -42,37 +49,111 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
             // The direction the entity currently goes to, but normalized.
             Vector2D currentDirection = direction.Normalize();
 
+            double speed = MovingEntity.VVelocity.Length() * 10;
+            double maxSpeed = MovingEntity.DMaxSpeed;
+
+            double extra = ((speed / maxSpeed) * MinimumRectangleLength);
+
+
+            RectangleDistance = MinimumRectangleLength + extra;
+
             // The square and its distance
             rDist = currentPos.Clone().Add((currentDirection.Clone().Multiply(RectangleDistance)));
-            
+
             // Create rectangle
-            one = currentDirection.Perpendicular().Normalize().Multiply(10);
-            two = new Vector2D(-one.X, -one.Y);
-            three = two.Clone().Add(currentDirection.Clone().Multiply(RectangleDistance * 2));
-            four = one.Clone().Add(currentDirection.Clone().Multiply(RectangleDistance * 2));
+            Rectangle = GetRectangle();
 
-            one.Add(currentPos);
-            two.Add(currentPos);
-            three.Add(currentPos);
-            four.Add(currentPos);
+            List<ObstacleEntity> obstaclesWithinRange = FindObstacleEntitiesWithinRange();
 
-
-
-
+            foreach (ObstacleEntity obstacle in obstaclesWithinRange)
+            {
+                Vector2D localSpacePosition = GetPositionInLocalSpace(obstacle);
+            }
 
 
             return new Vector2D(0, 0);
         }
 
+        private Vector2D GetPositionInLocalSpace(ObstacleEntity obstacle)
+        {
+            Vector2D obstaclePos = obstacle.VPos;
+
+            Vector2D direction = MovingEntity.VVelocity.Clone().Normalize();
+            Vector2D side = direction.Perpendicular();
+            Vector2D position = MovingEntity.VPos;
+
+
+            Matrix transformMatrix = new Matrix(
+                (float) direction.X, (float) side.X,
+                (float) direction.Y, (float) side.Y,
+                -(float) (position.Clone().DotMultiplication(direction).Length()),
+                -(float) (position.Clone().DotMultiplication(side).Length())
+            );
+
+            transformMatrix *;
+
+
+            return posInLocalSpace;
+        }
+
+        private List<Vector2D> GetRectangle()
+        {
+            Vector2D direction = MovingEntity.VVelocity.Clone();
+            Vector2D currentDirection = direction.Normalize();
+            Vector2D currentPos = MovingEntity.VPos;
+
+            List<Vector2D> rectangle = new List<Vector2D>();
+
+            Vector2D one = currentDirection.Perpendicular().Normalize().Multiply(RectangleWidth);
+            Vector2D two = new Vector2D(-one.X, -one.Y);
+            Vector2D three = two.Clone().Add(currentDirection.Clone().Multiply(RectangleDistance * 2));
+            Vector2D four = one.Clone().Add(currentDirection.Clone().Multiply(RectangleDistance * 2));
+
+            rectangle.AddRange(new[] {one, two, three, four});
+
+            foreach (Vector2D point in rectangle)
+            {
+                point.Add(currentPos);
+            }
+
+            return rectangle;
+        }
+
+        private List<ObstacleEntity> FindObstacleEntitiesWithinRange()
+        {
+            List<ObstacleEntity> obstaclesWithinRange = new List<ObstacleEntity>();
+            Vector2D currentPosition = MovingEntity.VPos;
+
+            foreach (ObstacleEntity obstacle in MovingEntity.World.Obstacles)
+            {
+                Vector2D distance = obstacle.VPos.Clone().Substract(currentPosition);
+
+                double minAllowedDist = (RectangleDistance * 2) + obstacle.Bradius;
+
+                if (distance.LengthSquared() < minAllowedDist * minAllowedDist)
+                {
+                    obstaclesWithinRange.Add(obstacle);
+                }
+            }
+
+            return obstaclesWithinRange;
+        }
+
         public override void DrawBehavior(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Red), (int)rDist.X, (int)rDist.Y, (int)5, (int)5);
 //            g.FillEllipse(new SolidBrush(Color.Red), (int)one.X, (int)one.Y, (int)5, (int)5);
 //            g.FillEllipse(new SolidBrush(Color.Red), (int)two.X, (int)two.Y, (int)5, (int)5);
 //            g.FillEllipse(new SolidBrush(Color.Red), (int)three.X, (int)three.Y, (int)5, (int)5);
 //            g.FillEllipse(new SolidBrush(Color.Red), (int)four.X, (int)four.Y, (int)5, (int)5);
 
-            g.FillPolygon(new SolidBrush(Color.Blue), new []{one.toPoint(), two.toPoint(), three.toPoint(), four.toPoint() });
+            g.FillPolygon(new SolidBrush(Color.Blue), new[]
+            {
+                Rectangle[0].ToPoint(),
+                Rectangle[1].ToPoint(),
+                Rectangle[2].ToPoint(),
+                Rectangle[3].ToPoint()
+            });
+            g.FillEllipse(new SolidBrush(Color.Red), (int) rDist.X, (int) rDist.Y, (int) 5, (int) 5);
         }
     }
 }
