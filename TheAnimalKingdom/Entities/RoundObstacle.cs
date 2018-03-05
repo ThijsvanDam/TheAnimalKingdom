@@ -8,14 +8,11 @@ using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Entities
 {
-    public class Obstacle : BaseGameEntity
+    class RoundObstacle : ObstacleEntity
     {
-        public Obstacle(Vector2D position, float size, World world) : base(position, world)
+        public RoundObstacle(Vector2D position, float size, World world) : base(position, size, world)
         {
-            Color = Color.DarkRed;
-            Scale = (size * 25)/ 2;
-
-            world.Obstacles.Add(this);
+            Color = Color.DarkBlue;
         }
 
         public override void Update(float time_elapsed)
@@ -28,7 +25,7 @@ namespace TheAnimalKingdom.Entities
             double left = VPos.X - Scale;
             double top = VPos.Y - Scale;
             double size = Scale * 2;
-            g.FillRectangle(new SolidBrush(Color), (int) left, (int) top, (int) size, (int) size);
+            g.FillEllipse(new SolidBrush(Color), (int)left, (int)top, (int)size, (int)size);
         }
     }
 }

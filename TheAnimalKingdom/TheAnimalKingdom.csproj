@@ -63,7 +63,9 @@
     <Compile Include="Entities\BaseGameEntity.cs" />
     <Compile Include="Entities\Gazelle.cs" />
     <Compile Include="Entities\MovingEntity.cs" />
-    <Compile Include="Entities\Obstacle.cs" />
+    <Compile Include="Entities\ObstacleEntity.cs" />
+    <Compile Include="Entities\RoundObstacle.cs" />
+    <Compile Include="Entities\SquaredObstacle.cs" />
     <Compile Include="Entities\StaticEntity.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

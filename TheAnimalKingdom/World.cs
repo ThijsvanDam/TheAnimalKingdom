@@ -17,7 +17,7 @@ namespace TheAnimalKingdom
         public static int MouseY = 300;
 
         public List<BaseGameEntity> Entities = new List<BaseGameEntity>();
-        public List<Obstacle> Obstacles = new List<Obstacle>();
+        public List<ObstacleEntity> Obstacles = new List<ObstacleEntity>();
         public int Width { get; set; }
         public int Height { get; set; }
 
@@ -42,13 +42,14 @@ namespace TheAnimalKingdom
 //
             StaticEntity s1 = new StaticEntity(new Vector2D(MouseX, MouseY), this);
 
-            Obstacle o1 = new Obstacle(new Vector2D(400, 200), 2f, this);
-            Obstacle o2 = new Obstacle(new Vector2D(200, 100), 3f, this);
-            Obstacle o3 = new Obstacle(new Vector2D(300, 300), 5f, this);
+            RoundObstacle o1 = new RoundObstacle(new Vector2D(400, 200), 2f, this);
+            RoundObstacle o2 = new RoundObstacle(new Vector2D(200, 100), 3f, this);
+            RoundObstacle o3 = new RoundObstacle(new Vector2D(300, 300), 5f, this);
 
 //            Gazelle g4 = new Gazelle(new Vector2D(40, 55), this);
 
-            g1.SteeringBehaviours.FleeOn(s1, 1);
+            g1.SteeringBehaviours.ObstacleAvoidanceOn(1);
+            g1.SteeringBehaviours.WanderOn(1);
             //            g1.SteeringBehaviours.ArriveOn(s1, 1);
             //            g1.SteeringBehaviours.SeekOn(s1, 1);
 

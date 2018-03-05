@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -100,6 +101,11 @@ namespace TheAnimalKingdom.Util
         public override string ToString()
         {
             return $"({X},{Y})";
+        }
+
+        public Point toPoint()
+        {
+            return new Point((int)this.X, (int)this.Y);
         }
     }
 }
