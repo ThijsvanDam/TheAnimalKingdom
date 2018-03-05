@@ -4,10 +4,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TheAnimalKingdom.Behaviours.BaseBehaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
 
-namespace TheAnimalKingdom.Behaviours
+namespace TheAnimalKingdom.Behaviours.NormalBehaviours
 {
     public class WanderBehaviour : SteeringBehaviour
     {
@@ -16,6 +17,8 @@ namespace TheAnimalKingdom.Behaviours
         public double CircleRadius = 80;
         public double LastAngle = 0;
         public double TurningAngle = (Math.PI * 2) / 20; // 360 / 72 = steps of 5 degrees
+
+        public static Random random = new Random();
 
         public Vector2D cDist;
         public Vector2D vDest;
@@ -31,9 +34,8 @@ namespace TheAnimalKingdom.Behaviours
         public override Vector2D Calculate()
         {
             // Generate a random new angle to find a point on the circle. Do this with the TurningAngle steps.
-            Random r = new Random();
             double currentAngle = LastAngle;
-            if (r.Next(0, 60) % 2 == 1)
+            if (random.Next(0, 60) % 2 == 1)
             {
                 currentAngle += TurningAngle;
             }
@@ -61,13 +63,16 @@ namespace TheAnimalKingdom.Behaviours
 
             // Our new destination we want to travel towards.
             vDest = cDist.Clone().Add(new Vector2D(X, Y));
+
             // One problem: This is the destination from 0, 0.
             // So, to get the dest from our entities location, we can just substract our entities location from it.
             steering = vDest.Clone().Substract(MovingEntity.VPos);
 
             // Update our last angle so we can get a random angle next time.
             LastAngle = currentAngle;
-            return steering;
+
+            // Make sure to limit the steering to the max force of the MovingEntity
+            return steering.Truncate(MovingEntity.DMaxForce);
         }
 
         public override void DrawBehavior(Graphics g)

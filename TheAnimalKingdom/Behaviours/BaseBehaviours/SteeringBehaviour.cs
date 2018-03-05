@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
 
-namespace TheAnimalKingdom.Behaviours
+namespace TheAnimalKingdom.Behaviours.BaseBehaviours
 {
     public abstract class SteeringBehaviour
     {

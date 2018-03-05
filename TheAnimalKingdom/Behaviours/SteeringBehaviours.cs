@@ -1,6 +1,9 @@
 ﻿using System;
 using System.CodeDom;
 using System.Drawing;
+using TheAnimalKingdom.Behaviours.AdvancedBehaviours;
+using TheAnimalKingdom.Behaviours.BaseBehaviours;
+using TheAnimalKingdom.Behaviours.NormalBehaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
 
@@ -8,19 +11,32 @@ namespace TheAnimalKingdom.Behaviours
 {
     public class SteeringBehaviours
     {
+        #region NormalBehaviours
+
         private ArriveBehaviour _arrive;
         private FleeBehaviour _flee;
         private SeekBehaviour _seek;
         private StraightWalkingBehaviour _straightWalking;
         private WanderBehaviour _wander;
 
-        private MovingEntity _movingEntity;
-
         private double _dArrive;
         private double _dFlee;
         private double _dSeek;
         private double _dStraightWalking;
         private double _dWander;
+
+        #endregion
+
+        #region AdvancedBehaviours
+
+        private ObstacleAvoidance _obstacleAvoidance;
+
+        private double _dObstacleAvoidance;
+
+        #endregion
+
+        private MovingEntity _movingEntity;
+
 
         public SteeringBehaviours(MovingEntity movingEntity)
         {
@@ -38,30 +54,36 @@ namespace TheAnimalKingdom.Behaviours
         {
             Vector2D sum = new Vector2D(0, 0);
 
+            #region NormalBehaviours
+
             if (_instanceExists(_arrive))
             {
                 Vector2D v = _arrive.Calculate().Multiply(_dArrive);
                 Console.WriteLine("Arrive: " + v);
                 sum.Add(v);
             }
+
             if (_instanceExists(_flee))
             {
                 Vector2D v = _flee.Calculate().Multiply(_dFlee);
                 Console.WriteLine("Flee: " + v);
                 sum.Add(v);
             }
+
             if (_instanceExists(_seek))
             {
                 Vector2D v = _seek.Calculate().Multiply(_dSeek);
                 Console.WriteLine("Seek: " + v);
                 sum.Add(v);
             }
+
             if (_instanceExists(_straightWalking))
             {
                 Vector2D v = _straightWalking.Calculate().Multiply(_dStraightWalking);
                 Console.WriteLine("Straight walking: " + v);
                 sum.Add(v);
             }
+
             if (_instanceExists(_wander))
             {
                 Vector2D v = _wander.Calculate().Multiply(_dWander);
@@ -69,10 +91,24 @@ namespace TheAnimalKingdom.Behaviours
                 sum.Add(v);
             }
 
+            #endregion
+
+            #region AdvancedBehaviours
+
+            if (_instanceExists(_obstacleAvoidance))
+            {
+                Vector2D v = _obstacleAvoidance.Calculate().Multiply(_dObstacleAvoidance);
+            }
+
+            #endregion
+
             Vector2D a = sum.Truncate(_movingEntity.DMaxForce);
 //            Console.WriteLine(" DIRECT_FORCE_GAIN (TRUNCATED): " + a + " MAXFORCE: " + _movingEntity.DMaxForce);
             return a;
         }
+
+
+        #region NormalBehaviours
 
         public void WanderOn(double intensity)
         {
@@ -135,28 +171,67 @@ namespace TheAnimalKingdom.Behaviours
             _dArrive = 0;
         }
 
+        #endregion
+
+        #region AdvancedBehaviours
+
+        public void ObstacleAvoidanceOn(double intensity)
+        {
+            _obstacleAvoidance = new ObstacleAvoidance(_movingEntity);
+            _dObstacleAvoidance = intensity;
+        }
+
+        public void ObstacleAvoidanceOff()
+        {
+            _obstacleAvoidance = null;
+            _dObstacleAvoidance = 0;
+        }
+
+        #endregion
+
+
+
+
+
         public void DrawBehaviors(Graphics g)
         {
+            #region NormalBehaviours
+
             if (_instanceExists(_arrive))
             {
                 _arrive.DrawBehavior(g);
             }
+
             if (_instanceExists(_flee))
             {
                 _flee.DrawBehavior(g);
             }
+
             if (_instanceExists(_seek))
             {
                 _seek.DrawBehavior(g);
             }
+
             if (_instanceExists(_straightWalking))
             {
                 _straightWalking.DrawBehavior(g);
             }
+
             if (_instanceExists(_wander))
             {
                 _wander.DrawBehavior(g);
             }
+
+            #endregion
+
+            #region AdvancedBehaviours
+
+            if (_instanceExists(_obstacleAvoidance))
+            {
+                _obstacleAvoidance.DrawBehavior(g);
+            }
+
+            #endregion
         }
     }
 }

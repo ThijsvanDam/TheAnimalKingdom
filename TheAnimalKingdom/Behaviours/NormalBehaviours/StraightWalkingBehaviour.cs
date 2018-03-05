@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
+using TheAnimalKingdom.Behaviours.BaseBehaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
 
-namespace TheAnimalKingdom.Behaviours
+namespace TheAnimalKingdom.Behaviours.NormalBehaviours
 {
     public class StraightWalkingBehaviour : SteeringBehaviour
     {

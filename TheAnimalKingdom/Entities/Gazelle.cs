@@ -17,7 +17,8 @@ namespace TheAnimalKingdom.Entities
             Scale = 5;
             VVelocity = new Vector2D(0, 0);
             DMass = 10;
-            DMaxSpeed = 2;
+            DMaxSpeed = 50;
+            DDeceleration = 3;
             DMaxForce = 10;
         }
 

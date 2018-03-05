@@ -26,14 +26,10 @@ namespace TheAnimalKingdom.Entities
         protected Vector2D VSide;
 
         protected double DMass;
-
         public double DMaxSpeed;
-
         public double DMaxForce;
-
+        public double DDeceleration;
         protected double DMaxTurnRate;
-
-        private World _world;
 
         public override void Update(float time_elapsed)
         {
