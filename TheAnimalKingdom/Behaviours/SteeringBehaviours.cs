@@ -87,7 +87,7 @@ namespace TheAnimalKingdom.Behaviours
             if (_instanceExists(_wander))
             {
                 Vector2D v = _wander.Calculate().Multiply(_dWander);
-                Console.WriteLine("Wander: " + v);
+//                Console.WriteLine("Wander: " + v);
                 sum.Add(v);
             }
 

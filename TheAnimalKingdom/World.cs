@@ -38,6 +38,7 @@ namespace TheAnimalKingdom
             Gazelle g2 = new Gazelle(new Vector2D(30, 20), this);
 
             Gazelle g3 = new Gazelle(new Vector2D(25, 10), this);
+
 //            
 //
             StaticEntity s1 = new StaticEntity(new Vector2D(MouseX, MouseY), this);
@@ -48,7 +49,10 @@ namespace TheAnimalKingdom
 
 //            Gazelle g4 = new Gazelle(new Vector2D(40, 55), this);
 
-            g1.SteeringBehaviours.ArriveOn(s1, 1);
+            g1.SteeringBehaviours.WanderOn(1);
+            g2.SteeringBehaviours.WanderOn(1);
+//            g3.SteeringBehaviours.WanderOn(1);
+            g3.SteeringBehaviours.ArriveOn(s1, 1);
             g1.SteeringBehaviours.ObstacleAvoidanceOn(1);
             //            g1.SteeringBehaviours.ArriveOn(s1, 1);
             //            g1.SteeringBehaviours.SeekOn(s1, 1);
@@ -60,7 +64,16 @@ namespace TheAnimalKingdom
             allesz.Add(g2);
             allesz.Add(g3);
             allesz.Add(s1);
-//            allesz.Add(g4);
+            //            allesz.Add(g4);
+            Random r = new Random();
+
+            for (int i = 0; i < 100; i++)
+            {
+                Gazelle g = new Gazelle(new Vector2D(r.NextDouble(), r.NextDouble()), this);
+                g.SteeringBehaviours.WanderOn(1);
+                g.SteeringBehaviours.ArriveOn(s1, 1);
+                allesz.Add(g);
+            }
 
             Entities.AddRange(allesz);
         }

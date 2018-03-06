@@ -90,10 +90,11 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
                 -(float) (position.Clone().DotMultiplication(side).Length())
             );
 
-            transformMatrix *;
+//            transformMatrix *;
 
 
-            return posInLocalSpace;
+//            return posInLocalSpace;
+            return new Vector2D(0, 0);
         }
 
         private List<Vector2D> GetRectangle()
