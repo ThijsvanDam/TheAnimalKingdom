@@ -67,7 +67,7 @@ namespace TheAnimalKingdom
             //            allesz.Add(g4);
             Random r = new Random();
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 Gazelle g = new Gazelle(new Vector2D(r.NextDouble(), r.NextDouble()), this);
                 g.SteeringBehaviours.WanderOn(1);
