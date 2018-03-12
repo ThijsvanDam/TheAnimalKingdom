@@ -13,10 +13,10 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
     public class WanderBehaviour : SteeringBehaviour
     {
 
-        public double CircleDistance = 100;
-        public double CircleRadius = 80;
+        public double CircleDistance = 30;
+        public double CircleRadius = 20;
         public double LastAngle = 0;
-        public double TurningAngle = (Math.PI * 2) / 20; // 360 / 72 = steps of 5 degrees
+        public double TurningAngle = (Math.PI * 2) / 40; // 360 / 72 = steps of 5 degrees
 
         public static Random random = new Random();
 
@@ -35,13 +35,21 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
         {
             // Generate a random new angle to find a point on the circle. Do this with the TurningAngle steps.
             double currentAngle = LastAngle;
-            if (random.Next(0, 60) % 2 == 1)
+            int r = random.Next(0, 30);
+            switch (r % 4)
             {
-                currentAngle += TurningAngle;
-            }
-            else
-            {
-                currentAngle -= TurningAngle;
+                case 0:
+                    currentAngle += TurningAngle * 2;
+                    break;
+                case 1:
+                    currentAngle += TurningAngle;
+                    break;
+                case 2:
+                    currentAngle -= TurningAngle;
+                    break;
+                case 3:
+                    currentAngle -= TurningAngle * 2;
+                    break;
             }
 
             // Current position of the entity.

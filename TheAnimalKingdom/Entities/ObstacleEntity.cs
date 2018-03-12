@@ -14,5 +14,8 @@ namespace TheAnimalKingdom.Entities
             Bradius = (size * 25) / 2;
 //            world.Obstacles.Add(this);
         }
+
+        public abstract void Tag();
+        public abstract void RemoveTag();
     }
 }

@@ -10,9 +10,12 @@ namespace TheAnimalKingdom.Entities
 {
     class RoundObstacle : ObstacleEntity
     {
+        public static Color BaseColor;
+
         public RoundObstacle(Vector2D position, float size, World world) : base(position, size, world)
         {
-            Color = Color.DarkBlue;
+            BaseColor = Color.DarkBlue;
+            Color = BaseColor;
         }
 
         public override void Update(float time_elapsed)
@@ -26,6 +29,16 @@ namespace TheAnimalKingdom.Entities
             double top = VPos.Y - Bradius;
             double size = Bradius * 2;
             g.FillEllipse(new SolidBrush(Color), (int)left, (int)top, (int)size, (int)size);
+        }
+
+        public override void Tag()
+        {
+            Color = Color.Black;
+        }
+
+        public override void RemoveTag()
+        {
+            Color = BaseColor;
         }
     }
 }

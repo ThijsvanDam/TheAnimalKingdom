@@ -133,7 +133,13 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
 
                 if (distance.LengthSquared() < minAllowedDist * minAllowedDist)
                 {
+                    obstacle.Color = Color.Black;
                     obstaclesWithinRange.Add(obstacle);
+                    obstacle.Tag();
+                }
+                else
+                {
+                    obstacle.RemoveTag();
                 }
             }
 

@@ -11,6 +11,7 @@ namespace TheAnimalKingdom.Entities
 {
     public abstract class BaseGameEntity
     {
+
         private static int NextValidID = 0;
 
         public int ID { get; private set; }

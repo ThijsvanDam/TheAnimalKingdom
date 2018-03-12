@@ -37,7 +37,8 @@ namespace TheAnimalKingdom
             //            Gazelle g2 = new Gazelle(new Vector2D(30, 20), this);
             //            Gazelle g3 = new Gazelle(new Vector2D(25, 10), this);
 
-            g1.SteeringBehaviours.ArriveOn(s1, 2);
+//            g1.SteeringBehaviours.ArriveOn(s1, 2);
+            g1.SteeringBehaviours.WanderOn(1);
             g1.SteeringBehaviours.ObstacleAvoidanceOn(1);
 
             Entities.AddRange(new List<BaseGameEntity>()
@@ -61,9 +62,9 @@ namespace TheAnimalKingdom
                 {  1,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 6
                 {  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 7
                 {  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 8
-                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 9
-                {  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 10
-                {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 11
+                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  1,  1,  1,  0,  0  }, // 9
+                {  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  1,  1,  1,  0,  0  }, // 10
+                {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  1,  1,  2,  2,  1,  1,  0,  0,  0,  1,  1,  1,  0,  0  }, // 11
                 {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 12
                 {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 13
                 {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0  }, // 14
@@ -81,7 +82,14 @@ namespace TheAnimalKingdom
                 {
                     if (gameGrid[i, j] == 1)
                     {
-                        Obstacles.Add(new SquaredObstacle(new Vector2D((fullSize * j) + (25f/2f), (fullSize * i) + (fullSize / 2)), 1f, this));
+                        Obstacles.Add(new SquaredObstacle(new Vector2D((fullSize * j) + (25f / 2f), (fullSize * i) + (fullSize / 2)), 1f, this));
+                    }
+                    if (gameGrid[i, j] == 2)
+                    {
+                        SquaredObstacle a = new SquaredObstacle(
+                            new Vector2D((fullSize * j) + (25f / 2f), (fullSize * i) + (fullSize / 2)), 1f, this);
+                        a.Color = Color.Red;
+                        Obstacles.Add(a);
                     }
                 }
             }
