@@ -93,6 +93,10 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
 
             // Draw the destination our entity has to steer towards.
             g.FillEllipse(new SolidBrush(Color.DeepPink), (int)(vDest.X - 3), (int)(vDest.Y - 3), 6, 6);
+
+
+            g.DrawLine(new Pen(Color.Brown, 10), (int)MovingEntity.VPos.X, (int)MovingEntity.VPos.Y, (int)(MovingEntity.VPos.X + steering.X),
+                (int)(MovingEntity.VPos.Y + steering.Y));
         }
     }
 }
