@@ -2,7 +2,7 @@
 {
     public class NavGraphNode : GraphNode
     {
-        private Vector2D Position;
+        public Vector2D Position { get; }
 
         public NavGraphNode(int idx, Vector2D position) : base(idx)
         {

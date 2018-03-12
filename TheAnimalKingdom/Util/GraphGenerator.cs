@@ -2,9 +2,9 @@
 {
     public class GraphGenerator
     {
-        public static SparseGraph<GraphEdge, NavGraphNode> Generate()
+        public static SparseGraph Generate()
         {
-            return new SparseGraph<GraphEdge, NavGraphNode>(false);
+            return new SparseGraph(false);
         }
     }
 }
