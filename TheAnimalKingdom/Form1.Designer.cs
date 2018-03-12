@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this._dbPanel1 = new TheAnimalKingdom.DBPanel();
             this.SuspendLayout();
             // 
             // _dbPanel1
             // 
             this._dbPanel1.BackColor = System.Drawing.Color.White;
+            this._dbPanel1.BackgroundImage = global::TheAnimalKingdom.Properties.Resources.sand;
             this._dbPanel1.Location = new System.Drawing.Point(8, 6);
             this._dbPanel1.Name = "_dbPanel1";
             this._dbPanel1.Size = new System.Drawing.Size(800, 600);
@@ -49,6 +51,7 @@
             this.ClientSize = new System.Drawing.Size(817, 613);
             this.Controls.Add(this._dbPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.Name = "Form1";
             this.Text = "The animal kingdom";

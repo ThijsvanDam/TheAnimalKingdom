@@ -27,7 +27,7 @@ namespace TheAnimalKingdom.Entities
             double left = VPos.X - Bradius;
             double top = VPos.Y - Bradius;
             double size = Bradius * 2;
-//            SteeringBehaviours.DrawBehaviors(g);
+            SteeringBehaviours.DrawBehaviors(g);
             g.FillEllipse(new SolidBrush(Color), (int)left, (int)top, (int)size, (int)size);
         }
     }

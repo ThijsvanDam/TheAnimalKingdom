@@ -12,7 +12,7 @@ namespace TheAnimalKingdom.Entities
     {
         public SquaredObstacle(Vector2D position, float size, World world) : base(position, size, world)
         {
-            Color = Color.DarkRed;
+            Color = Color.FromArgb(240, 43, 30, 22);
         }
 
         public override void Update(float time_elapsed)
