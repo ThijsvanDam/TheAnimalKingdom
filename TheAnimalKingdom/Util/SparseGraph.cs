@@ -1,38 +1,42 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace TheAnimalKingdom.Util
 {
-    public class SparseGraph<EdgeType, NodeType> 
-        where EdgeType : GraphEdge 
-        where NodeType : GraphNode
-    {
-        public List<NodeType> NodeList { get; set; }
-        public List<EdgeType> EdgeList { get; set; }
+    public class SparseGraph {
+        public List<NavGraphNode> NodeList { get; set; }
+        public List<GraphEdge> EdgeList { get; set; }
         public bool IsDirected { get; set; }
         public int NextNodeIndex { get; }
         
         public SparseGraph(bool isDirected)
         {
-            NodeList = new List<NodeType>();
-            EdgeList = new List<EdgeType>();
+            NodeList = new List<NavGraphNode>();
+            EdgeList = new List<GraphEdge>();
             NextNodeIndex = 0;
             IsDirected = isDirected;
         }
 
-        public NodeType GetNode(int index)
+        public NavGraphNode GetNode(int index)
         {
             return NodeList[index];
         }
 
-        public EdgeType GetEdge(int from, int to)
+        public GraphEdge GetEdge(int from, int to)
         {
             return EdgeList.FirstOrDefault(x => x.From == from && x.To == to);
         }
 
-        public void AddNode(NodeType node)
+        public IEnumerable<GraphEdge> GetConnectedEdges(int from)
+        {
+            return EdgeList.Where(x => x.From == from);
+        }
+
+        public void AddNode(NavGraphNode node)
         {
             NodeList[NextNodeIndex] = node;
         }
@@ -43,7 +47,7 @@ namespace TheAnimalKingdom.Util
             NodeList[nodeIndex].Index = -1;
         }
 
-        public void AddEdge(EdgeType edge)
+        public void AddEdge(GraphEdge edge)
         {
             EdgeList.Add(edge);
         }
@@ -106,14 +110,14 @@ namespace TheAnimalKingdom.Util
             }
         }
 
-        public static SparseGraph<EdgeType, NodeType> LoadFromFile(string path)
+        public static SparseGraph LoadFromFile(string path)
         {
             try
             {
                 using (Stream stream = File.Open(path, FileMode.Create))
                 {
                     var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    return (SparseGraph<EdgeType, NodeType>) binaryFormatter.Deserialize(stream);
+                    return (SparseGraph) binaryFormatter.Deserialize(stream);
                 }
             }
             catch (SerializationException)
@@ -123,6 +127,36 @@ namespace TheAnimalKingdom.Util
             catch (FileLoadException)
             {
                 return null;
+            }
+        }
+
+        #endregion
+
+        #region Drawing
+
+        public void Render(Graphics g)
+        {
+            //Do not start drawing when the graph is empty
+            if (IsEmpty()) return;
+            
+            //Start the recursive draw method with the first node in the list
+            Render(g, NodeList.First());
+        }
+
+        private void Render(Graphics g, NavGraphNode node)
+        {
+            //Draw the node itself
+            var left = (int)node.Position.X - 2;
+            var top = (int)node.Position.Y - 2;
+            g.FillEllipse(new SolidBrush(Color.Black), left, top, 4, 4);
+            
+            //Draw edges to other nodes and continue with those nodes
+            foreach (var edge in GetConnectedEdges(node.Index))
+            {
+                var nodeTo = GetNode(edge.To);
+                g.DrawLine(new Pen(Color.Black), node.Position.ToPoint(), nodeTo.Position.ToPoint());
+                //Continue down the graph and draw the connected node
+                Render(g, nodeTo);
             }
         }
 
