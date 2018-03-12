@@ -13,8 +13,8 @@ namespace TheAnimalKingdom
     public class World
     {
         public static int Intensity = 0;
-        public static int MouseX = 300;
-        public static int MouseY = 300;
+        public static int MouseX = 0;
+        public static int MouseY = 0;
 
         public List<BaseGameEntity> Entities = new List<BaseGameEntity>();
         public List<ObstacleEntity> Obstacles = new List<ObstacleEntity>();
@@ -31,51 +31,61 @@ namespace TheAnimalKingdom
 
         private void _populate()
         {
-            List<BaseGameEntity> allesz = new List<BaseGameEntity>();
 
-            Gazelle g1 = new Gazelle(new Vector2D(200, 200), this);
+            StaticEntity s1 = new StaticEntity(new Vector2D(0, 0), this); // the entity with ID=0 always follow the cursor so it has to be at the start.
+            Gazelle g1 = new Gazelle(new Vector2D(0, 0), this);
+            //            Gazelle g2 = new Gazelle(new Vector2D(30, 20), this);
+            //            Gazelle g3 = new Gazelle(new Vector2D(25, 10), this);
 
-            Gazelle g2 = new Gazelle(new Vector2D(30, 20), this);
-
-            Gazelle g3 = new Gazelle(new Vector2D(25, 10), this);
-
-//            
-//
-            StaticEntity s1 = new StaticEntity(new Vector2D(MouseX, MouseY), this);
-
-            RoundObstacle o1 = new RoundObstacle(new Vector2D(400, 200), 2f, this);
-            RoundObstacle o2 = new RoundObstacle(new Vector2D(200, 100), 3f, this);
-            RoundObstacle o3 = new RoundObstacle(new Vector2D(300, 300), 5f, this);
-
-//            Gazelle g4 = new Gazelle(new Vector2D(40, 55), this);
-
-            g1.SteeringBehaviours.WanderOn(1);
-            g2.SteeringBehaviours.WanderOn(1);
-//            g3.SteeringBehaviours.WanderOn(1);
-            g3.SteeringBehaviours.ArriveOn(s1, 1);
+            g1.SteeringBehaviours.ArriveOn(s1, 2);
             g1.SteeringBehaviours.ObstacleAvoidanceOn(1);
-            //            g1.SteeringBehaviours.ArriveOn(s1, 1);
-            //            g1.SteeringBehaviours.SeekOn(s1, 1);
 
-            allesz.Add(o1);
-            allesz.Add(o2);
-            allesz.Add(o3);
-            allesz.Add(g1);
-            allesz.Add(g2);
-            allesz.Add(g3);
-            allesz.Add(s1);
-            //            allesz.Add(g4);
-            Random r = new Random();
-
-            for (int i = 0; i < 1000; i++)
+            Entities.AddRange(new List<BaseGameEntity>()
             {
-                Gazelle g = new Gazelle(new Vector2D(r.NextDouble(), r.NextDouble()), this);
-                g.SteeringBehaviours.WanderOn(1);
-                g.SteeringBehaviours.ArriveOn(s1, 1);
-                allesz.Add(g);
-            }
+                s1, g1,
+            });
 
-            Entities.AddRange(allesz);
+
+
+
+            #region Grid
+            float fullSize = 25f;
+
+            int[,] gameGrid = new int[20, 24]
+            {//    1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24      
+                {  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 1
+                {  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 2 
+                {  1,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 3
+                {  1,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 4
+                {  1,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 5
+                {  1,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 6
+                {  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 7
+                {  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 8
+                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 9
+                {  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 10
+                {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 11
+                {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 12
+                {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 13
+                {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0  }, // 14
+                {  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  0,  0,  1,  1,  0,  0,  0,  0,  0  }, // 15
+                {  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0,  1,  0,  0,  0,  0,  0  }, // 16
+                {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 17
+                {  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0  }, // 18
+                {  1,  1,  1,  1,  1,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0  }, // 19
+                {  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 20
+            };
+
+            for (int i = 0; i < gameGrid.GetLength(0); i++)
+            {
+                for (int j = 0; j < gameGrid.GetLength(1); j++)
+                {
+                    if (gameGrid[i, j] == 1)
+                    {
+                        Obstacles.Add(new SquaredObstacle(new Vector2D((fullSize * j) + (25f/2f), (fullSize * i) + (fullSize / 2)), 1f, this));
+                    }
+                }
+            }
+            #endregion
         }
 
         public void Update(float timeElapsed)
@@ -83,11 +93,10 @@ namespace TheAnimalKingdom
             foreach (BaseGameEntity entity in Entities)
             {
                 entity.Update(timeElapsed);
-                if (entity.ID == 3)
+                if (entity.ID == 0)
                 {
                     entity.VPos.X = MouseX;
                     entity.VPos.Y = MouseY;
-//                    Console.WriteLine(entity.ID + ": " + entity.VPos.X);
                 }
             }
         }
@@ -100,9 +109,13 @@ namespace TheAnimalKingdom
 
         public void Render(Graphics g)
         {
-            foreach (BaseGameEntity entity in Entities)
+            foreach (ObstacleEntity obstacleEntity in Obstacles)
             {
-                entity.Render(g);
+                obstacleEntity.Render(g);
+            }
+            foreach (BaseGameEntity baseGameEntity in Entities)
+            {
+                baseGameEntity.Render(g);
             }
         }
     }
