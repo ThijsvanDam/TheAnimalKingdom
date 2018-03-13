@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace TheAnimalKingdom.Util
@@ -11,7 +10,7 @@ namespace TheAnimalKingdom.Util
         public List<NavGraphNode> NodeList { get; set; }
         public List<GraphEdge> EdgeList { get; set; }
         public bool IsDirected { get; set; }
-        public int NextNodeIndex { get; }
+        public int NextNodeIndex { get; private set; }
         
         public SparseGraph(bool isDirected)
         {
@@ -26,6 +25,11 @@ namespace TheAnimalKingdom.Util
             return NodeList[index];
         }
 
+        public NavGraphNode GetNode(double x, double y)
+        {
+            return NodeList.FirstOrDefault(n => n.Position.X == x && n.Position.Y == y);
+        }
+
         public GraphEdge GetEdge(int from, int to)
         {
             return EdgeList.FirstOrDefault(x => x.From == from && x.To == to);
@@ -38,7 +42,8 @@ namespace TheAnimalKingdom.Util
 
         public void AddNode(NavGraphNode node)
         {
-            NodeList[NextNodeIndex] = node;
+            NodeList.Add(node);
+            NextNodeIndex++;
         }
 
         public void RemoveNode(int nodeIndex)
@@ -80,6 +85,11 @@ namespace TheAnimalKingdom.Util
         public bool IsPresent(int nodeIndex)
         {
             return NodeList.Exists(x => x.Index == nodeIndex);
+        }
+
+        public bool IsPresent(double x, double y)
+        {
+            return GetNode(x, y) != null;
         }
 
         public void Clear()
@@ -135,31 +145,19 @@ namespace TheAnimalKingdom.Util
         #region Drawing
 
         public void Render(Graphics g)
-        {
-            //Do not start drawing when the graph is empty
-            if (IsEmpty()) return;
-            
-            //Start the recursive draw method with the first node in the list
-            Render(g, NodeList.First());
-        }
-
-        private void Render(Graphics g, NavGraphNode node)
-        {
-            //Draw the node itself
-            var left = (int)node.Position.X - 2;
-            var top = (int)node.Position.Y - 2;
-            g.FillEllipse(new SolidBrush(Color.Black), left, top, 4, 4);
-            
-            //Draw edges to other nodes and continue with those nodes
-            foreach (var edge in GetConnectedEdges(node.Index))
+        {            
+            foreach (NavGraphNode node in NodeList)
             {
-                var nodeTo = GetNode(edge.To);
-                g.DrawLine(new Pen(Color.Black), node.Position.ToPoint(), nodeTo.Position.ToPoint());
-                //Continue down the graph and draw the connected node
-                Render(g, nodeTo);
+                var left = (int)node.Position.X - 2;
+                var top = (int)node.Position.Y - 2;
+                g.FillEllipse(new SolidBrush(Color.Black), left, top, 4, 4);
+                foreach (var edge in GetConnectedEdges(node.Index))
+                {
+                    var nodeTo = GetNode(edge.To);
+                    g.DrawLine(new Pen(Color.Black), node.Position.ToPoint(), nodeTo.Position.ToPoint());
+                }
             }
         }
-
         #endregion
     }
 }
