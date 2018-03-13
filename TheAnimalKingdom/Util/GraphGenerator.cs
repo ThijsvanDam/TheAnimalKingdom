@@ -29,6 +29,7 @@ namespace TheAnimalKingdom.Util
              * 
              * C:     Current node
              * 1 - 8: Neighbouring nodes for which the edges/nodes should be generated if not colliding with object
+             * W:     Width or space between nodes
              * 
              *       1 -- 2 -- 3
              *       | \  |  / |
@@ -39,14 +40,14 @@ namespace TheAnimalKingdom.Util
              *       6 -- 7 -- 8
              *
              *
-             *  1 (c.X - 25, c.Y - 25)
-             *  2 (c.X     , c.Y - 25)
-             *  3 (c.X + 25, c.Y - 25)
-             *  4 (c.X - 25, c.Y     )
-             *  5 (c.X + 25, c.Y     )
-             *  6 (c.X - 25, c.Y + 25)
-             *  7 (c.X     , c.Y + 25)
-             *  8 (c.X + 25, c.Y + 25)
+             *  1 (c.X - W, c.Y - W)
+             *  2 (c.X    , c.Y - W)
+             *  3 (c.X + W, c.Y - W)
+             *  4 (c.X - W, c.Y    )
+             *  5 (c.X + W, c.Y    )
+             *  6 (c.X - W, c.Y + W)
+             *  7 (c.X    , c.Y + W)
+             *  8 (c.X + W, c.Y + W)
              */
             
             
