@@ -6,13 +6,13 @@ namespace TheAnimalKingdom.Util
     {
         private const float Width = 30f;
         
-        public static SparseGraph FloodFill(World world)
+        public static SparseGraph FloodFill(World world, Vector2D startPosition)
         {
             var graph = new SparseGraph(false);
             
             var firstNode = new NavGraphNode(
                 idx: graph.NextNodeIndex, 
-                position: new Vector2D(5f, 5f)
+                position: startPosition
             );
             
             graph.AddNode(firstNode);

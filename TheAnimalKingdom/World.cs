@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TheAnimalKingdom.Behaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
@@ -30,7 +31,7 @@ namespace TheAnimalKingdom
             Width = w;
             Height = h;
             _populate();
-            graph = GraphGenerator.FloodFill(this);
+            graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(5f, 5f));
         }
 
         private void _populate()
