@@ -31,7 +31,7 @@ namespace TheAnimalKingdom
             Width = w;
             Height = h;
             _populate();
-            graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(5f, 5f));
+            graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(7.5f, 7.5f));
         }
 
         private void _populate()

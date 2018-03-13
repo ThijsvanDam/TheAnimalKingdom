@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using TheAnimalKingdom.Entities;
 
 namespace TheAnimalKingdom.Util
 {
     public static class GraphGenerator
     {
-        private const float Width = 30f;
+        private const float Width = 15f;
         
         public static SparseGraph FloodFill(World world, Vector2D startPosition)
         {
@@ -68,11 +70,7 @@ namespace TheAnimalKingdom.Util
             foreach (var point in neighbouringPoints)
             {
                 // Do not add node if it collides with obstacle and skip to next node
-                if (world.Obstacles.Exists(o => 
-                    point.X >= o.VPos.X - o.Bradius && point.X <= o.VPos.X + o.Bradius
-                    &&
-                    point.Y >= o.VPos.Y - o.Bradius && point.Y <= o.VPos.Y + o.Bradius
-                )) continue;
+                if (IsObjectInRange(obstacles: world.Obstacles, point: point)) continue;
                 
                 // Also skip this node if it is outside of the world boundaries
                 if (point.X < 0 || point.Y < 0 || point.X > world.Width || point.Y > world.Height) continue;
@@ -91,6 +89,14 @@ namespace TheAnimalKingdom.Util
                 // Check if edge exists, and add one if that is not the case
                 if (!graph.EdgeList.Exists(x => x.From == node.Index && x.To == neighbour.Index))
                 {
+                    // But also check if the edge doesn't through an object, otherwise it shouldn't be drawn
+                    if (!IsObjectInRange(
+                        obstacles: world.Obstacles, 
+                        point: new Vector2D(
+                            node.Position.X + ((neighbour.Position.X - node.Position.X) / 2), // Take the X-coordinate in the middle of the edge
+                            node.Position.Y + ((neighbour.Position.Y - node.Position.Y) / 2)// Take the Y-coordinate in the middle of the edge
+                            )
+                        ))
                     graph.AddEdge(new GraphEdge(from: node.Index, to: neighbour.Index));
                 }
 
@@ -98,6 +104,14 @@ namespace TheAnimalKingdom.Util
                 if(neighbourDidAlreadyExist) continue;
                 FloodFill(graph: graph, world: world, node: neighbour);
             }
+        }
+
+        private static bool IsObjectInRange(List<ObstacleEntity> obstacles, Vector2D point){
+            return obstacles.Exists(o => 
+                    point.X >= o.VPos.X - o.Bradius && point.X <= o.VPos.X + o.Bradius
+                    &&
+                    point.Y >= o.VPos.Y - o.Bradius && point.Y <= o.VPos.Y + o.Bradius
+                );
         }
     }
 }
