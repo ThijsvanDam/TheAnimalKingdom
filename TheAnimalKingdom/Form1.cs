@@ -52,8 +52,10 @@ namespace TheAnimalKingdom
 
         private void _dbPanel1_MouseClick(object sender, MouseEventArgs e)
         {
-            World.MouseX = e.X;
-            World.MouseY = e.Y;
+            //World.MouseX = e.X;
+            //World.MouseY = e.Y;
+            var target = _world.graph.FindNearestNode(new Vector2D(e.X, e.Y));
+            //_world.AStarSearch = new AStarSearch(_world.graph, 0, target.Index);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)

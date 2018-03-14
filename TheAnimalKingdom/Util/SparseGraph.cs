@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -98,6 +99,31 @@ namespace TheAnimalKingdom.Util
             NodeList.Clear();
         }
 
+        public NavGraphNode FindNearestNode(Vector2D target)
+        {
+            double closestDistance = double.MaxValue;
+            NavGraphNode nearestNode = null;
+
+            foreach (var node in NodeList)
+            {
+                //Reset the IsTarget flag
+                node.IsTarget = false;
+                
+                var distanceX = Math.Abs(target.X - node.Position.X);
+                var distanceY = Math.Abs(target.Y - node.Position.Y);
+                var distanceSqr = distanceX * distanceY;
+                if (distanceSqr < closestDistance)
+                {
+                    closestDistance = distanceSqr;
+                    nearestNode = node;
+                }
+            }
+
+            nearestNode.IsTarget = true;
+            Console.WriteLine("Nearest node: (" + nearestNode.Position.X + "," + nearestNode.Position.Y + ")");
+            return nearestNode;
+        }
+
         #region File Handling
 
         public bool SaveToFile(string fileName)
@@ -145,17 +171,31 @@ namespace TheAnimalKingdom.Util
         #region Drawing
 
         public void Render(Graphics g)
-        {            
+        {
+            NavGraphNode target = null;
+            
             foreach (NavGraphNode node in NodeList)
             {
                 var left = (int)node.Position.X - 2;
                 var top = (int)node.Position.Y - 2;
+                
                 g.FillEllipse(new SolidBrush(Color.Black), left, top, 4, 4);
+
+                if (node.IsTarget)
+                {
+                    target = node;
+                }
+                
                 foreach (var edge in GetConnectedEdges(node.Index))
                 {
                     var nodeTo = GetNode(edge.To);
                     g.DrawLine(new Pen(Color.Black), node.Position.ToPoint(), nodeTo.Position.ToPoint());
                 }
+            }
+
+            if (target != null)
+            {
+                g.FillEllipse(new SolidBrush(Color.Red), (int)target.Position.X - 3, (int)target.Position.Y - 3, 6, 6);
             }
         }
         #endregion
