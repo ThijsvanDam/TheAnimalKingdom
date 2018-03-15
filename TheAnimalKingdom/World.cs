@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TheAnimalKingdom.Behaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
@@ -21,12 +22,16 @@ namespace TheAnimalKingdom
         public int Width { get; set; }
         public int Height { get; set; }
 
+        public bool shouldRenderGraph = false;
+
+        public SparseGraph graph;
 
         public World(int w, int h)
         {
             Width = w;
             Height = h;
             _populate();
+            graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(7.5f, 7.5f));
         }
 
         private void _populate()
@@ -111,7 +116,7 @@ namespace TheAnimalKingdom
                 {  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 7
                 {  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 8
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  1,  1,  1,  0,  0  }, // 9
-                {  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  1,  1,  1,  0,  0  }, // 10
+                {  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  1,  1,  1,  0,  0  }, // 10
                 {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  1,  1,  2,  2,  1,  1,  0,  0,  0,  1,  1,  1,  0,  0  }, // 11
                 {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 12
                 {  0,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 13
@@ -133,6 +138,8 @@ namespace TheAnimalKingdom
 
         public void Render(Graphics g)
         {
+            graph.Render(g);
+            
             foreach (ObstacleEntity obstacleEntity in Obstacles)
             {
                 obstacleEntity.Render(g);

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace TheAnimalKingdom.Util
@@ -11,7 +11,7 @@ namespace TheAnimalKingdom.Util
         public List<NavGraphNode> NodeList { get; set; }
         public List<GraphEdge> EdgeList { get; set; }
         public bool IsDirected { get; set; }
-        public int NextNodeIndex { get; }
+        public int NextNodeIndex { get; private set; }
         
         public SparseGraph(bool isDirected)
         {
@@ -26,6 +26,11 @@ namespace TheAnimalKingdom.Util
             return NodeList[index];
         }
 
+        public NavGraphNode GetNode(double x, double y)
+        {
+            return NodeList.FirstOrDefault(n => n.Position.X == x && n.Position.Y == y);
+        }
+
         public GraphEdge GetEdge(int from, int to)
         {
             return EdgeList.FirstOrDefault(x => x.From == from && x.To == to);
@@ -38,7 +43,8 @@ namespace TheAnimalKingdom.Util
 
         public void AddNode(NavGraphNode node)
         {
-            NodeList[NextNodeIndex] = node;
+            NodeList.Add(node);
+            NextNodeIndex++;
         }
 
         public void RemoveNode(int nodeIndex)
@@ -82,10 +88,40 @@ namespace TheAnimalKingdom.Util
             return NodeList.Exists(x => x.Index == nodeIndex);
         }
 
+        public bool IsPresent(double x, double y)
+        {
+            return GetNode(x, y) != null;
+        }
+
         public void Clear()
         {
             EdgeList.Clear();
             NodeList.Clear();
+        }
+
+        public NavGraphNode FindNearestNode(Vector2D target)
+        {
+            double closestDistance = double.MaxValue;
+            NavGraphNode nearestNode = null;
+
+            foreach (var node in NodeList)
+            {
+                //Reset the IsTarget flag
+                node.IsTarget = false;
+                
+                var distanceX = Math.Abs(target.X - node.Position.X);
+                var distanceY = Math.Abs(target.Y - node.Position.Y);
+                var distanceSqr = distanceX * distanceY;
+                if (distanceSqr < closestDistance)
+                {
+                    closestDistance = distanceSqr;
+                    nearestNode = node;
+                }
+            }
+
+            nearestNode.IsTarget = true;
+            Console.WriteLine("Nearest node: (" + nearestNode.Position.X + "," + nearestNode.Position.Y + ")");
+            return nearestNode;
         }
 
         #region File Handling
@@ -136,30 +172,32 @@ namespace TheAnimalKingdom.Util
 
         public void Render(Graphics g)
         {
-            //Do not start drawing when the graph is empty
-            if (IsEmpty()) return;
+            NavGraphNode target = null;
             
-            //Start the recursive draw method with the first node in the list
-            Render(g, NodeList.First());
-        }
-
-        private void Render(Graphics g, NavGraphNode node)
-        {
-            //Draw the node itself
-            var left = (int)node.Position.X - 2;
-            var top = (int)node.Position.Y - 2;
-            g.FillEllipse(new SolidBrush(Color.Black), left, top, 4, 4);
-            
-            //Draw edges to other nodes and continue with those nodes
-            foreach (var edge in GetConnectedEdges(node.Index))
+            foreach (NavGraphNode node in NodeList)
             {
-                var nodeTo = GetNode(edge.To);
-                g.DrawLine(new Pen(Color.Black), node.Position.ToPoint(), nodeTo.Position.ToPoint());
-                //Continue down the graph and draw the connected node
-                Render(g, nodeTo);
+                var left = (int)node.Position.X - 2;
+                var top = (int)node.Position.Y - 2;
+                
+                g.FillEllipse(new SolidBrush(Color.Black), left, top, 4, 4);
+
+                if (node.IsTarget)
+                {
+                    target = node;
+                }
+                
+                foreach (var edge in GetConnectedEdges(node.Index))
+                {
+                    var nodeTo = GetNode(edge.To);
+                    g.DrawLine(new Pen(Color.Black), node.Position.ToPoint(), nodeTo.Position.ToPoint());
+                }
+            }
+
+            if (target != null)
+            {
+                g.FillEllipse(new SolidBrush(Color.Red), (int)target.Position.X - 3, (int)target.Position.Y - 3, 6, 6);
             }
         }
-
         #endregion
     }
 }
