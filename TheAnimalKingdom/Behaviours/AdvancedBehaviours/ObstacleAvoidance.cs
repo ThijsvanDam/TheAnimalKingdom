@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using TheAnimalKingdom.Behaviours.BaseBehaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
@@ -68,6 +67,11 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
             foreach (ObstacleEntity obstacle in obstaclesWithinRange)
             {
                 Vector2D localSpacePosition = GetPositionInLocalSpace(obstacle);
+//                Console.WriteLine(localSpacePosition);
+                if (localSpacePosition.Y < 0)
+                {
+                    obstacle.RemoveTag();
+                }
             }
 
 
@@ -76,25 +80,37 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
 
         private Vector2D GetPositionInLocalSpace(ObstacleEntity obstacle)
         {
-            Vector2D obstaclePos = obstacle.VPos;
-
-            Vector2D direction = MovingEntity.VVelocity.Clone().Normalize();
-            Vector2D side = direction.Perpendicular();
-            Vector2D position = MovingEntity.VPos;
-
-
-            Matrix transformMatrix = new Matrix(
-                (float) direction.X, (float) side.X,
-                (float) direction.Y, (float) side.Y,
-                -(float) (position.Clone().DotMultiplication(direction).Length()),
-                -(float) (position.Clone().DotMultiplication(side).Length())
-            );
+//            Vector2D obstaclePos = obstacle.VPos;
+//
+//            Vector2D direction = MovingEntity.VVelocity.Clone().Normalize();
+//            Vector2D side = direction.Perpendicular();
+//            Vector2D position = MovingEntity.VPos;
+//
+//
+//            Matrix transformMatrix = new Matrix(
+//                (float) direction.X, (float) side.X,
+//                (float) direction.Y, (float) side.Y,
+//                -(float) (position.Clone().DotMultiplication(direction).Length()),
+//                -(float) (position.Clone().DotMultiplication(side).Length())
+//            );
 
 //            transformMatrix *;
 
+            // This is the THIJSplementation!
 
-//            return posInLocalSpace;
-            return new Vector2D(0, 0);
+            Vector2D toChild = obstacle.VPos.Clone().Substract(MovingEntity.VPos);
+            
+            double rotation = Math.Atan(MovingEntity.VVelocity.Y / MovingEntity.VVelocity.X);
+            //            Console.WriteLine(rotation);
+
+
+//            Console.WriteLine(MovingEntity.VVelocity);
+
+            Console.WriteLine(rotation * (360 / Math.PI));
+
+            Vector2D posInLocalSpace = Matrix.RotateRad(rotation) * toChild;
+            
+            return posInLocalSpace;
         }
 
         private List<Vector2D> GetRectangle()

@@ -12,15 +12,17 @@ namespace TheAnimalKingdom.Util
     {
         public double X { get; set; }
         public double Y { get; set; }
+        public double W { get; set; }
 
         public Vector2D() : this(0,0)
         {
         }
 
-        public Vector2D(double x, double y)
+        public Vector2D(double x, double y, double w=1)
         {
             X = x;
             Y = y;
+            W = w;
         }
 
         public double Length()
@@ -103,7 +105,12 @@ namespace TheAnimalKingdom.Util
         {
             return new Vector2D(this.X, this.Y);
         }
-        
+
+        public static Vector2D operator +(Vector2D left, Vector2D right)
+        {
+            return new Vector2D(left.X + right.X, left.Y + right.Y, 1);
+        }
+
         public override string ToString()
         {
             return $"({X},{Y})";
@@ -116,6 +123,24 @@ namespace TheAnimalKingdom.Util
         public PointF ToPointF()
         {
             return new PointF((float)this.X, (float)this.Y);
+        }
+
+        public Vector2D Scale(float xFactor, float yFactor)
+        {
+            Matrix scaleMatrix = Matrix.Scale(xFactor);
+            return scaleMatrix * new Vector2D(X, Y, 1);
+        }
+
+        public Vector2D Rotate(float degrees)
+        {
+            Matrix rotationMatrix = Matrix.Rotate(degrees);
+            return rotationMatrix * new Vector2D(X, Y, 1);
+        }
+
+        public Vector2D Translate(Vector2D v)
+        {
+            Matrix translationMatrix = Matrix.Translate(v);
+            return translationMatrix * new Vector2D(X, Y, 1);
         }
     }
 }
