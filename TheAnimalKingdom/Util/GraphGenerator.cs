@@ -97,7 +97,9 @@ namespace TheAnimalKingdom.Util
                             node.Position.Y + ((neighbour.Position.Y - node.Position.Y) / 2)// Take the Y-coordinate in the middle of the edge
                             )
                         ))
+                    // Add edge in both directions
                     graph.AddEdge(new GraphEdge(from: node.Index, to: neighbour.Index));
+                    graph.AddEdge(new GraphEdge(from: neighbour.Index, to: node.Index));
                 }
 
                 // Go on with the neighbour node, if it didn't exist yet, otherwise skip to the next node
