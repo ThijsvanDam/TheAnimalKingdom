@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.Drawing;
 using TheAnimalKingdom.Behaviours.AdvancedBehaviours;
 using TheAnimalKingdom.Behaviours.BaseBehaviours;
@@ -18,12 +19,14 @@ namespace TheAnimalKingdom.Behaviours
         private SeekBehaviour _seek;
         private StraightWalkingBehaviour _straightWalking;
         private WanderBehaviour _wander;
+        private FollowPathBehaviour _followPath;
 
         private double _dArrive;
         private double _dFlee;
         private double _dSeek;
         private double _dStraightWalking;
         private double _dWander;
+        private double _dFollowPath;
 
         #endregion
 
@@ -59,35 +62,36 @@ namespace TheAnimalKingdom.Behaviours
             if (_instanceExists(_arrive))
             {
                 Vector2D v = _arrive.Calculate().Multiply(_dArrive);
-//                Console.WriteLine("Arrive: " + v);
                 sum.Add(v);
             }
 
             if (_instanceExists(_flee))
             {
                 Vector2D v = _flee.Calculate().Multiply(_dFlee);
-                Console.WriteLine("Flee: " + v);
                 sum.Add(v);
             }
 
             if (_instanceExists(_seek))
             {
                 Vector2D v = _seek.Calculate().Multiply(_dSeek);
-                Console.WriteLine("Seek: " + v);
                 sum.Add(v);
             }
 
             if (_instanceExists(_straightWalking))
             {
                 Vector2D v = _straightWalking.Calculate().Multiply(_dStraightWalking);
-                Console.WriteLine("Straight walking: " + v);
                 sum.Add(v);
             }
 
             if (_instanceExists(_wander))
             {
                 Vector2D v = _wander.Calculate().Multiply(_dWander);
-//                Console.WriteLine("Wander: " + v);
+                sum.Add(v);
+            }
+
+            if (_instanceExists(_followPath))
+            {
+                Vector2D v = _followPath.Calculate().Multiply(_dFollowPath);
                 sum.Add(v);
             }
 
@@ -98,14 +102,12 @@ namespace TheAnimalKingdom.Behaviours
             if (_instanceExists(_obstacleAvoidance))
             {
                 Vector2D v = _obstacleAvoidance.Calculate().Multiply(_dObstacleAvoidance);
-//                Console.WriteLine("Object avoidance: " + v);
                 sum.Add(v);
             }
 
             #endregion
 
             Vector2D a = sum.Truncate(_movingEntity.DMaxForce);
-//            Console.WriteLine(" DIRECT_FORCE_GAIN (TRUNCATED): " + a + " MAXFORCE: " + _movingEntity.DMaxForce);
             return a;
         }
 
@@ -171,6 +173,18 @@ namespace TheAnimalKingdom.Behaviours
         {
             _arrive = null;
             _dArrive = 0;
+        }
+
+        public void FollowPathOn(List<NavGraphNode> route, double intensity)
+        {
+            _followPath = new FollowPathBehaviour(_movingEntity, route);
+            _dFollowPath = intensity;
+        }
+
+        public void FollowPathOff()
+        {
+            _followPath = null;
+            _dFollowPath = 0;
         }
 
         #endregion

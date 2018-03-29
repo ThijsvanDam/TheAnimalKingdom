@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace TheAnimalKingdom.Util
-{
+{  
     public class AStarSearch
     {
-        private readonly SparseGraph _graph;
-
-        private readonly int _source;
-        private readonly int _target;
-        private readonly List<int> _open;
-        private readonly List<int> _closed;
+        private int _source;
+        private int _target;
+        private List<int> _open;
+        private List<int> _closed;
         private readonly List<NavGraphNode> _copiedNodes;
+        private readonly List<GraphEdge> _edges;
         
         private bool _foundPath;
         private List<int> _route;
@@ -20,16 +20,15 @@ namespace TheAnimalKingdom.Util
         private Vector2D _targetLocation;
 
         public AStarSearch(SparseGraph graph, int source, int target)
-        {
-            _graph = graph;
-            _source = source;
+        {            
+            _copiedNodes = graph.NodeList;
+            _edges = graph.EdgeList;
             _target = target;
-            _copiedNodes = _graph.NodeList;
+            _source = source;
             _targetLocation = _copiedNodes[_target].Position;
-            
             _open = new List<int>();
             _closed = new List<int>();
-            
+                                   
             _foundPath = Search();
             _route = ConstructPath();
         }
@@ -50,7 +49,9 @@ namespace TheAnimalKingdom.Util
 
                 if (current == _target) return true;
 
-                foreach (var connectedEdge in _graph.GetConnectedEdges(current))
+                var connectedEdges = _edges.Where(x => x.From == current);
+                
+                foreach (var connectedEdge in connectedEdges)
                 {
                     var successor = connectedEdge.To;
                     var successorCurrentCost = _copiedNodes[current].G + connectedEdge.Cost;
@@ -123,6 +124,17 @@ namespace TheAnimalKingdom.Util
             while (routeStack.Count > 0)
             {
                 route.Add(routeStack.Pop());
+            }
+
+            return route;
+        }
+
+        public List<NavGraphNode> GetRoute()
+        {
+            List<NavGraphNode> route = new List<NavGraphNode>();
+            foreach (var nodeIndex in _route)
+            {
+                route.Add(_copiedNodes[nodeIndex]);
             }
 
             return route;

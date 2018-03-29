@@ -103,6 +103,12 @@ namespace TheAnimalKingdom.Util
         {
             return new Vector2D(this.X, this.Y);
         }
+
+        public static double DistanceSquared(Vector2D v1, Vector2D v2)
+        {
+            // d(v1, v2) = ||v1 - v2|| = Sqrt((v1.X - v2.X)^2 + (v1.Y - v2.Y)^2)
+            return Math.Pow(v1.X - v2.X, 2.0) + Math.Pow(v1.Y - v2.Y, 2.0);
+        }
         
         public override string ToString()
         {
