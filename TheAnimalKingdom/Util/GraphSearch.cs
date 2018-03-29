@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -7,13 +6,13 @@ namespace TheAnimalKingdom.Util
 {
     public class AStarSearch
     {
-        private SparseGraph _graph;
+        private readonly SparseGraph _graph;
 
-        private int _source;
-        private int _target;
-        private List<int> _open;
-        private List<int> _closed;
-        private List<NavGraphNode> _copiedNodes;
+        private readonly int _source;
+        private readonly int _target;
+        private readonly List<int> _open;
+        private readonly List<int> _closed;
+        private readonly List<NavGraphNode> _copiedNodes;
         
         private bool _foundPath;
         private List<int> _route;

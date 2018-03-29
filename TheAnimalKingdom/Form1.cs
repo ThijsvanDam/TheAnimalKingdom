@@ -74,6 +74,9 @@ namespace TheAnimalKingdom
                     // NumMin
                     World.Intensity -= 10;
                     break;
+                case 71:
+                    World.ShouldRenderGraph = !World.ShouldRenderGraph;
+                    break;
             }
             Console.WriteLine(@"Intensity: " + World.Intensity);
         }

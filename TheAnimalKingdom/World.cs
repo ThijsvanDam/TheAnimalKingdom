@@ -16,6 +16,7 @@ namespace TheAnimalKingdom
         public static int Intensity = 0;
         public static int MouseX = 0;
         public static int MouseY = 0;
+        public static bool ShouldRenderGraph { get; set; }
 
         public List<BaseGameEntity> Entities = new List<BaseGameEntity>();
         public List<ObstacleEntity> Obstacles = new List<ObstacleEntity>();
@@ -32,6 +33,8 @@ namespace TheAnimalKingdom
             Height = h;
             _populate();
             graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(7.5f, 7.5f));
+
+            ShouldRenderGraph = false;
         }
 
         private void _populate()
@@ -138,9 +141,11 @@ namespace TheAnimalKingdom
 
         public void Render(Graphics g)
         {
-            graph.Render(g);
-
-            AStarSearch?.Render(g);
+            if (World.ShouldRenderGraph)
+            {
+                graph.Render(g);
+                AStarSearch?.Render(g);
+            }
 
             foreach (ObstacleEntity obstacleEntity in Obstacles)
             {
