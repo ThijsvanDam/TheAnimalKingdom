@@ -22,7 +22,7 @@ namespace TheAnimalKingdom
         public int Width { get; set; }
         public int Height { get; set; }
 
-        //public AStarSearch AStarSearch { get; set; }
+        public AStarSearch AStarSearch { get; set; }
 
         public SparseGraph graph;
 
@@ -140,7 +140,7 @@ namespace TheAnimalKingdom
         {
             graph.Render(g);
 
-            //AStarSearch?.Render(g);
+            AStarSearch?.Render(g);
 
             foreach (ObstacleEntity obstacleEntity in Obstacles)
             {
