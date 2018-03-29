@@ -54,7 +54,6 @@ namespace TheAnimalKingdom.Util
                 foreach (var connectedEdge in _graph.GetConnectedEdges(current))
                 {
                     var successor = connectedEdge.To;
-                    Console.WriteLine("Testing Edge: " + current + " -> " + successor);
                     var successorCurrentCost = _copiedNodes[current].G + connectedEdge.Cost;
                     
                     if (_open.Contains(successor))
