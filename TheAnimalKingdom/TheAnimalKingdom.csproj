@@ -74,6 +74,15 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Goals\AtomicGoals\AtomicGoal.cs" />
+    <Compile Include="Goals\AtomicGoals\GoalTraverseEdge.cs" />
+    <Compile Include="Goals\AtomicGoals\GoalWander.cs" />
+    <Compile Include="Goals\Base\Goal.cs" />
+    <Compile Include="Goals\Base\GoalType.cs" />
+    <Compile Include="Goals\Base\Status.cs" />
+    <Compile Include="Goals\CompositeGoals\CompositeGoal.cs" />
+    <Compile Include="Goals\CompositeGoals\GoalFollowPath.cs" />
+    <Compile Include="Goals\CompositeGoals\GoalThink.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\GraphEdge.cs" />

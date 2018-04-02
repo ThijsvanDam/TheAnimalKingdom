@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace TheAnimalKingdom.Util
 {  
+    //ToDo: Time-slicing and creation of PathPlanner & PathManager (PDF page 387 - ...)
     public class AStarSearch
     {
         private int _source;
