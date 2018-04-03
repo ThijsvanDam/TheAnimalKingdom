@@ -1,6 +1,5 @@
 ﻿using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Goals.AtomicGoals;
-using TheAnimalKingdom.Goals.Base;
 
 namespace TheAnimalKingdom.Goals.CompositeGoals
 {
@@ -8,21 +7,23 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
     {
         public GoalThink(MovingEntity owner) : base(owner: owner)
         {
+            AddSubgoal(new GoalWander(Owner));
         }
         
-        public override void Activate()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Status Process()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Terminate()
-        {
-            throw new System.NotImplementedException();
-        }
+// ToDo: Implement this
+//        public override void Activate()
+//        {
+//            throw new System.NotImplementedException();
+//        }
+//
+//        public override Status Process()
+//        {
+//            throw new System.NotImplementedException();
+//        }
+//
+//        public override void Terminate()
+//        {
+//            throw new System.NotImplementedException();
+//        }
     }
 }

@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using Microsoft.Win32;
 using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom
@@ -37,7 +28,6 @@ namespace TheAnimalKingdom
         {
             _world.Update(timeDelta);
             _dbPanel1.Invalidate();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -52,10 +42,8 @@ namespace TheAnimalKingdom
 
         private void _dbPanel1_MouseClick(object sender, MouseEventArgs e)
         {
-            //World.MouseX = e.X;
-            //World.MouseY = e.Y;
             var target = _world.graph.FindNearestNode(new Vector2D(e.X, e.Y));
-            _world.StartPathFollowing(target.Index);
+            _world.StartPathFollowing(target.Position);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)

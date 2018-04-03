@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TheAnimalKingdom.Behaviours;
 using TheAnimalKingdom.Entities;
+using TheAnimalKingdom.Goals.CompositeGoals;
 using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom
@@ -23,42 +24,41 @@ namespace TheAnimalKingdom
         public int Width { get; set; }
         public int Height { get; set; }
 
-        private AStarSearch _aStarSearch;
-
+        public PathManager PathManager { get; }
+        
         public SparseGraph graph;
+
+        private bool _isBusy = false;
 
         public World(int w, int h)
         {
             Width = w;
             Height = h;
+            
+            PathManager = new PathManager(numCyclesPerUpdate:50);
             _populate();
-            graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(7.5f, 7.5f));
 
             ShouldRenderGraph = false;
         }
 
         private void _populate()
         {
-
+            FillObstaclesWithArray(GetFunPlayField());
+            graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(7.5f, 7.5f));
+            
             StaticEntity s1 = new StaticEntity(new Vector2D(0, 0), this); // the entity with ID=0 always follow the cursor so it has to be at the start.
             Gazelle g1 = new Gazelle(new Vector2D(0, 0), this);
-            //            Gazelle g2 = new Gazelle(new Vector2D(30, 20), this);
-            //            Gazelle g3 = new Gazelle(new Vector2D(25, 10), this);
-
-            g1.SteeringBehaviours.ArriveOn(s1, 2);
-//            g1.SteeringBehaviours.WanderOn(1);
-            g1.SteeringBehaviours.ObstacleAvoidanceOn(1);
-
+ 
             Entities.AddRange(new List<BaseGameEntity>()
             {
                 s1, g1,
             });
-
-            FillObstaclesWithArray(GetFunPlayField());
         }
 
         public void Update(float timeElapsed)
         {
+            PathManager.UpdateSearches();
+    
             foreach (BaseGameEntity entity in Entities)
             {
                 entity.Update(timeElapsed);
@@ -68,17 +68,6 @@ namespace TheAnimalKingdom
                     entity.VPos.Y = MouseY;
                 }
             }
-        }
-
-        public void StartPathFollowing(int target)
-        {
-            //ToDo: This needs to be more dynamic
-            var entity = (MovingEntity)Entities[1];
-            var source = graph.FindNearestNode(entity.VPos);
-            _aStarSearch = new AStarSearch(graph, source.Index, target);
-            entity.SteeringBehaviours.FollowPathOff();
-            entity.SteeringBehaviours.FollowPathOn(route: _aStarSearch.GetRoute(), intensity: 5.0);
-            
         }
 
         private void FillObstaclesWithArray(int[,] array)
@@ -149,13 +138,20 @@ namespace TheAnimalKingdom
             Console.WriteLine("inputs");
         }
 
+        public void StartPathFollowing(Vector2D target)
+        {
+            var entity = (MovingEntity)Entities[1];
+            entity.HashTagLifeGoal.RemoveAllSubgoals();
+            entity.HashTagLifeGoal.AddSubgoal(new GoalMoveToPosition(entity, target));
+        }
+
 
         public void Render(Graphics g)
         {
             if (ShouldRenderGraph)
             {
                 graph.Render(g);
-                _aStarSearch?.Render(g);
+                PathManager.Render(g);
             }
 
             foreach (ObstacleEntity obstacleEntity in Obstacles)

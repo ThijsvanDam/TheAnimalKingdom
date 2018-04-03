@@ -1,4 +1,5 @@
-﻿using TheAnimalKingdom.Entities;
+﻿using System;
+using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Goals.Base;
 using TheAnimalKingdom.Util;
 
@@ -18,12 +19,14 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
 
         public override void Activate()
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("Activate TraverseEdge");
+            Status = Status.Active;
         }
 
         public override Status Process()
         {
             ActivateIfInactive();
+            Console.WriteLine("Process TraverseEdge");
 
             if (Owner.VPos == _destination) Status = Status.Completed;
 
@@ -32,6 +35,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
 
         public override void Terminate()
         {
+            Console.WriteLine("Terminate TraverseEdge");
             Owner.SteeringBehaviours.SeekOff();
             Owner.SteeringBehaviours.ArriveOff();
         }

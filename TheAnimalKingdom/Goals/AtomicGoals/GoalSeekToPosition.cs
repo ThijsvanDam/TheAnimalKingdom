@@ -1,33 +1,34 @@
 ﻿using System;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Goals.Base;
+using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Goals.AtomicGoals
 {
-    public class GoalWander : AtomicGoal
+    public class GoalSeekToPosition : AtomicGoal
     {
-        public GoalWander(MovingEntity owner) : base(owner)
+        public GoalSeekToPosition(MovingEntity owner, Vector2D position) : base(owner)
         {
         }
 
         public override void Activate()
         {
-            Console.WriteLine("Activate Wander");
+            Console.WriteLine("Activate SeekToPosition");
             Status = Status.Active;
-            Owner.SteeringBehaviours.WanderOn(1.0);
+            return;
         }
 
         public override Status Process()
         {
-            Console.WriteLine("Processing Wander");
             ActivateIfInactive();
-            return Status;
+            Console.WriteLine("Process SeekToPosition");
+            return Status.Completed;
         }
 
         public override void Terminate()
         {
-            Console.WriteLine("Stopping Wander");
-            Owner.SteeringBehaviours.WanderOff();
+            Console.WriteLine("Terminate SeekToPosition");
+            return;
         }
     }
 }

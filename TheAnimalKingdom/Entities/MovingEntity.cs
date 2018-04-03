@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TheAnimalKingdom.Behaviours;
+﻿using TheAnimalKingdom.Behaviours;
+using TheAnimalKingdom.Goals.Base;
+using TheAnimalKingdom.Goals.CompositeGoals;
 using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Entities
@@ -13,10 +8,16 @@ namespace TheAnimalKingdom.Entities
     public abstract class MovingEntity : BaseGameEntity
     {
         public SteeringBehaviours SteeringBehaviours{ get; set; }
+        public PathResult FindPathResult { get; set; }
+        public PathPlanner PathPlanner { get; set; }
+        public CompositeGoal HashTagLifeGoal { get; set; }
 
         public MovingEntity(Vector2D position, World world) : base(position, world)
         {
             SteeringBehaviours = new SteeringBehaviours(this);
+            HashTagLifeGoal = new GoalThink(this);
+            PathPlanner = new PathPlanner(this);
+            world.PathManager.Register(PathPlanner);
         }
 
         public Vector2D VVelocity;
@@ -33,6 +34,7 @@ namespace TheAnimalKingdom.Entities
 
         public override void Update(float time_elapsed)
         {
+            HashTagLifeGoal.Process();
 
             Vector2D steeringForce = SteeringBehaviours.Calculate();
             Vector2D acceleration = steeringForce.Divide(DMass);

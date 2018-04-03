@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Goals.AtomicGoals;
 using TheAnimalKingdom.Goals.Base;
@@ -17,6 +18,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         
         public override void Activate()
         {
+            Console.WriteLine("Activate FollowPath");
             Status = Status.Active;
 
             NavGraphNode edge = _path.Pop();
@@ -26,6 +28,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 
         public override Status Process()
         {
+            Console.WriteLine("Process FollowPath");
             ActivateIfInactive();
 
             Status = ProcessSubgoals();

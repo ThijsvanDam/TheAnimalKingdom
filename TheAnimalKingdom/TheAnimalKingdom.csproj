@@ -63,6 +63,7 @@
     <Compile Include="Entities\Animal.cs" />
     <Compile Include="Entities\BaseGameEntity.cs" />
     <Compile Include="Entities\Gazelle.cs" />
+    <Compile Include="Entities\ItemType.cs" />
     <Compile Include="Entities\MovingEntity.cs" />
     <Compile Include="Entities\ObstacleEntity.cs" />
     <Compile Include="Entities\RoundObstacle.cs" />
@@ -75,6 +76,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Goals\AtomicGoals\AtomicGoal.cs" />
+    <Compile Include="Goals\AtomicGoals\GoalSeekToPosition.cs" />
     <Compile Include="Goals\AtomicGoals\GoalTraverseEdge.cs" />
     <Compile Include="Goals\AtomicGoals\GoalWander.cs" />
     <Compile Include="Goals\Base\Goal.cs" />
@@ -82,14 +84,20 @@
     <Compile Include="Goals\Base\Status.cs" />
     <Compile Include="Goals\CompositeGoals\CompositeGoal.cs" />
     <Compile Include="Goals\CompositeGoals\GoalFollowPath.cs" />
+    <Compile Include="Goals\CompositeGoals\GoalMoveToPosition.cs" />
     <Compile Include="Goals\CompositeGoals\GoalThink.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\AStarSearch.cs" />
+    <Compile Include="Util\DijkstraSearch.cs" />
     <Compile Include="Util\GraphEdge.cs" />
     <Compile Include="Util\GraphGenerator.cs" />
     <Compile Include="Util\GraphSearch.cs" />
     <Compile Include="Util\NavGraphNode.cs" />
     <Compile Include="Util\GraphNode.cs" />
+    <Compile Include="Util\PathManager.cs" />
+    <Compile Include="Util\PathPlanner.cs" />
+    <Compile Include="Util\PathResult.cs" />
     <Compile Include="Util\SparseGraph.cs" />
     <Compile Include="Util\Vector2D.cs" />
     <Compile Include="World.cs" />

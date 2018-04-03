@@ -1,4 +1,5 @@
 ﻿using System;
+using TheAnimalKingdom.Entities;
 
 namespace TheAnimalKingdom.Util
 {
@@ -12,6 +13,7 @@ namespace TheAnimalKingdom.Util
         public double H { get; set; }
         public double T => G + H;
         public int Prev { get; set; }
+        public StaticEntity NearbyEntity { get; set; }
 
         public NavGraphNode(int idx, Vector2D position) : base(idx)
         {
