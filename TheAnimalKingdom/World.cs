@@ -54,7 +54,7 @@ namespace TheAnimalKingdom
                 s1, g1,
             });
 
-            FillObstaclesWithArray(GetFullWithObstaclesPlayField());
+            FillObstaclesWithArray(GetFunPlayField());
         }
 
         public void Update(float timeElapsed)

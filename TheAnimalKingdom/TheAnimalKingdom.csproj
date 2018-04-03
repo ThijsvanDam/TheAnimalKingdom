@@ -74,6 +74,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FuzzyLogic\FuzzyVariable.cs" />
     <Compile Include="Goals\AtomicGoals\AtomicGoal.cs" />
     <Compile Include="Goals\AtomicGoals\GoalTraverseEdge.cs" />
     <Compile Include="Goals\AtomicGoals\GoalWander.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Util\GraphEdge.cs" />
     <Compile Include="Util\GraphGenerator.cs" />
     <Compile Include="Util\GraphSearch.cs" />
+    <Compile Include="Util\Matrix.cs" />
     <Compile Include="Util\NavGraphNode.cs" />
     <Compile Include="Util\GraphNode.cs" />
     <Compile Include="Util\SparseGraph.cs" />
@@ -126,5 +128,6 @@
   <ItemGroup>
     <Content Include="Resources\seamless-sand-textures.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
