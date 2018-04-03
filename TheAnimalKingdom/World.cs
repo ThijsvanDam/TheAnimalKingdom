@@ -16,13 +16,14 @@ namespace TheAnimalKingdom
         public static int Intensity = 0;
         public static int MouseX = 0;
         public static int MouseY = 0;
+        public static bool ShouldRenderGraph { get; set; }
 
         public List<BaseGameEntity> Entities = new List<BaseGameEntity>();
         public List<ObstacleEntity> Obstacles = new List<ObstacleEntity>();
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public bool shouldRenderGraph = false;
+        private AStarSearch _aStarSearch;
 
         public SparseGraph graph;
 
@@ -32,6 +33,8 @@ namespace TheAnimalKingdom
             Height = h;
             _populate();
             graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(7.5f, 7.5f));
+
+            ShouldRenderGraph = false;
         }
 
         private void _populate()
@@ -67,7 +70,18 @@ namespace TheAnimalKingdom
             }
         }
 
-        public void FillObstaclesWithArray(int[,] array)
+        public void StartPathFollowing(int target)
+        {
+            //ToDo: This needs to be more dynamic
+            var entity = (MovingEntity)Entities[1];
+            var source = graph.FindNearestNode(entity.VPos);
+            _aStarSearch = new AStarSearch(graph, source.Index, target);
+            entity.SteeringBehaviours.FollowPathOff();
+            entity.SteeringBehaviours.FollowPathOn(route: _aStarSearch.GetRoute(), intensity: 5.0);
+            
+        }
+
+        private void FillObstaclesWithArray(int[,] array)
         {
             float fullSize = 25f;
 
@@ -109,10 +123,10 @@ namespace TheAnimalKingdom
             {//    1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24      
                 {  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 1
                 {  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  }, // 2 
-                {  1,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 3
+                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 3
                 {  1,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 4
-                {  1,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 5
-                {  1,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 6
+                {  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 5
+                {  1,  0,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0  }, // 6
                 {  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 7
                 {  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0  }, // 8
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  1,  1,  1,  0,  0  }, // 9
@@ -138,8 +152,12 @@ namespace TheAnimalKingdom
 
         public void Render(Graphics g)
         {
-            graph.Render(g);
-            
+            if (ShouldRenderGraph)
+            {
+                graph.Render(g);
+                _aStarSearch?.Render(g);
+            }
+
             foreach (ObstacleEntity obstacleEntity in Obstacles)
             {
                 obstacleEntity.Render(g);

@@ -51,6 +51,7 @@
     <Compile Include="Behaviours\NormalBehaviours\ArriveBehaviour.cs" />
     <Compile Include="Behaviours\NormalBehaviours\FleeBehaviour.cs" />
     <Compile Include="Behaviours\AdvancedBehaviours\ObstacleAvoidance.cs" />
+    <Compile Include="Behaviours\NormalBehaviours\FollowPathBehaviour.cs" />
     <Compile Include="Behaviours\NormalBehaviours\SeekBehaviour.cs" />
     <Compile Include="Behaviours\BaseBehaviours\SteeringBehaviour.cs" />
     <Compile Include="Behaviours\SteeringBehaviours.cs" />
@@ -73,11 +74,20 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Goals\AtomicGoals\AtomicGoal.cs" />
+    <Compile Include="Goals\AtomicGoals\GoalTraverseEdge.cs" />
+    <Compile Include="Goals\AtomicGoals\GoalWander.cs" />
+    <Compile Include="Goals\Base\Goal.cs" />
+    <Compile Include="Goals\Base\GoalType.cs" />
+    <Compile Include="Goals\Base\Status.cs" />
+    <Compile Include="Goals\CompositeGoals\CompositeGoal.cs" />
+    <Compile Include="Goals\CompositeGoals\GoalFollowPath.cs" />
+    <Compile Include="Goals\CompositeGoals\GoalThink.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\GraphEdge.cs" />
     <Compile Include="Util\GraphGenerator.cs" />
-    <Compile Include="Util\Matrix.cs" />
+    <Compile Include="Util\GraphSearch.cs" />
     <Compile Include="Util\NavGraphNode.cs" />
     <Compile Include="Util\GraphNode.cs" />
     <Compile Include="Util\SparseGraph.cs" />

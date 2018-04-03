@@ -143,6 +143,7 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
 
             foreach (ObstacleEntity obstacle in MovingEntity.World.Obstacles)
             {
+                //Todo: This should probably be changed to Vector2D.DistanceSquared(currentPosition, obstacle.VPos)
                 Vector2D distance = obstacle.VPos.Clone().Substract(currentPosition);
 
                 double minAllowedDist = (RectangleDistance * 2) + obstacle.Bradius;

@@ -35,6 +35,12 @@ namespace TheAnimalKingdom.Util
             return (X * X) + (Y * Y);
         }
 
+        public static double DistanceSquared(Vector2D v1, Vector2D v2)
+        {
+            // d(v1, v2) = ||v1 - v2|| = Sqrt((v1.X - v2.X)^2 + (v1.Y - v2.Y)^2)
+            return Math.Pow(v1.X - v2.X, 2.0) + Math.Pow(v1.Y - v2.Y, 2.0);
+        }
+
         public Vector2D Add(Vector2D v)
         {
             X += v.X;

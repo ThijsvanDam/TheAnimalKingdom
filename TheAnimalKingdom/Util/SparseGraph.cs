@@ -120,7 +120,6 @@ namespace TheAnimalKingdom.Util
             }
 
             nearestNode.IsTarget = true;
-            Console.WriteLine("Nearest node: (" + nearestNode.Position.X + "," + nearestNode.Position.Y + ")");
             return nearestNode;
         }
 

@@ -55,7 +55,7 @@ namespace TheAnimalKingdom
             //World.MouseX = e.X;
             //World.MouseY = e.Y;
             var target = _world.graph.FindNearestNode(new Vector2D(e.X, e.Y));
-            //_world.AStarSearch = new AStarSearch(_world.graph, 0, target.Index);
+            _world.StartPathFollowing(target.Index);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -73,6 +73,9 @@ namespace TheAnimalKingdom
                 case 109:
                     // NumMin
                     World.Intensity -= 10;
+                    break;
+                case 71:
+                    World.ShouldRenderGraph = !World.ShouldRenderGraph;
                     break;
             }
             Console.WriteLine(@"Intensity: " + World.Intensity);
