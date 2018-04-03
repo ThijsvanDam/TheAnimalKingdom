@@ -1,4 +1,5 @@
-﻿using TheAnimalKingdom.Behaviours;
+﻿using System.Collections.Generic;
+using TheAnimalKingdom.Behaviours;
 using TheAnimalKingdom.Goals.Base;
 using TheAnimalKingdom.Goals.CompositeGoals;
 using TheAnimalKingdom.Util;
@@ -17,7 +18,6 @@ namespace TheAnimalKingdom.Entities
             SteeringBehaviours = new SteeringBehaviours(this);
             HashTagLifeGoal = new GoalThink(this);
             PathPlanner = new PathPlanner(this);
-            world.PathManager.Register(PathPlanner);
         }
 
         public Vector2D VVelocity;

@@ -18,7 +18,11 @@ namespace TheAnimalKingdom.Util
         {
             var current = Lowest();
 
-            if (current == _target) return PathResult.Found;
+            if (current == _target)
+            {
+                _foundPath = true;
+                return PathResult.Found;
+            }
 
             if (current == -1) return PathResult.NotFound;
             

@@ -52,7 +52,7 @@ namespace TheAnimalKingdom.Util
         }
 
         public Stack<NavGraphNode> GetRoute()
-        {
+        {   
             if (_route == null)
             {
                 var routeStack = new Stack<NavGraphNode>();
@@ -62,7 +62,7 @@ namespace TheAnimalKingdom.Util
                 {
                     routeStack.Push(_copiedNodes[current]);
 
-                    if (current == _copiedNodes[current].Prev) break; //Prevent looping if path hasn't been completely found yet
+                    if (_copiedNodes[current].Prev == -1) break; //Prevent looping when the route hasn't been completely found yet.
                     
                     current = _copiedNodes[current].Prev;
                 }

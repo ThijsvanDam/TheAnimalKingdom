@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace TheAnimalKingdom.Util
@@ -26,7 +27,7 @@ namespace TheAnimalKingdom.Util
 
                 if (result == PathResult.Found || result == PathResult.NotFound)
                 {
-                    _searchRequests.Remove(currentPath);
+                    UnRegister(currentPath);
                 }
 
                 numSearchCyclesRemaining--;

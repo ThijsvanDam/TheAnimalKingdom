@@ -20,6 +20,7 @@ namespace TheAnimalKingdom.Util
             Position = position;
             G = 0;
             H = 0;
+            Prev = -1;
         }
     }
 }

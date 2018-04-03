@@ -35,7 +35,7 @@ namespace TheAnimalKingdom
             Width = w;
             Height = h;
             
-            PathManager = new PathManager(numCyclesPerUpdate:50);
+            PathManager = new PathManager(numCyclesPerUpdate:20);
             _populate();
 
             ShouldRenderGraph = false;

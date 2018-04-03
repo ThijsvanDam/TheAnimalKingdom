@@ -6,6 +6,11 @@ namespace TheAnimalKingdom.Util
 {
     public class PathPlanner
     {
+        public Stack<NavGraphNode> Route
+        {
+            get { return _search.GetRoute(); }
+        }
+        
         private GraphSearch _search;
         private readonly MovingEntity _owner;
 
@@ -20,6 +25,7 @@ namespace TheAnimalKingdom.Util
             var targetNodeIndex = _owner.World.graph.FindNearestNode(target).Index;
             _search = new AStarSearch(graph: _owner.World.graph, source: sourceNodeIndex, target: targetNodeIndex);
             _owner.FindPathResult = PathResult.InProgress;
+            _owner.World.PathManager.Register(this);
         }
 
         public void RequestPathToItem(ItemType itemType)
@@ -27,6 +33,7 @@ namespace TheAnimalKingdom.Util
             var sourceNodeIndex = _owner.World.graph.FindNearestNode(_owner.VPos).Index;
             _search = new DijkstraSearch(graph: _owner.World.graph, source: sourceNodeIndex, type: itemType);
             _owner.FindPathResult = PathResult.InProgress;
+            _owner.World.PathManager.Register(this);
         }
         
         public PathResult CycleOnce()
@@ -41,11 +48,6 @@ namespace TheAnimalKingdom.Util
             }
 
             return result;
-        }
-
-        public Stack<NavGraphNode> GetRoute()
-        {
-            return _search.GetRoute();
         }
 
         public void Render(Graphics g)
