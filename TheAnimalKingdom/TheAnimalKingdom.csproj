@@ -77,7 +77,16 @@
     <Compile Include="FuzzyLogic\FuzzyModule.cs" />
     <Compile Include="FuzzyLogic\FuzzyRule.cs" />
     <Compile Include="FuzzyLogic\FuzzySet.cs" />
+    <Compile Include="FuzzyLogic\FuzzySets\FuzzySet_LeftShoulder.cs" />
+    <Compile Include="FuzzyLogic\FuzzySets\FuzzySet_RightShoulder.cs" />
+    <Compile Include="FuzzyLogic\FuzzySets\FuzzySet_Singleton.cs" />
+    <Compile Include="FuzzyLogic\FuzzySets\FuzzySet_Triangle.cs" />
     <Compile Include="FuzzyLogic\FuzzyTerm.cs" />
+    <Compile Include="FuzzyLogic\FuzzyTerms\FuzzyTermAND.cs" />
+    <Compile Include="FuzzyLogic\FuzzyTerms\FuzzyTermFairly.cs" />
+    <Compile Include="FuzzyLogic\FuzzyTerms\FuzzyTermOR.cs" />
+    <Compile Include="FuzzyLogic\FuzzyTerms\FuzzyTermSet.cs" />
+    <Compile Include="FuzzyLogic\FuzzyTerms\FuzzyTermVery.cs" />
     <Compile Include="FuzzyLogic\FuzzyVariable.cs" />
     <Compile Include="Goals\AtomicGoals\AtomicGoal.cs" />
     <Compile Include="Goals\AtomicGoals\GoalTraverseEdge.cs" />
@@ -132,6 +141,5 @@
   <ItemGroup>
     <Content Include="Resources\seamless-sand-textures.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

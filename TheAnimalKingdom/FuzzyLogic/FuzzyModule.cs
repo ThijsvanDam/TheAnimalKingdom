@@ -13,13 +13,16 @@ namespace TheAnimalKingdom.FuzzyLogic
             
         }
 
-        public FuzzyVariable CreateFLV()
+        public FuzzyVariable CreateFLV(string name)
         {
-            return null;
+            var f = new FuzzyVariable(null, null, 0, 0);
+            _m_Variables.Add(name, f);
+            return f;
         }
         
-        public void AddRule(FuzzyTerm one, FuzzyTerm two)
+        public void AddRule(FuzzyTerm antecedent, FuzzyTerm consequence)
         {
+            _m_Rules.Add(new FuzzyRule(antecedent, consequence));
             
         }
 

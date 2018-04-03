@@ -1,7 +1,10 @@
 ﻿namespace TheAnimalKingdom.FuzzyLogic
 {
-    public class FuzzyTerm
+    public abstract class FuzzyTerm
     {
-        
+        public abstract void Clone();
+        public abstract void GetDOM();
+        public abstract void ClearDOM();
+        public abstract void ORwithDOM(double d);
     }
 }
