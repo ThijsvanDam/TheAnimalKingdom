@@ -12,6 +12,7 @@ namespace TheAnimalKingdom.Util
     {
         public double X { get; set; }
         public double Y { get; set; }
+        public double Z { get; set; }
 
         public Vector2D() : this(0,0)
         {
@@ -21,6 +22,7 @@ namespace TheAnimalKingdom.Util
         {
             X = x;
             Y = y;
+            Z = 1;
         }
 
         public double Length()
@@ -54,11 +56,9 @@ namespace TheAnimalKingdom.Util
             Y *= value;
             return this;
         }
-        public Vector2D DotMultiplication(Vector2D value)
+        public double DotMultiplication(Vector2D v2)
         {
-            X *= value.X;
-            Y *= value.Y;
-            return this;
+            return X*v2.X + Y*v2.Y;
         }
 
         public Vector2D Divide(double value)

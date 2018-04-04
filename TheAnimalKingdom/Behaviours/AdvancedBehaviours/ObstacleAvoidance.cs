@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using TheAnimalKingdom.Behaviours.BaseBehaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
+using Matrix = TheAnimalKingdom.Util.Matrix;
 
 namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
 {
@@ -37,53 +38,80 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
 
         public override Vector2D Calculate()
         {
-            // All obstacles and its position
-            List<ObstacleEntity> obstacles = MovingEntity.World.Obstacles;
-
-            // Current position of the entity.
-            Vector2D currentPos = MovingEntity.VPos;
-
-            // Direction the entity currently goes to with applied force.
-            Vector2D direction = MovingEntity.VVelocity.Clone();
-
-            // The direction the entity currently goes to, but normalized.
-            Vector2D currentDirection = direction.Normalize();
-
-            double speed = MovingEntity.VVelocity.Length() * 10;
-            double maxSpeed = MovingEntity.DMaxSpeed;
-
-            double extra = ((speed / maxSpeed) * MinimumRectangleLength);
-
-
-            RectangleDistance = MinimumRectangleLength + extra;
-
-            // The square and its distance
-            rDist = currentPos.Clone().Add((currentDirection.Clone().Multiply(RectangleDistance)));
-
-            // Create rectangle
-            Rectangle = GetRectangle();
-
-            List<ObstacleEntity> obstaclesWithinRange = FindObstacleEntitiesInCollisionCourse();
-
-            foreach (ObstacleEntity obstacle in obstaclesWithinRange)
+            List<ObstacleEntity> obstaclesToLookOutFor = FindObstacleEntitiesWithinRange();
+                        
+            var distToNearestObject = double.MaxValue;
+            ObstacleEntity nearestDangerousObject = null;
+            Vector2D localPositionOfNearestDangerousObject = null;
+            
+            var heading = MovingEntity.VVelocity.Clone().Normalize();
+            
+            foreach (var obstacle in obstaclesToLookOutFor)
             {
-                Vector2D localSpacePosition = GetPositionInLocalSpace(obstacle);
+                
+                Vector2D localPosition = GetPositionInLocalSpace(obstacle, heading,
+                    heading.Perpendicular(), MovingEntity.VPos);
+
+                if (localPosition.X > 0)
+                {
+                    double safeDistance = obstacle.Bradius + MovingEntity.Bradius;
+
+                    if (Math.Abs(localPosition.Y) < safeDistance)
+                    {
+                        var cX = localPosition.X;
+                        var cY = localPosition.Y;
+
+                        var sqrtPart = Math.Sqrt(safeDistance * safeDistance - cY * cY);
+
+                        var ip = cX - sqrtPart;
+
+                        if (ip <= 0.0)
+                        {
+                            ip = cX + sqrtPart;
+                        }
+
+                        if (ip < distToNearestObject)
+                        {
+                            distToNearestObject = ip;
+                            nearestDangerousObject = obstacle;
+                            localPositionOfNearestDangerousObject = localPosition;
+                        }
+                    }
+                }
             }
 
+            Vector2D steeringForce = new Vector2D();
 
-            return new Vector2D(0, 0);
+            if (nearestDangerousObject != null)
+            {
+                var rectLength = Rectangle[2].Y - Rectangle[0].Y;
+                double multiplier = 1.0 + (rectLength - localPositionOfNearestDangerousObject.X) / rectLength;
+
+                steeringForce.Y = (nearestDangerousObject.Bradius - localPositionOfNearestDangerousObject.Y) *
+                                  multiplier;
+                steeringForce.X = (nearestDangerousObject.Bradius - localPositionOfNearestDangerousObject.X) * 0.2;
+            }
+
+            return VectorToWorldSpace(steeringForce, heading, heading.Perpendicular());
         }
 
-        private Vector2D GetPositionInLocalSpace(ObstacleEntity obstacle)
+        private Vector2D GetPositionInLocalSpace(ObstacleEntity obstacle, Vector2D heading, Vector2D side, Vector2D position)
         {
             Vector2D obstaclePos = obstacle.VPos;
 
-            double direction = Vector2D.Direction(Rectangle[0], Rectangle[2]);
+            var tX = -position.Clone().DotMultiplication(heading);
+            var tY = -position.Clone().DotMultiplication(side);
             
-            Vector2D position = MovingEntity.VPos;
+            Matrix transformMatrix = new Matrix(heading.X, heading.Y, 0.0, heading.Y, heading.X, 0.0, tX, tY, 1.0);
 
+            obstaclePos = transformMatrix * obstaclePos;
 
-            return new Vector2D(0, 0);
+            return obstaclePos;
+        }
+
+        private Vector2D VectorToWorldSpace(Vector2D vector, Vector2D heading, Vector2D side)
+        {
+            
         }
 
         private List<Vector2D> GetRectangle()
@@ -109,43 +137,26 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
             return rectangle;
         }
 
-        private List<ObstacleEntity> FindObstacleEntitiesInCollisionCourse()
+        private List<ObstacleEntity> FindObstacleEntitiesWithinRange()
         {           
             List<ObstacleEntity> obstaclesWithinRange = new List<ObstacleEntity>();
             
             foreach (ObstacleEntity obstacle in MovingEntity.World.Obstacles)
             {
-                var distanceToObstace = Vector2D.DistanceSquared(obstacle.VPos, MovingEntity.VPos);
-                
-                var directionOfAgent = Math.Atan2(MovingEntity.VVelocity.X, MovingEntity.VVelocity.Y);
-
-                var distanceToObstacle = obstacle.VPos.Clone().Substract(MovingEntity.VPos);
-                
-                var directionToObstacle = Math.Atan2(distanceToObstacle.X, distanceToObstacle.Y);
-                
-                Console.WriteLine("directionToObstacle:" + directionToObstacle + "\ndirectionOfAgent:" + directionOfAgent);
-                
+                double distanceToObstace = Vector2D.DistanceSquared(obstacle.VPos, MovingEntity.VPos);
+                                
                 double minAllowedDist = (RectangleDistance * 2) + obstacle.Bradius;
-
+               
                 if (distanceToObstace < minAllowedDist * minAllowedDist)
                 {
+                    obstaclesWithinRange.Add(obstacle);
                     obstacle.Tag();
-                    
-                    if (directionToObstacle < Math.PI / 2 && directionToObstacle > - Math.PI / 2)
-                    {
-                        obstacle.Color = Color.Black;
-                        obstaclesWithinRange.Add(obstacle);
-                        obstacle.Tag();
-                    }
-                    else
-                    {
-                        obstacle.RemoveTag();
-                    }
                 }
                 else
                 {
                     obstacle.RemoveTag();
                 }
+
             }
 
             return obstaclesWithinRange;
