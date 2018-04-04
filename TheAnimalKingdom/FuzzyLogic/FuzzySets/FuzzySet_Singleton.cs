@@ -2,14 +2,16 @@
 {
     public class FuzzySet_Singleton : FuzzySet
     {
-        public FuzzySet_Singleton()
+        public double PeakPoint;
+        
+        public FuzzySet_Singleton(double mid) : base(mid)
         {
-            
+            PeakPoint = mid;
         }
         
         public override double CalculateDOM(double d)
         {
-            throw new System.NotImplementedException();
+            return PeakPoint.Equals(d) ? 1.0 : 0.0;
         }
 
         public override double GetDOM()

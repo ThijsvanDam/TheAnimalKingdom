@@ -80,6 +80,7 @@
     <Compile Include="FuzzyLogic\FuzzySets\FuzzySet_LeftShoulder.cs" />
     <Compile Include="FuzzyLogic\FuzzySets\FuzzySet_RightShoulder.cs" />
     <Compile Include="FuzzyLogic\FuzzySets\FuzzySet_Singleton.cs" />
+    <Compile Include="FuzzyLogic\FuzzySets\FuzzySet_Trapezoid.cs" />
     <Compile Include="FuzzyLogic\FuzzySets\FuzzySet_Triangle.cs" />
     <Compile Include="FuzzyLogic\FuzzyTerm.cs" />
     <Compile Include="FuzzyLogic\FuzzyTerms\FuzzyTermAND.cs" />

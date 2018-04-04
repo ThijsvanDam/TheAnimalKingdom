@@ -20,6 +20,7 @@
                 return 1.0;
             }
 
+            // If d is inside the left part of the triangle.
             if ((d <= PeakPoint) && (d >= (PeakPoint - LeftOffset)))
             {
                 double grad = 1.0 / LeftOffset;
@@ -27,11 +28,12 @@
                 return grad * (d - (PeakPoint - LeftOffset));
             }
             
+            // If d is inside the right part of the triangle.
             if ((d > PeakPoint) && (d < (PeakPoint + RightOffset)))
             {
-                double grad = 1.0 / RightOffset;
+                double grad = 1.0 / -RightOffset;
 
-                return grad * (d - PeakPoint) - 1.0;
+                return grad * (d - PeakPoint) + 1.0;
             }
             
             return 0.0;
