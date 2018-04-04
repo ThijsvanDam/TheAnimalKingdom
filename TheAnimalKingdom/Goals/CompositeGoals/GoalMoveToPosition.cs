@@ -19,7 +19,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         
         public override void Activate()
         {
-            Console.WriteLine("Activate MoveToPosition");
             Status = Status.Active;
             
             RemoveAllSubgoals();
@@ -31,27 +30,32 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         
         public override Status Process()
         {
-            ActivateIfInactive();
             Console.WriteLine("Process MoveToPosition");
+
+            ActivateIfInactive();
 
             if (Owner.FindPathResult == PathResult.Found && !_routeFound)
             {
                 Owner.Route = Owner.PathPlanner.Route;
                 _routeFound = true;
                 RemoveAllSubgoals();
-                AddSubgoal(new GoalFollowPath(Owner, Owner.PathPlanner.Route));
-                Console.WriteLine("Route Length: " + Owner.Route.Count);
+                AddSubgoal(new GoalFollowPath(Owner, Owner.Route));
             }
 
             if (Owner.FindPathResult == PathResult.NotFound)
             {
-                RemoveAllSubgoals();
                 return Status.Failed;
             }
             
             var status = ProcessSubgoals();
 
             return status;
+        }
+
+        public override void Terminate()
+        {
+            Console.WriteLine("Terminate MoveToPosition");
+            base.Terminate();
         }
     }
 }

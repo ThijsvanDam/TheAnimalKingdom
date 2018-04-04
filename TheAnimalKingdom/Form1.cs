@@ -7,7 +7,7 @@ namespace TheAnimalKingdom
 {
     public partial class Form1 : Form
     {
-        public const float timeDelta = 0.8f;
+        public const float timeDelta = 0.6f;
 
         private World _world;
         private System.Timers.Timer _timer;
@@ -19,7 +19,7 @@ namespace TheAnimalKingdom
             _world = new World(_dbPanel1.Width, _dbPanel1.Height);
             _timer = new System.Timers.Timer();
             _timer.Elapsed += timerTick;
-            _timer.Interval = 20;
+            _timer.Interval = 10;
             _timer.Enabled = true;
 
         }

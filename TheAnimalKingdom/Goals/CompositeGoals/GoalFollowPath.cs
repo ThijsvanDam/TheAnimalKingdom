@@ -18,7 +18,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         
         public override void Activate()
         {
-            Console.WriteLine("Activate FollowPath");
             Status = Status.Active;
 
             NavGraphNode edge = _path.Pop();
@@ -28,7 +27,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 
         public override Status Process()
         {
-            Console.WriteLine("Process FollowPath");
             ActivateIfInactive();
 
             Status = ProcessSubgoals();

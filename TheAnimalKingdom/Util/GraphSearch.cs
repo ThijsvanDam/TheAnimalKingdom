@@ -10,7 +10,6 @@ namespace TheAnimalKingdom.Util
         protected int _target;
         protected List<int> _open;
         protected List<int> _closed;
-        private Stack<NavGraphNode> _route;
 
         protected readonly List<NavGraphNode> _copiedNodes;
         protected readonly List<GraphEdge> _edges;
@@ -51,25 +50,18 @@ namespace TheAnimalKingdom.Util
 
         public Stack<NavGraphNode> GetRoute()
         {   
-            if (_route == null)
+            var routeStack = new Stack<NavGraphNode>();
+        
+            var current = _target;
+            while (current != _source)
             {
-                var routeStack = new Stack<NavGraphNode>();
-            
-                var current = _target;
-                while (current != _source)
-                {
-                    routeStack.Push(_copiedNodes[current]);
-
-                    if (_copiedNodes[current].Prev == -1) break; //Prevent looping when the route hasn't been completely found yet.
-                    
-                    current = _copiedNodes[current].Prev;
-                }
-                routeStack.Push(_copiedNodes[_source]);
-
-                _route = routeStack;
+                routeStack.Push(_copiedNodes[current]);
+                
+                current = _copiedNodes[current].Prev;
             }
-            
-            return _route;
+            routeStack.Push(_copiedNodes[_source]);
+
+            return routeStack;
         }
     }
 }

@@ -43,17 +43,20 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 
             if (_subgoals.Count > 0)
             {
-                Status status = _subgoals.Peek().Process();
+                Status statusOfSubgoals = _subgoals.Peek().Process();
 
-                if (status == Status.Completed && _subgoals.Count > 1)
+                if (statusOfSubgoals == Status.Completed && _subgoals.Count > 1)
                 {
                     return Status.Active;
                 }
 
-                return status;
+                return statusOfSubgoals;
             }
-            
-            return Status.Completed;
+            else
+            {
+                return Status.Completed;
+
+            }
         }
 
         public void RemoveAllSubgoals()

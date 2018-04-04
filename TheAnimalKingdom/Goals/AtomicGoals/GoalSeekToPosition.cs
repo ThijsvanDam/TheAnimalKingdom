@@ -16,24 +16,20 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
 
         public override void Activate()
         {
-            Console.WriteLine("Activate SeekToPosition");
-            Owner.SteeringBehaviours.SeekOn(_destination ,1.0);
+            Owner.SteeringBehaviours.SeekOn(_destination, 0.7f);
             Status = Status.Active;
-            return;
         }
 
         public override Status Process()
         {
             ActivateIfInactive();
-            Console.WriteLine("Process SeekToPosition");
-            return Status.Completed;
+                        
+            return Status;
         }
 
         public override void Terminate()
         {
             Owner.SteeringBehaviours.SeekOff();
-            Console.WriteLine("Terminate SeekToPosition");
-            return;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TheAnimalKingdom.Entities
             SteeringBehaviours.DrawBehaviors(g);
             g.FillEllipse(new SolidBrush(Color), (int)left, (int)top, (int)size, (int)size);
 
-            if (Route?.Count > 0) RenderRoute(g);
+            if (Route?.Count > 0 && World.ShouldRenderGraph) RenderRoute(g);
         }
         
         public void RenderRoute(Graphics g)

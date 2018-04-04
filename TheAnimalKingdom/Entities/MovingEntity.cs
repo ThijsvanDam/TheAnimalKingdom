@@ -33,6 +33,13 @@ namespace TheAnimalKingdom.Entities
         public double DDeceleration;
         protected double DMaxTurnRate;
 
+        public bool IsAtPosition(Vector2D position)
+        {
+            var squaredDistance = Vector2D.DistanceSquared(VPos, position);
+
+            return (squaredDistance < 100);
+        }
+
         public override void Update(float time_elapsed)
         {
             HashTagLifeGoal.Process();

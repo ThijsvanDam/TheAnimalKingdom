@@ -33,7 +33,7 @@ namespace TheAnimalKingdom
             Width = w;
             Height = h;
             
-            PathManager = new PathManager(numCyclesPerUpdate:1000);
+            PathManager = new PathManager(numCyclesPerUpdate:200);
             _populate();
 
             ShouldRenderGraph = false;
@@ -139,7 +139,6 @@ namespace TheAnimalKingdom
         public void StartPathFollowing(Vector2D target)
         {
             var entity = (MovingEntity)Entities[1];
-            entity.HashTagLifeGoal.RemoveAllSubgoals();
             entity.HashTagLifeGoal.AddSubgoal(new GoalMoveToPosition(entity, target));
         }
 
