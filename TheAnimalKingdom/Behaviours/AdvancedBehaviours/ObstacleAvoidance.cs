@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using TheAnimalKingdom.Behaviours.BaseBehaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
@@ -13,8 +15,6 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
         public double RectangleDistance;
         public double RectangleWidth;
         public double MinimumRectangleLength;
-
-        public Random r = new Random();
 
         public Vector2D rDist;
         public List<Vector2D> Rectangle;
@@ -63,7 +63,7 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
             // Create rectangle
             Rectangle = GetRectangle();
 
-            List<ObstacleEntity> obstaclesWithinRange = FindObstacleEntitiesWithinRange();
+            List<ObstacleEntity> obstaclesWithinRange = FindObstacleEntitiesInCollisionCourse();
 
             foreach (ObstacleEntity obstacle in obstaclesWithinRange)
             {
@@ -78,22 +78,11 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
         {
             Vector2D obstaclePos = obstacle.VPos;
 
-            Vector2D direction = MovingEntity.VVelocity.Clone().Normalize();
-            Vector2D side = direction.Perpendicular();
+            double direction = Vector2D.Direction(Rectangle[0], Rectangle[2]);
+            
             Vector2D position = MovingEntity.VPos;
 
 
-            Matrix transformMatrix = new Matrix(
-                (float) direction.X, (float) side.X,
-                (float) direction.Y, (float) side.Y,
-                -(float) (position.Clone().DotMultiplication(direction).Length()),
-                -(float) (position.Clone().DotMultiplication(side).Length())
-            );
-
-//            transformMatrix *;
-
-
-//            return posInLocalSpace;
             return new Vector2D(0, 0);
         }
 
@@ -120,23 +109,38 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
             return rectangle;
         }
 
-        private List<ObstacleEntity> FindObstacleEntitiesWithinRange()
-        {
+        private List<ObstacleEntity> FindObstacleEntitiesInCollisionCourse()
+        {           
             List<ObstacleEntity> obstaclesWithinRange = new List<ObstacleEntity>();
-            Vector2D currentPosition = MovingEntity.VPos;
-
+            
             foreach (ObstacleEntity obstacle in MovingEntity.World.Obstacles)
             {
-                //Todo: This should probably be changed to Vector2D.DistanceSquared(currentPosition, obstacle.VPos)
-                Vector2D distance = obstacle.VPos.Clone().Substract(currentPosition);
+                var distanceToObstace = Vector2D.DistanceSquared(obstacle.VPos, MovingEntity.VPos);
+                
+                var directionOfAgent = Math.Atan2(MovingEntity.VVelocity.X, MovingEntity.VVelocity.Y);
 
+                var distanceToObstacle = obstacle.VPos.Clone().Substract(MovingEntity.VPos);
+                
+                var directionToObstacle = Math.Atan2(distanceToObstacle.X, distanceToObstacle.Y);
+                
+                Console.WriteLine("directionToObstacle:" + directionToObstacle + "\ndirectionOfAgent:" + directionOfAgent);
+                
                 double minAllowedDist = (RectangleDistance * 2) + obstacle.Bradius;
 
-                if (distance.LengthSquared() < minAllowedDist * minAllowedDist)
+                if (distanceToObstace < minAllowedDist * minAllowedDist)
                 {
-                    obstacle.Color = Color.Black;
-                    obstaclesWithinRange.Add(obstacle);
                     obstacle.Tag();
+                    
+                    if (directionToObstacle < Math.PI / 2 && directionToObstacle > - Math.PI / 2)
+                    {
+                        obstacle.Color = Color.Black;
+                        obstaclesWithinRange.Add(obstacle);
+                        obstacle.Tag();
+                    }
+                    else
+                    {
+                        obstacle.RemoveTag();
+                    }
                 }
                 else
                 {
@@ -149,11 +153,6 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
 
         public override void DrawBehavior(Graphics g)
         {
-//            g.FillEllipse(new SolidBrush(Color.Red), (int)one.X, (int)one.Y, (int)5, (int)5);
-//            g.FillEllipse(new SolidBrush(Color.Red), (int)two.X, (int)two.Y, (int)5, (int)5);
-//            g.FillEllipse(new SolidBrush(Color.Red), (int)three.X, (int)three.Y, (int)5, (int)5);
-//            g.FillEllipse(new SolidBrush(Color.Red), (int)four.X, (int)four.Y, (int)5, (int)5);
-
             g.FillPolygon(new SolidBrush(Color.Blue), new[]
             {
                 Rectangle[0].ToPoint(),

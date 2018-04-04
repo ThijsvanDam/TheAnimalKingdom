@@ -19,6 +19,8 @@ namespace TheAnimalKingdom.Entities
             SteeringBehaviours = new SteeringBehaviours(this);
             HashTagLifeGoal = new GoalThink(this);
             PathPlanner = new PathPlanner(this);
+            
+            SteeringBehaviours.ObstacleAvoidanceOn(1.0);
         }
 
         public Vector2D VVelocity;

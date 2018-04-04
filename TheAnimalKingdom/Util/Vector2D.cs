@@ -109,6 +109,15 @@ namespace TheAnimalKingdom.Util
             // d(v1, v2) = ||v1 - v2|| = Sqrt((v1.X - v2.X)^2 + (v1.Y - v2.Y)^2)
             return Math.Pow(v1.X - v2.X, 2.0) + Math.Pow(v1.Y - v2.Y, 2.0);
         }
+
+        public static double Direction(Vector2D from, Vector2D to)
+        {
+            if (to.X > from.X)
+            {
+                return Math.Atan((from.Y - to.Y) / (from.X - to.X));
+            }
+            return Math.Atan((from.Y - to.Y) / (from.X - to.X)) + Math.PI;
+        }
         
         public override string ToString()
         {
