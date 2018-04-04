@@ -20,6 +20,15 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
         public override void Activate()
         {
             Console.WriteLine("Activate TraverseEdge");
+
+            if (_isFinalEdge)
+            {
+                Owner.SteeringBehaviours.ArriveOn(_destination, 1.0);
+            }
+            else
+            {
+                Owner.SteeringBehaviours.SeekOn(_destination, 1.0);
+            }
             Status = Status.Active;
         }
 
@@ -28,7 +37,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
             ActivateIfInactive();
             Console.WriteLine("Process TraverseEdge");
 
-            if (Owner.VPos == _destination) Status = Status.Completed;
+            if (IsAtPosition()) Status = Status.Completed;
 
             return Status;
         }
@@ -38,6 +47,13 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
             Console.WriteLine("Terminate TraverseEdge");
             Owner.SteeringBehaviours.SeekOff();
             Owner.SteeringBehaviours.ArriveOff();
+        }
+
+        private bool IsAtPosition()
+        {
+            var squaredDistance = Vector2D.DistanceSquared(Owner.VPos, _destination);
+
+            return (squaredDistance < 1000);
         }
     }
 }

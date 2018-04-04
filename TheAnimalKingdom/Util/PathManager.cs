@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 
 namespace TheAnimalKingdom.Util
 {
@@ -42,14 +40,6 @@ namespace TheAnimalKingdom.Util
         public void UnRegister(PathPlanner planner)
         {
             _searchRequests.Remove(planner);
-        }
-
-        public void Render(Graphics g)
-        {
-            foreach (var searchRequest in _searchRequests)
-            {
-                searchRequest.Render(g);
-            }
         }
     }
 }

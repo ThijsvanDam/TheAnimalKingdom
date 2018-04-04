@@ -6,7 +6,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 {
     public abstract class CompositeGoal : Goal
     {
-        private Stack<Goal> _subgoals;
+        protected Stack<Goal> _subgoals;
 
         public CompositeGoal(MovingEntity owner) : base(owner: owner, type: GoalType.Composite)
         {

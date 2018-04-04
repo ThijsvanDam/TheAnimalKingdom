@@ -21,6 +21,11 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
             steering = new Vector2D(0, 0);
         }
 
+        public SeekBehaviour(MovingEntity movingEntity, Vector2D goal) : 
+            this (movingEntity, new StaticEntity(position: goal, world: movingEntity.World))
+        {
+        }
+
         public override Vector2D Calculate()
         {
             Vector2D currentVelocity = MovingEntity.VVelocity;

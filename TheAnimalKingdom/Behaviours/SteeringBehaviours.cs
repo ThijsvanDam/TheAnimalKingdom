@@ -145,6 +145,12 @@ namespace TheAnimalKingdom.Behaviours
             _dSeek = intensity;
         }
 
+        public void SeekOn(Vector2D destination, double intensity)
+        {
+            _seek = new SeekBehaviour(_movingEntity, destination);
+            _dSeek = intensity;
+        }
+
         public void SeekOff()
         {
             _seek = null;
@@ -166,6 +172,12 @@ namespace TheAnimalKingdom.Behaviours
         public void ArriveOn(BaseGameEntity goal, double intensity)
         {
             _arrive = new ArriveBehaviour(_movingEntity, goal);
+            _dArrive = intensity;
+        }
+        
+        public void ArriveOn(Vector2D destination, double intensity)
+        {
+            _arrive = new ArriveBehaviour(_movingEntity, destination);
             _dArrive = intensity;
         }
 

@@ -25,7 +25,6 @@ namespace TheAnimalKingdom.Util
             if (IsTerminationConditionSatisfied(current))
             {
                 _target = current;
-                _foundPath = true;
                 return PathResult.Found;
             }   
 

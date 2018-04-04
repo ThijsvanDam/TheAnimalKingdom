@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TheAnimalKingdom.Behaviours.BaseBehaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
@@ -20,6 +21,12 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
         {
             Goal = goal;
             desiredVelocity = new Vector2D(0, 0);
+        }
+
+        public ArriveBehaviour(MovingEntity movingEntity, Vector2D goal) : 
+            this(movingEntity, new StaticEntity(goal, movingEntity.World))
+        {
+            
         }
 
         public override Vector2D Calculate()

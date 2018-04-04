@@ -28,14 +28,12 @@ namespace TheAnimalKingdom
         
         public SparseGraph graph;
 
-        private bool _isBusy = false;
-
         public World(int w, int h)
         {
             Width = w;
             Height = h;
             
-            PathManager = new PathManager(numCyclesPerUpdate:20);
+            PathManager = new PathManager(numCyclesPerUpdate:1000);
             _populate();
 
             ShouldRenderGraph = false;
@@ -151,7 +149,6 @@ namespace TheAnimalKingdom
             if (ShouldRenderGraph)
             {
                 graph.Render(g);
-                PathManager.Render(g);
             }
 
             foreach (ObstacleEntity obstacleEntity in Obstacles)

@@ -29,6 +29,21 @@ namespace TheAnimalKingdom.Entities
             double size = Bradius * 2;
             SteeringBehaviours.DrawBehaviors(g);
             g.FillEllipse(new SolidBrush(Color), (int)left, (int)top, (int)size, (int)size);
+
+            if (Route?.Count > 0) RenderRoute(g);
+        }
+        
+        public void RenderRoute(Graphics g)
+        {
+            Stack<NavGraphNode> copiedRoute = new Stack<NavGraphNode>(Route.Reverse());
+            
+            while (copiedRoute.Count > 1)
+            {
+                var nodeFrom = copiedRoute.Pop();
+                var nodeTo = copiedRoute.Peek();
+                
+                g.DrawLine(new Pen(Color.Yellow), nodeFrom.Position.ToPoint(), nodeTo.Position.ToPoint());
+            }
         }
     }
 }

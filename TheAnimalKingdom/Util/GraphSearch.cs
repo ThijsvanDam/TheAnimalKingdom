@@ -14,9 +14,7 @@ namespace TheAnimalKingdom.Util
 
         protected readonly List<NavGraphNode> _copiedNodes;
         protected readonly List<GraphEdge> _edges;
-        
-        protected bool _foundPath;
-        
+                
         protected Vector2D _targetLocation;
 
         public GraphSearch(SparseGraph graph, int source, int target)
@@ -72,21 +70,6 @@ namespace TheAnimalKingdom.Util
             }
             
             return _route;
-        }
-
-        public void Render(Graphics g)
-        {
-            Stack<NavGraphNode> copiedRoute = GetRoute();
-            
-            if (!_foundPath) return;
-
-            while (copiedRoute.Count > 1)
-            {
-                var nodeFrom = copiedRoute.Pop();
-                var nodeTo = copiedRoute.Peek();
-                
-                g.DrawLine(new Pen(Color.Yellow), nodeFrom.Position.ToPoint(), nodeTo.Position.ToPoint());
-            }
         }
     }
 }

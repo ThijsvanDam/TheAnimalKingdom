@@ -26,10 +26,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             
             Owner.PathPlanner.RequestPathToTarget(_destination);
 
-            if (Owner.FindPathResult == PathResult.NotFound)
-            {
-                AddSubgoal(new GoalSeekToPosition(Owner, _destination));
-            }
+            AddSubgoal(new GoalSeekToPosition(Owner, _destination));
         }
         
         public override Status Process()
@@ -39,9 +36,11 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 
             if (Owner.FindPathResult == PathResult.Found && !_routeFound)
             {
+                Owner.Route = Owner.PathPlanner.Route;
+                _routeFound = true;
                 RemoveAllSubgoals();
                 AddSubgoal(new GoalFollowPath(Owner, Owner.PathPlanner.Route));
-                _routeFound = true;
+                Console.WriteLine("Route Length: " + Owner.Route.Count);
             }
 
             if (Owner.FindPathResult == PathResult.NotFound)

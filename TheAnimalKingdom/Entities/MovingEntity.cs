@@ -12,6 +12,7 @@ namespace TheAnimalKingdom.Entities
         public PathResult FindPathResult { get; set; }
         public PathPlanner PathPlanner { get; set; }
         public CompositeGoal HashTagLifeGoal { get; set; }
+        public Stack<NavGraphNode> Route { get; set; }
 
         public MovingEntity(Vector2D position, World world) : base(position, world)
         {
