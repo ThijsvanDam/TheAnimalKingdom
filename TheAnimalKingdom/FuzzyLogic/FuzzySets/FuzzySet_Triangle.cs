@@ -6,11 +6,11 @@
         public double LeftOffset;
         public double RightOffset;
 
-        public FuzzySet_Triangle(double mid, double left, double right) : base(mid)
+        public FuzzySet_Triangle(double peakPoint, double leftOffset, double rightOffset) : base(peakPoint)
         {
-            PeakPoint = mid;
-            LeftOffset = left;
-            RightOffset = right;
+            PeakPoint = peakPoint;
+            LeftOffset = leftOffset;
+            RightOffset = rightOffset;
         }
         
         public override double CalculateDOM(double d)
@@ -37,21 +37,6 @@
             }
             
             return 0.0;
-        }
-
-        public override double GetDOM()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void ClearDOM()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override double ORwithDOM(double d)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

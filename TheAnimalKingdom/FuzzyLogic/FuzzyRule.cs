@@ -2,18 +2,27 @@
 {
     public class FuzzyRule
     {
-        private FuzzyTerm _m_pAntecedent;
-        private FuzzyTerm _m_pConsequent;
+        // Usually a composite of several fuzzy sets and operators
+        private FuzzyTerm Antecedent;
+        
+        // Usually a single fuzzy set
+        private FuzzyTerm Consequence;
 
-        public FuzzyRule(FuzzyTerm mPAntecedent, FuzzyTerm mPConsequent)
+        public FuzzyRule(FuzzyTerm antecedent, FuzzyTerm consequence)
         {
-            _m_pAntecedent = mPAntecedent;
-            _m_pConsequent = mPConsequent;
+            Antecedent = antecedent.Clone();
+            Consequence = consequence.Clone();
         }
 
+        public void SetConfidenceOfConsequentToZero()
+        {
+            Consequence.ClearDOM();
+        }
+        
+        // Updates the DOM of the consequent term with the DOM of the antecedent term
         public void Calculate()
         {
-            
+            Consequence.ORwithDOM(Antecedent.GetDOM());
         }
     }
 }

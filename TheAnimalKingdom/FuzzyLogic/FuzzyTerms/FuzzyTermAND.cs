@@ -1,25 +1,68 @@
-﻿namespace TheAnimalKingdom.FuzzyLogic.FuzzyTerms
+﻿using System.Collections.Generic;
+
+namespace TheAnimalKingdom.FuzzyLogic.FuzzyTerms
 {
     public class FuzzyTermAND : FuzzyTerm
     {
-        public override void Clone()
+        // Could, according to the book, from two to four FuzzyTerms.
+        
+        public List<FuzzyTerm> FuzzyTerms = new List<FuzzyTerm>();
+
+        public FuzzyTermAND(FuzzyTermAND ftand)
         {
-            throw new System.NotImplementedException();
+            foreach (FuzzyTerm term in ftand.FuzzyTerms)
+            {
+                FuzzyTerms.Add(term);
+            }
         }
 
-        public override void GetDOM()
+        public FuzzyTermAND(FuzzyTerm t1, FuzzyTerm t2)
         {
-            throw new System.NotImplementedException();
+            FuzzyTerms.AddRange(new[]{t1, t2});
+        }
+        
+        public FuzzyTermAND(FuzzyTerm t1, FuzzyTerm t2, FuzzyTerm t3)
+        {
+            FuzzyTerms.AddRange(new[]{t1, t2, t3});
+        }
+
+        public FuzzyTermAND(FuzzyTerm t1, FuzzyTerm t2, FuzzyTerm t3, FuzzyTerm t4)
+        {
+            FuzzyTerms.AddRange(new[]{t1, t2, t3, t4});
+        }
+        
+        public override FuzzyTerm Clone()
+        {
+            return new FuzzyTermAND(this);
+        }
+
+        public override double GetDOM()
+        {
+            double minDOM = double.MaxValue;
+            foreach (FuzzyTerm term in FuzzyTerms)
+            {
+                if (term.GetDOM() < minDOM)
+                {
+                    minDOM = term.GetDOM();
+                }
+            }
+            return minDOM;
         }
 
         public override void ClearDOM()
         {
-            throw new System.NotImplementedException();
+            foreach (FuzzyTerm term in FuzzyTerms)
+            {
+                term.ClearDOM();
+            }
         }
 
-        public override void ORwithDOM(double d)
+        public override void ORwithDOM(double value)
         {
-            throw new System.NotImplementedException();
+            foreach (FuzzyTerm term in FuzzyTerms)
+            {
+                term.ORwithDOM(value);
+            }
         }
     }
 }

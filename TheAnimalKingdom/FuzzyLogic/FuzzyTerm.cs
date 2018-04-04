@@ -2,9 +2,9 @@
 {
     public abstract class FuzzyTerm
     {
-        public abstract void Clone();
-        public abstract void GetDOM();
+        public abstract FuzzyTerm Clone();
+        public abstract double GetDOM();
         public abstract void ClearDOM();
-        public abstract void ORwithDOM(double d);
+        public abstract void ORwithDOM(double value);
     }
 }

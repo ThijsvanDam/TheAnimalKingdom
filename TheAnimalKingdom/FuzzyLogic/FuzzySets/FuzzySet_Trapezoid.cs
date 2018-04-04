@@ -2,16 +2,16 @@
 {
     public class FuzzySet_Trapezoid : FuzzySet
     {
+        public double LeftOffset;
         public double LeftPeakPoint;
         public double RightPeakPoint;
-        public double LeftOffset;
         public double RightOffset;
         
-        public FuzzySet_Trapezoid(double leftPeak, double rightPeak, double leftOffset, double rightOffset) : base((leftPeak + rightPeak) / 2)
+        public FuzzySet_Trapezoid(double leftOffset, double leftPeak, double rightPeak, double rightOffset) : base((leftPeak + rightPeak) / 2)
         {
+            LeftOffset = leftOffset;
             LeftPeakPoint = leftPeak;
             RightPeakPoint = rightPeak;
-            LeftOffset = leftOffset;
             RightOffset = rightOffset;
         }
 
@@ -24,7 +24,7 @@
             }
 
             // If it's inside the parts of the trapezoid.
-            if (d > LeftOffset && d < RightOffset)
+            if (d > LeftPeakPoint && d < RightPeakPoint)
             {
                 return 1.0;
             }
@@ -38,7 +38,7 @@
             }
             
             // If d is inside the right part of the triangle.
-            if ((d > RightPeakPoint) && (d < (RightPeakPoint + RightOffset)))
+            if ((d >= RightPeakPoint) && (d < (RightPeakPoint + RightOffset)))
             {
                 double grad = 1.0 / -RightOffset;
 
@@ -46,21 +46,6 @@
             }
             
             return 0.0;
-        }
-
-        public override double GetDOM()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void ClearDOM()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override double ORwithDOM(double d)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

@@ -2,24 +2,36 @@
 {
     public class FuzzyTermSet : FuzzyTerm
     {
-        public override void Clone()
+        private FuzzySet _fuzzSet;
+
+        public FuzzyTermSet(FuzzyTermSet fts)
         {
-            throw new System.NotImplementedException();
+            _fuzzSet = fts._fuzzSet;
+        }
+        
+        public FuzzyTermSet(FuzzySet fuzz)
+        {
+            _fuzzSet = fuzz;
+        }
+        
+        public override FuzzyTerm Clone()
+        {
+            return new FuzzyTermSet(this);
         }
 
-        public override void GetDOM()
+        public override double GetDOM()
         {
-            throw new System.NotImplementedException();
+            return _fuzzSet.GetDOM();
         }
 
         public override void ClearDOM()
         {
-            throw new System.NotImplementedException();
+            _fuzzSet.ClearDOM();
         }
 
-        public override void ORwithDOM(double d)
+        public override void ORwithDOM(double value)
         {
-            throw new System.NotImplementedException();
+            _fuzzSet.ORwithDOM(value);
         }
     }
 }

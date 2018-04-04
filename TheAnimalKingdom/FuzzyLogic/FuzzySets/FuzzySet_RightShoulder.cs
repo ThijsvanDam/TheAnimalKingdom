@@ -8,11 +8,11 @@ namespace TheAnimalKingdom.FuzzyLogic.FuzzySets
         public double LeftOffset;
         public double RightOffset;
         
-        public FuzzySet_RightShoulder(double mid, double left, double right) : base(((mid + right) + mid) / 2)
+        public FuzzySet_RightShoulder(double peakPoint, double leftOffset, double rightOffset) : base(((peakPoint + rightOffset) + peakPoint) / 2)
         {
-            PeakPoint = mid;
-            LeftOffset = left;
-            RightOffset = right;
+            PeakPoint = peakPoint;
+            LeftOffset = leftOffset;
+            RightOffset = rightOffset;
         }
         
         public override double CalculateDOM(double d)
@@ -38,21 +38,6 @@ namespace TheAnimalKingdom.FuzzyLogic.FuzzySets
             
             // If it's not on this variable
             return 0.0;
-        }
-
-        public override double GetDOM()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void ClearDOM()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override double ORwithDOM(double d)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
