@@ -172,10 +172,10 @@ namespace TheAnimalKingdom.Util
 
         public static bool CheckEqualSize(Matrix left, Matrix right)
         {
-            return left.Columns == right.Columns && left.Rows == right.Rows
-                ? true
-                : throw new IndexOutOfRangeException(
-                    message: "Lekker bezig, pannekoek! Die matrices zijn niet even groot.");
+            return left.Columns == right.Columns && left.Rows == right.Rows;
+//                ? true
+//                : throw new IndexOutOfRangeException(
+//                    message: "Lekker bezig, pannekoek! Die matrices zijn niet even groot.");
         }
 
 
