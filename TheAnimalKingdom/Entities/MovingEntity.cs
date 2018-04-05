@@ -19,12 +19,18 @@ namespace TheAnimalKingdom.Entities
         
         public int Energy { get; set; }
         public int Hunger { get; set; }
+        public bool IsPredator { get; }
+        public MovingEntity IsScaredOf => null;
 
-        public MovingEntity(Vector2D position, World world) : base(position, world)
+        public MovingEntity(Vector2D position, World world, bool isPredator) : base(position, world)
         {
             SteeringBehaviours = new SteeringBehaviours(this);
             HashTagLifeGoal = new GoalThink(this);
             PathPlanner = new PathPlanner(this);
+            IsPredator = isPredator;
+
+            Energy = 10;
+            Hunger = 0;
             
             SteeringBehaviours.ObstacleAvoidanceOn(1.0);
         }

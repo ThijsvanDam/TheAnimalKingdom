@@ -76,6 +76,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Goals\AtomicGoals\AtomicGoal.cs" />
+    <Compile Include="Goals\AtomicGoals\GoalEscapeLion.cs" />
     <Compile Include="Goals\AtomicGoals\GoalSeekToPosition.cs" />
     <Compile Include="Goals\AtomicGoals\GoalSleep.cs" />
     <Compile Include="Goals\AtomicGoals\GoalTraverseEdge.cs" />

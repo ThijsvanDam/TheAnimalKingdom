@@ -3,30 +3,30 @@ using TheAnimalKingdom.Goals.Base;
 
 namespace TheAnimalKingdom.Goals.AtomicGoals
 {
-    public class GoalSleep : AtomicGoal
+    public class GoalEscapeLion : AtomicGoal
     {
-        public GoalSleep(MovingEntity owner) : base(owner)
+        private MovingEntity _enemy;
+        
+        public GoalEscapeLion(MovingEntity owner, MovingEntity enemy) : base(owner)
         {
+            _enemy = enemy;
         }
 
         public override void Activate()
         {
-            Status = Status.Active;
-            Owner.SteeringBehaviours.AllOff();
+            Owner.SteeringBehaviours.FleeOn(_enemy, 1.0f);
         }
 
         public override Status Process()
         {
             ActivateIfInactive();
 
-            Owner.Energy += 1;
-
             return Status.Active;
         }
 
         public override void Terminate()
         {
-            Owner.SteeringBehaviours.WanderOn(1.0f);
+            Owner.SteeringBehaviours.FleeOff();
         }
     }
 }

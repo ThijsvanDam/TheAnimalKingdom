@@ -5,7 +5,7 @@ namespace TheAnimalKingdom.Entities
 {
     public class Lion : Animal
     {
-        public Lion(Vector2D position, World world) : base(position, world)
+        public Lion(Vector2D position, World world) : base(position, world, true)
         {
             Color = Color.Beige;
             Bradius = 5;
