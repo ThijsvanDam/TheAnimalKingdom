@@ -114,6 +114,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docs\Documentation.tex" />
+    <Content Include="Docs\images\PathFinding.jpg" />
+    <Content Include="Docs\sources.bib" />
+    <Content Include="Docs\Documentation.tex" />
     <Content Include="Docs\Documenthijstion.tex" />
     <Content Include="Docs\images\ObstacleAvoidance.png" />
     <Content Include="Docs\images\WanderBehaviour.png" />
