@@ -126,7 +126,10 @@ Bos, Sander\\
     There is also a predifined maximum amount of calculation cycles per update, which prefents the game from slowing down.
     At first we struggled with this, as it seemed to take much longer to find a path than previoulsy with just the single \textit{Search()} function.
     After a bit of tweaking (changing the maximum amount of cycles per update) and removing a lot of \lstinline[columns=fixed]{Console.WriteLine(...)}
-    lines used for debugging.
+    lines used for debugging which were clearly slowing down the calculations as they were limited by the speed of the console.\par
+    
+    However, performance can still be improved.
+    Storing precalculated costs, or some shortest paths could dramatically improve the performance when the amount of agents increases.
     
     \newpage
     %-----------------------------------------------------------------------------------------
