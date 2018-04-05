@@ -1,0 +1,98 @@
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[nottoc]{tocbibind}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{amsmath}
+
+% Author
+\author{Van Dam, Thijs\\
+\and
+Bos, Sander\\
+}
+\title{\huge The Animal Kingdom}
+\date{April 2018}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+\DeclareCaptionFormat{cancaption}{#1#2#3\par}
+\DeclareCaptionLabelFormat{cancaptionlabel}{#1}
+\captionsetup[figure][number]{format=cancaption,labelformat=cancaptionlabel}
+\graphicspath{{images/}}
+
+
+% Document
+
+\begin{document}
+    \maketitle
+    \thispagestyle{empty}
+    \newpage
+    \newpage
+    \setcounter{page}{1}
+    \section{Introduction}\label{sec:introduction}
+    In this document we discuss the following topics:
+    \begin{itemize}
+        \item Steering
+        \item Path planning
+        \item Behaviour
+        \item Fuzzy logic
+    \end{itemize}
+    
+    To understand the context of this game, we will first give a short explanation of the game/simulation itself.
+    
+    \subsection*{About the game}\label{subsec:about}
+    Somewhere in Africa, a herd of gazelles is gathering food.
+    At the same time a pride of lions is getting quite hungry and thus sees the gazelles as a tasteful meal.
+    The gazelles notice the lions are getting closer and closer.
+    They start to run.
+    It becomes a race of life and death...
+
+    \newpage
+    %-----------------------------------------------------------------------------------------
+    \tableofcontents
+    
+    \newpage
+    %-----------------------------------------------------------------------------------------
+    \section{Steering}\label{sec:steering}
+
+    \newpage
+    %-----------------------------------------------------------------------------------------
+    \section{Path planning}\label{sec:pathPlanning}
+    \input{path-planning}
+
+    \newpage
+    %-----------------------------------------------------------------------------------------
+    \section{Behaviours (Goals)}\label{sec:behaviour}
+    \input{behaviours}
+    
+    \newpage
+    %-----------------------------------------------------------------------------------------
+    \section{Fuzzy logic}\label{sec:fuzzyLogic}
+
+    \newpage
+    %-----------------------------------------------------------------------------------------
+    \section{Conclusion}\label{sec:conclusion}
+    \input{conclusion}
+    \newpage
+    %-----------------------------------------------------------------------------------------
+
+    \addcontentsline{toc}{chapter}{References}
+    \begin{thebibliography}{9}
+        \bibitem{pgaie}
+        Mat Buckland (2004).
+        \textit{Programming Game AI by Example}.
+        Wordware, 2004
+
+        \bibitem{aapc}
+        Lluis Alseda.
+        \textit{A* Algorithm pseudocode}
+        \\\textit{\url{http://mat.uab.cat/~alseda/MasterOpt/AStar-Algorithm.pdf}}
+        \\\textit{Accessed: 2018-04-01}
+    \end{thebibliography}
+\end{document}
