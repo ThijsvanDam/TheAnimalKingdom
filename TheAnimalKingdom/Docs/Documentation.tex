@@ -65,6 +65,8 @@ Bos, Sander\\
     \section{Path planning}\label{sec:pathPlanning}
     \input{path-planning}
 
+    \newpage
+    %-----------------------------------------------------------------------------------------
     \section{Behaviours (Goals)}\label{sec:behaviour}
     \input{behaviours}
     
@@ -75,11 +77,21 @@ Bos, Sander\\
     \newpage
     %-----------------------------------------------------------------------------------------
     \section{Conclusion}\label{sec:conclusion}
-
+    \input{conclusion}
     \newpage
     %-----------------------------------------------------------------------------------------
 
-    \addcontentsline{toc}{section}{References}
-    \bibliographystyle{apalike}
-    \bibliography{references}
+    \addcontentsline{toc}{chapter}{References}
+    \begin{thebibliography}{9}
+        \bibitem{pgaie}
+        Mat Buckland (2004).
+        \textit{Programming Game AI by Example}.
+        Wordware, 2004
+
+        \bibitem{aapc}
+        Lluis Alseda.
+        \textit{A* Algorithm pseudocode}
+        \\\textit{\url{http://mat.uab.cat/~alseda/MasterOpt/AStar-Algorithm.pdf}}
+        \\\textit{Accessed: 2018-04-01}
+    \end{thebibliography}
 \end{document}

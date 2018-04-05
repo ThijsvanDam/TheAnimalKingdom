@@ -67,7 +67,7 @@ Calculating the Manhattan distance was very easy as we could just calculate the 
 and devide it by the length of one edge to get the estimated distance (fig.\ref{fig:pathPlanCalcManhattan}).
 
 \begin{figure}[h!]
-    \[ $$M = \dfrac{|targetLocation.X - currentLocation.X| + |targetLocation.Y - currentLocation.Y|}{15}\]
+    \[ $$Dist_M = \dfrac{|targetLocation.X - currentLocation.X| + |targetLocation.Y - currentLocation.Y|}{15}\]
     \caption{Calculating the Manhattan distance}
     \label{fig:pathPlanCalcManhattan}
 \end{figure}
@@ -80,5 +80,3 @@ After a bit of tweaking (changing the maximum amount of cycles per update) and r
 lines used for debugging which were clearly slowing down the calculations as they were limited by the speed of the console.\par
 However, performance can still be improved.
 Storing precalculated costs, or some shortest paths could dramatically improve the performance when the amount of agents increases.
-\newpage
-%-----------------------------------------------------------------------------------------

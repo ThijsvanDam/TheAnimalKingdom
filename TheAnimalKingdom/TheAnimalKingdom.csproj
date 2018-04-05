@@ -123,7 +123,6 @@
     <Content Include="Docs\images\PathFinding.png" />
     <Content Include="Docs\images\WanderBehaviour.png" />
     <Content Include="Docs\path-planning.tex" />
-    <Content Include="Docs\references.bib" />
     <Content Include="Resources\seamless-sand-textures.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
