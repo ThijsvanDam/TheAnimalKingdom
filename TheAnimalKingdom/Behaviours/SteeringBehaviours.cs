@@ -75,12 +75,6 @@ namespace TheAnimalKingdom.Behaviours
                 sum.Add(v);
             }
 
-            if (_instanceExists(_straightWalking))
-            {
-                Vector2D v = _straightWalking.Calculate().Multiply(_dStraightWalking);
-                sum.Add(v);
-            }
-
             if (_instanceExists(_wander))
             {
                 Vector2D v = _wander.Calculate().Multiply(_dWander);
