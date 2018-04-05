@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 using TheAnimalKingdom.Behaviours.BaseBehaviours;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
@@ -23,6 +24,11 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
 
         public override Vector2D Calculate()
         {
+            if (CheckIfObstacleInVision())
+            {
+                return new Vector2D(0, 0);
+            }
+            
             Vector2D currentVelocity = MovingEntity.VVelocity;
 
             Vector2D desiredVelocity = Enemy.VPos.Clone().Substract(MovingEntity.VPos).Normalize();
@@ -30,6 +36,12 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
             newDesiredVelocity.Multiply(MovingEntity.DMaxForce);
             steering = newDesiredVelocity.Substract(currentVelocity);
             return steering;
+        }
+
+        public bool CheckIfObstacleInVision()
+        {
+            // TODO: Implement this, we forgot it.
+            return false;
         }
 
         public override void DrawBehavior(Graphics g)
