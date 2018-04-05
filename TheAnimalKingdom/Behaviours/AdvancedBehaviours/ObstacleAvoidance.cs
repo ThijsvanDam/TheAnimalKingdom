@@ -51,7 +51,7 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
 
             double speed = MovingEntity.VVelocity.Length() * 10;
             double maxSpeed = MovingEntity.DMaxSpeed;
-
+            
             double extra = ((speed / maxSpeed) * MinimumRectangleLength);
 
             RectangleDistance = MinimumRectangleLength + extra;
