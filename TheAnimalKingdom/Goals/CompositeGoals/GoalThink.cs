@@ -13,7 +13,8 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         public override void Activate()
         {
             Status = Status.Active;
-            //AddSubgoal(new GoalWander(Owner));
+            Owner.SteeringBehaviours.ObstacleAvoidanceOn(5.0f);
+            AddSubgoal(new GoalWander(Owner));
         }
 
         public override Status Process()
@@ -24,7 +25,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 
             if (_subgoals.Count == 0)
             {
-                //AddSubgoal(new GoalWander(Owner));
+                AddSubgoal(new GoalWander(Owner));
             }
             
             return status;

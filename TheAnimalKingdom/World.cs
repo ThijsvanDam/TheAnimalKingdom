@@ -133,7 +133,7 @@ namespace TheAnimalKingdom
 
         public void StartPathFollowing(Vector2D target)
         {
-            
+            if (!GodMode) return;
             var entity = (MovingEntity)Entities[1];
             entity.SteeringBehaviours.ArriveOn(target, 2.0f);
             entity.DMaxForce = 20.0f;
@@ -142,10 +142,7 @@ namespace TheAnimalKingdom
 
         public void Render(Graphics g)
         {
-            if (GodMode)
-            {
-                graph.Render(g);
-            }
+            if (GodMode)graph.Render(g);
 
             foreach (ObstacleEntity obstacleEntity in Obstacles)
             {
