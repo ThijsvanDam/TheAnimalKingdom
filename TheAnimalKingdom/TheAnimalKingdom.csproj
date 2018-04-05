@@ -54,7 +54,6 @@
     <Compile Include="Behaviours\NormalBehaviours\SeekBehaviour.cs" />
     <Compile Include="Behaviours\BaseBehaviours\SteeringBehaviour.cs" />
     <Compile Include="Behaviours\SteeringBehaviours.cs" />
-    <Compile Include="Behaviours\NormalBehaviours\StraightWalkingBehaviour.cs" />
     <Compile Include="Behaviours\NormalBehaviours\WanderBehaviour.cs" />
     <Compile Include="DBPanel.cs">
       <SubType>Component</SubType>
@@ -114,10 +113,11 @@
     <None Include="Resources\Visualpharm-Animals-Panda.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Docs\Documentation.tex" />
+    <Content Include="Docs\Documenthijstion.tex" />
+    <Content Include="Docs\images\ObstacleAvoidance.png" />
+    <Content Include="Docs\images\WanderBehaviour.png" />
     <Content Include="Resources\seamless-sand-textures.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Docs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

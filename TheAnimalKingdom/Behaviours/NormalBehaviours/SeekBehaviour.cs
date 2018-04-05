@@ -13,12 +13,12 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
     public class SeekBehaviour : SteeringBehaviour
     {
         public BaseGameEntity Goal;
-        public Vector2D steering;
+        public Vector2D Steering;
 
         public SeekBehaviour(MovingEntity movingEntity, BaseGameEntity goal) : base(movingEntity)
         {
             Goal = goal;
-            steering = new Vector2D(0, 0);
+            Steering = new Vector2D(0, 0);
         }
 
         public override Vector2D Calculate()
@@ -27,8 +27,8 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
 
             Vector2D desiredVelocity = Goal.VPos.Clone().Substract(MovingEntity.VPos).Normalize();
             desiredVelocity.Multiply(MovingEntity.DMaxForce);
-            steering = desiredVelocity.Substract(currentVelocity);
-            return steering;
+            Steering = desiredVelocity.Substract(currentVelocity);
+            return Steering;
         }
 
         public override void DrawBehavior(Graphics g)
@@ -36,7 +36,7 @@ namespace TheAnimalKingdom.Behaviours.NormalBehaviours
             double x = MovingEntity.VPos.X;
             double y = MovingEntity.VPos.Y;
 
-            g.DrawLine(new Pen(Color.Red), (int)x, (int)y, (int)(steering.X + x), (int)(steering.Y + y));
+            g.DrawLine(new Pen(Color.Red), (int)x, (int)y, (int)(Steering.X + x), (int)(Steering.Y + y));
         }
     }
 }

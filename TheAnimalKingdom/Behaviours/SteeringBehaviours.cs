@@ -16,13 +16,11 @@ namespace TheAnimalKingdom.Behaviours
         private ArriveBehaviour _arrive;
         private FleeBehaviour _flee;
         private SeekBehaviour _seek;
-        private StraightWalkingBehaviour _straightWalking;
         private WanderBehaviour _wander;
 
         private double _dArrive;
         private double _dFlee;
         private double _dSeek;
-        private double _dStraightWalking;
         private double _dWander;
 
         #endregion
@@ -77,13 +75,6 @@ namespace TheAnimalKingdom.Behaviours
                 sum.Add(v);
             }
 
-            if (_instanceExists(_straightWalking))
-            {
-                Vector2D v = _straightWalking.Calculate().Multiply(_dStraightWalking);
-                Console.WriteLine("Straight walking: " + v);
-                sum.Add(v);
-            }
-
             if (_instanceExists(_wander))
             {
                 Vector2D v = _wander.Calculate().Multiply(_dWander);
@@ -123,19 +114,6 @@ namespace TheAnimalKingdom.Behaviours
             _wander = null;
             _dWander = 0;
         }
-
-        public void StraightWalkingOn(double intensity)
-        {
-            _straightWalking = new StraightWalkingBehaviour(_movingEntity);
-            _dStraightWalking = intensity;
-        }
-
-        public void StraightWalkingOff()
-        {
-            _straightWalking = null;
-            _dStraightWalking = 0;
-        }
-
 
         public void SeekOn(BaseGameEntity goal, double intensity)
         {
@@ -191,10 +169,6 @@ namespace TheAnimalKingdom.Behaviours
 
         #endregion
 
-
-
-
-
         public void DrawBehaviors(Graphics g)
         {
             #region NormalBehaviours
@@ -213,12 +187,7 @@ namespace TheAnimalKingdom.Behaviours
             {
                 _seek.DrawBehavior(g);
             }
-
-            if (_instanceExists(_straightWalking))
-            {
-                _straightWalking.DrawBehavior(g);
-            }
-
+            
             if (_instanceExists(_wander))
             {
                 _wander.DrawBehavior(g);
