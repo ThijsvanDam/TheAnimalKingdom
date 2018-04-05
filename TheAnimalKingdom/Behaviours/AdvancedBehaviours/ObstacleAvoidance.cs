@@ -118,9 +118,7 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
         private List<ObstacleEntity> FindObstaclesWithinRange()
         {           
             List<ObstacleEntity> obstaclesWithinRange = new List<ObstacleEntity>();
-            
-            var agentHeading = Math.Atan2(MovingEntity.VVelocity.X, MovingEntity.VVelocity.Y);
-            
+                        
             foreach (ObstacleEntity obstacle in MovingEntity.World.Obstacles)
             {
                 var distanceToObstacle = Vector2D.DistanceSquared(obstacle.VPos, MovingEntity.VPos);

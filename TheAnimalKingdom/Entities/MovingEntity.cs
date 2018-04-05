@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using TheAnimalKingdom.Behaviours;
 using TheAnimalKingdom.Goals.Base;
 using TheAnimalKingdom.Goals.CompositeGoals;
@@ -63,9 +66,30 @@ namespace TheAnimalKingdom.Entities
                 VHeading = VVelocity.Clone().Normalize();
                 VSide = VHeading.Perpendicular();
             }
-            
-            //CheckOutOfScreen();
         }
+
+        public override void Render(Graphics g)
+        {
+            if (World.GodMode)
+            {
+                SteeringBehaviours.DrawBehaviors(g);
+                if (Route?.Count > 0) RenderRoute(g);
+            }
+        }
+        
+        public void RenderRoute(Graphics g)
+        {
+            Stack<NavGraphNode> copiedRoute = new Stack<NavGraphNode>(Route.Reverse());
+            
+            while (copiedRoute.Count > 1)
+            {
+                var nodeFrom = copiedRoute.Pop();
+                var nodeTo = copiedRoute.Peek();
+                
+                g.DrawLine(new Pen(Color.Yellow), nodeFrom.Position.ToPoint(), nodeTo.Position.ToPoint());
+            }
+        }
+        
 
         private void CheckOutOfScreen()
         {

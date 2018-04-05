@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TheAnimalKingdom.Util;
+﻿using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Entities
 {
@@ -12,7 +7,6 @@ namespace TheAnimalKingdom.Entities
         protected ObstacleEntity(Vector2D position, float size, World world) : base(position, world)
         {
             Bradius = (size * 25) / 2;
-//            world.Obstacles.Add(this);
         }
 
         public abstract void Tag();

@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using TheAnimalKingdom.Util;
+﻿using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Entities
 {

@@ -11,7 +11,7 @@ namespace TheAnimalKingdom
         public static int Intensity = 0;
         public static int MouseX = 0;
         public static int MouseY = 0;
-        public static bool ShouldRenderGraph { get; set; }
+        public static bool GodMode { get; set; }
 
         public List<BaseGameEntity> Entities = new List<BaseGameEntity>();
         public List<ObstacleEntity> Obstacles = new List<ObstacleEntity>();
@@ -30,7 +30,7 @@ namespace TheAnimalKingdom
             PathManager = new PathManager(numCyclesPerUpdate:200);
             _populate();
 
-            ShouldRenderGraph = false;
+            GodMode = false;
         }
 
         private void _populate()
@@ -133,6 +133,7 @@ namespace TheAnimalKingdom
 
         public void StartPathFollowing(Vector2D target)
         {
+            
             var entity = (MovingEntity)Entities[1];
             entity.SteeringBehaviours.ArriveOn(target, 2.0f);
             entity.DMaxForce = 20.0f;
@@ -141,7 +142,7 @@ namespace TheAnimalKingdom
 
         public void Render(Graphics g)
         {
-            if (ShouldRenderGraph)
+            if (GodMode)
             {
                 graph.Render(g);
             }

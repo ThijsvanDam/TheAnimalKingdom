@@ -54,7 +54,7 @@ namespace TheAnimalKingdom
             switch (e.KeyValue)
             {
                 case 68: //D
-                    World.ShouldRenderGraph = !World.ShouldRenderGraph;
+                    World.GodMode = !World.GodMode;
                     break;
             }
         }
