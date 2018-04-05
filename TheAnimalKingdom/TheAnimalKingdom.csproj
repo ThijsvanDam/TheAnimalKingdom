@@ -116,10 +116,11 @@
     <Content Include="Docs\behaviours.tex" />
     <Content Include="Docs\Documentation.tex" />
     <Content Include="Docs\images\Floodfill.png" />
-    <Content Include="Docs\images\PathFinding.jpg" />
     <Content Include="Docs\Documentation.tex" />
     <Content Include="Docs\Documenthijstion.tex" />
+    <Content Include="Docs\images\Goals.png" />
     <Content Include="Docs\images\ObstacleAvoidance.png" />
+    <Content Include="Docs\images\PathFinding.png" />
     <Content Include="Docs\images\WanderBehaviour.png" />
     <Content Include="Docs\path-planning.tex" />
     <Content Include="Docs\references.bib" />
