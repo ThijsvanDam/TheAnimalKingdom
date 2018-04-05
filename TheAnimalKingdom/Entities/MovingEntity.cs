@@ -13,6 +13,9 @@ namespace TheAnimalKingdom.Entities
         public PathPlanner PathPlanner { get; set; }
         public CompositeGoal HashTagLifeGoal { get; set; }
         public Stack<NavGraphNode> Route { get; set; }
+        
+        public int Energy { get; set; }
+        public int Hunger { get; set; }
 
         public MovingEntity(Vector2D position, World world) : base(position, world)
         {

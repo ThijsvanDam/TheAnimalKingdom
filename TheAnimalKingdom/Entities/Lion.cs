@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TheAnimalKingdom.Behaviours;
 using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Entities
 {
-    class Gazelle : Animal
+    public class Lion : Animal
     {
-        public Gazelle(Vector2D position, World world) : base(position, world)
+        public Lion(Vector2D position, World world) : base(position, world)
         {
-            Color = Color.Coral;
+            Color = Color.Beige;
             Bradius = 5;
             VVelocity = new Vector2D(0, 0);
-            DMass = 10;
-            DMaxSpeed = 7;
+            DMass = 15;
+            DMaxSpeed = 5;
             DDeceleration = 3;
             DMaxForce = 10;
         }
@@ -26,7 +22,7 @@ namespace TheAnimalKingdom.Entities
         {
             double left = VPos.X - Bradius;
             double top = VPos.Y - Bradius;
-            double size = Bradius * 2;
+            double size = Bradius * 3;
             SteeringBehaviours.DrawBehaviors(g);
             g.FillEllipse(new SolidBrush(Color), (int)left, (int)top, (int)size, (int)size);
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using TheAnimalKingdom.Entities;
-using TheAnimalKingdom.Goals.CompositeGoals;
 using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom
@@ -37,14 +36,14 @@ namespace TheAnimalKingdom
         private void _populate()
         {
             FillObstaclesWithArray(GetFunPlayField());
-            graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(15f, 15f));
+            graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(50f, 50f));
             
-            StaticEntity s1 = new StaticEntity(new Vector2D(0, 0), this); // the entity with ID=0 always follow the cursor so it has to be at the start.
-            Gazelle g1 = new Gazelle(new Vector2D(20f, 20f), this);
+            Gazelle g1 = new Gazelle(new Vector2D(50f, 50f), this);
+            Lion l1 = new Lion(new Vector2D(100f, 100f), this);
  
             Entities.AddRange(new List<BaseGameEntity>()
             {
-                s1, g1,
+                g1, l1
             });
         }
 
@@ -79,15 +78,13 @@ namespace TheAnimalKingdom
                     if (array[i, j] == 2)
                     {
                         SquaredObstacle a = new SquaredObstacle(
-                            new Vector2D((fullSize * j) + (25f / 2f), (fullSize * i) + (fullSize / 2)), 1f, this);
-                        a.Color = Color.Red;
+                            new Vector2D((fullSize * j) + (25f / 2f), (fullSize * i) + (fullSize / 2)), 1f, this, ItemType.Grass);
                         Obstacles.Add(a);
                     }
                     if (array[i, j] == 3)
                     {
                         SquaredObstacle a = new SquaredObstacle(
-                            new Vector2D((fullSize * j) + (25f / 2f), (fullSize * i) + (fullSize / 2)), 1f, this);
-                        a.Color = Color.Blue;
+                            new Vector2D((fullSize * j) + (25f / 2f), (fullSize * i) + (fullSize / 2)), 1f, this, ItemType.Water);
                         Obstacles.Add(a);
                     }
                 }
@@ -112,39 +109,32 @@ namespace TheAnimalKingdom
             return new int[20, 24]
             {//    1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24      
                 {  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1  }, // 1
-                {  1,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 2 
-                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1  }, // 3
-                {  1,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1  }, // 4
-                {  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1  }, // 5
-                {  1,  0,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1  }, // 6
-                {  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  1  }, // 7
-                {  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  1  }, // 8
-                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  1,  1,  1,  0,  1  }, // 9
-                {  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  1,  1,  1,  0,  1  }, // 10
-                {  1,  0,  0,  0,  1,  1,  0,  0,  0,  0,  1,  1,  2,  2,  1,  1,  0,  0,  0,  1,  1,  1,  0,  1  }, // 11
+                {  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  1  }, // 2 
+                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  1  }, // 3
+                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  1  }, // 4
+                {  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 5
+                {  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 6
+                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 7
+                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 8
+                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 9
+                {  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  2,  2,  2,  1,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 10
+                {  1,  0,  0,  0,  2,  1,  0,  0,  0,  0,  2,  2,  2,  2,  1,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 11
                 {  1,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 12
                 {  1,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 13
-                {  1,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1,  1,  1,  0,  0,  0,  0,  1  }, // 14
-                {  1,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  0,  0,  1,  1,  0,  0,  0,  0,  1  }, // 15
-                {  1,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0,  1,  0,  0,  0,  0,  1  }, // 16
-                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1  }, // 17
-                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  1  }, // 18
-                {  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3  }, // 19
-                {  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3  }, // 20
+                {  1,  0,  0,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 14
+                {  1,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 15
+                {  1,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  2,  1,  2,  2,  0,  0,  0,  0,  0,  0,  0,  1  }, // 16
+                {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  1,  1,  2,  2,  0,  0,  0,  0,  0,  0,  1  }, // 17
+                {  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1  }, // 18
+                {  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1  }, // 19
+                {  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1  }, // 20
             };
-        }
-
-        public void ReadInputs()
-        {
-            Console.WriteLine("inputs");
         }
 
         public void StartPathFollowing(Vector2D target)
         {
             var entity = (MovingEntity)Entities[1];
-            //entity.HashTagLifeGoal.AddSubgoal(new GoalMoveToPosition(entity, target));
-            var staticObject = new StaticEntity(target, this);
-            entity.SteeringBehaviours.ArriveOn(target, 1.0f);
+            entity.SteeringBehaviours.ArriveOn(target, 2.0f);
             entity.DMaxForce = 20.0f;
         }
 

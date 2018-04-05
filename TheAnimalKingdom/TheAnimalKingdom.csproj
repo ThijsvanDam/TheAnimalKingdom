@@ -63,6 +63,7 @@
     <Compile Include="Entities\BaseGameEntity.cs" />
     <Compile Include="Entities\Gazelle.cs" />
     <Compile Include="Entities\ItemType.cs" />
+    <Compile Include="Entities\Lion.cs" />
     <Compile Include="Entities\MovingEntity.cs" />
     <Compile Include="Entities\ObstacleEntity.cs" />
     <Compile Include="Entities\RoundObstacle.cs" />

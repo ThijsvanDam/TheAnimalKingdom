@@ -78,10 +78,8 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
                 // front of the moving entity  
                 if (objectToLocalSpace.Y > 0)
                 {
-                    // All obstacles that are within range AND in front of the moving entity
-                    MovingEntity.World.Obstacles[obstacle.ID].Color = Color.Red;
-                                       
-                    var severity = (10 / Vector2D.DistanceSquared(new Vector2D(0,0), objectToLocalSpace)) * speed;
+                    // All obstacles that are within range AND in front of the moving entity                                       
+                    var severity = 10 / (Vector2D.DistanceSquared(new Vector2D(0,0), objectToLocalSpace)) * speed;
                     
                     // Calculate the forces that should be added to change direction
                     var forceX = - objectToLocalSpace.X * severity;
@@ -89,10 +87,6 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
             
                     //And add it to the total force
                     totalForce.Add(new Vector2D(forceX ,forceY));
-                }
-                else
-                {
-                    MovingEntity.World.Obstacles[obstacle.ID].Color = Color.Green;
                 }
             }
             return totalForce;
@@ -135,12 +129,7 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
 
                 if (distanceToObstacle < minAllowedDist * minAllowedDist)
                 {   
-                    obstacle.Tag();
                     obstaclesWithinRange.Add(obstacle);
-                }
-                else
-                {
-                    obstacle.RemoveTag();
                 }
             }
 

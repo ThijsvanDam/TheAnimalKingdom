@@ -53,7 +53,7 @@ namespace TheAnimalKingdom
         {
             switch (e.KeyValue)
             {
-                case 71:
+                case 68: //D
                     World.ShouldRenderGraph = !World.ShouldRenderGraph;
                     break;
             }
