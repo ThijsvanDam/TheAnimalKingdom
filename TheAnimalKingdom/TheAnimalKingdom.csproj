@@ -115,11 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docs\Documentation.tex" />
+    <Content Include="Docs\images\PathFinding.jpg" />
     <Content Include="Docs\sources.bib" />
     <Content Include="Resources\seamless-sand-textures.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Docs\images" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
