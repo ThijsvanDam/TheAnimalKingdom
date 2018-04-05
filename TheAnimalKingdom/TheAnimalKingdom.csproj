@@ -116,5 +116,8 @@
   <ItemGroup>
     <Content Include="Resources\seamless-sand-textures.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Docs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
