@@ -3,7 +3,7 @@ First the structure will be discussed, then we will give an illustration of how 
 the implementation of the used path-finding algorithms is explained.
 
 \subsection{Structure}\label{subsec:pathstructure}
-Buckland\cite{pgaie} describes a well-structured approach to splitting logic for the pathfinding.
+Buckland describes\cite{pgaie} a well-structured approach to splitting logic for the pathfinding.
 This same structure is what we used in our application, although we have made some changes to fit our own needs.
 The application contains one instance of a \textit{PathManager} and each (moving) entity contains a \textit{PathPlanner}.
 The \textit{PathPlanner} is what is used to request a new search with the specified algorithm (A* or Dijkstra).
