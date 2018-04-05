@@ -54,7 +54,6 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
 
             double extra = ((speed / maxSpeed) * MinimumRectangleLength);
 
-
             RectangleDistance = MinimumRectangleLength + extra;
 
             // The square and its distance
@@ -62,28 +61,41 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
 
             // Create rectangle
             Rectangle = GetRectangle();
-
-            List<ObstacleEntity> obstaclesWithinRange = FindObstacleEntitiesInCollisionCourse();
-
-            foreach (ObstacleEntity obstacle in obstaclesWithinRange)
-            {
-                Vector2D localSpacePosition = GetPositionInLocalSpace(obstacle);
-            }
-
-
-            return new Vector2D(0, 0);
-        }
-
-        private Vector2D GetPositionInLocalSpace(ObstacleEntity obstacle)
-        {
-            Vector2D obstaclePos = obstacle.VPos;
-
-            double direction = Vector2D.Direction(Rectangle[0], Rectangle[2]);
             
-            Vector2D position = MovingEntity.VPos;
+            var agentHeading = Math.Atan2(MovingEntity.VVelocity.X, MovingEntity.VVelocity.Y);
+               
+            // Get all obstacles within range
+            List<ObstacleEntity> obstaclesWithinRange = FindObstaclesWithinRange();
+            
+            Vector2D totalForce = new Vector2D();
 
-
-            return new Vector2D(0, 0);
+            foreach (var obstacle in obstaclesWithinRange)
+            {
+                // All obstacles that are within range
+                var objectToLocalSpace = ToLocalSpace(obstacle.VPos, agentHeading);
+                
+                // Once we have all obstacles within our range, translate them to the local space and check if they are in
+                // front of the moving entity  
+                if (objectToLocalSpace.Y > 0)
+                {
+                    // All obstacles that are within range AND in front of the moving entity
+                    MovingEntity.World.Obstacles[obstacle.ID].Color = Color.Red;
+                                       
+                    var severity = (10 / Vector2D.DistanceSquared(new Vector2D(0,0), objectToLocalSpace)) * speed;
+                    
+                    // Calculate the forces that should be added to change direction
+                    var forceX = - objectToLocalSpace.X * severity;
+                    var forceY = - objectToLocalSpace.Y * severity;
+            
+                    //And add it to the total force
+                    totalForce.Add(new Vector2D(forceX ,forceY));
+                }
+                else
+                {
+                    MovingEntity.World.Obstacles[obstacle.ID].Color = Color.Green;
+                }
+            }
+            return totalForce;
         }
 
         private List<Vector2D> GetRectangle()
@@ -109,38 +121,22 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
             return rectangle;
         }
 
-        private List<ObstacleEntity> FindObstacleEntitiesInCollisionCourse()
+        private List<ObstacleEntity> FindObstaclesWithinRange()
         {           
             List<ObstacleEntity> obstaclesWithinRange = new List<ObstacleEntity>();
             
+            var agentHeading = Math.Atan2(MovingEntity.VVelocity.X, MovingEntity.VVelocity.Y);
+            
             foreach (ObstacleEntity obstacle in MovingEntity.World.Obstacles)
             {
-                var distanceToObstace = Vector2D.DistanceSquared(obstacle.VPos, MovingEntity.VPos);
-                
-                var directionOfAgent = Math.Atan2(MovingEntity.VVelocity.X, MovingEntity.VVelocity.Y);
-
-                var distanceToObstacle = obstacle.VPos.Clone().Substract(MovingEntity.VPos);
-                
-                var directionToObstacle = Math.Atan2(distanceToObstacle.X, distanceToObstacle.Y);
-                
-                Console.WriteLine("directionToObstacle:" + directionToObstacle + "\ndirectionOfAgent:" + directionOfAgent);
-                
+                var distanceToObstacle = Vector2D.DistanceSquared(obstacle.VPos, MovingEntity.VPos);
+                                
                 double minAllowedDist = (RectangleDistance * 2) + obstacle.Bradius;
 
-                if (distanceToObstace < minAllowedDist * minAllowedDist)
-                {
+                if (distanceToObstacle < minAllowedDist * minAllowedDist)
+                {   
                     obstacle.Tag();
-                    
-                    if (directionToObstacle < Math.PI / 2 && directionToObstacle > - Math.PI / 2)
-                    {
-                        obstacle.Color = Color.Black;
-                        obstaclesWithinRange.Add(obstacle);
-                        obstacle.Tag();
-                    }
-                    else
-                    {
-                        obstacle.RemoveTag();
-                    }
+                    obstaclesWithinRange.Add(obstacle);
                 }
                 else
                 {
@@ -149,6 +145,14 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
             }
 
             return obstaclesWithinRange;
+        }
+        
+        private Vector2D ToLocalSpace(Vector2D worldPosition, double agentHeading)
+        {
+            Vector2D positionInLocalSpace = worldPosition.Clone().Substract(MovingEntity.VPos);
+            Vector2D positionAndHeadingInLocalSpace = positionInLocalSpace.Rotate(agentHeading);
+
+            return positionAndHeadingInLocalSpace;
         }
 
         public override void DrawBehavior(Graphics g)

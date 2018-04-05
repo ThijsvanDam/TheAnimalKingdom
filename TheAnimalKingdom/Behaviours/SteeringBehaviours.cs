@@ -247,7 +247,7 @@ namespace TheAnimalKingdom.Behaviours
 
             if (_instanceExists(_wander))
             {
-                _wander.DrawBehavior(g);
+                //_wander.DrawBehavior(g);
             }
 
             #endregion

@@ -93,6 +93,7 @@
     <Compile Include="Util\GraphEdge.cs" />
     <Compile Include="Util\GraphGenerator.cs" />
     <Compile Include="Util\GraphSearch.cs" />
+    <Compile Include="Util\Matrix.cs" />
     <Compile Include="Util\NavGraphNode.cs" />
     <Compile Include="Util\GraphNode.cs" />
     <Compile Include="Util\PathManager.cs" />

@@ -61,7 +61,7 @@ namespace TheAnimalKingdom.Entities
                 VSide = VHeading.Perpendicular();
             }
             
-            CheckOutOfScreen();
+            //CheckOutOfScreen();
         }
 
         private void CheckOutOfScreen()

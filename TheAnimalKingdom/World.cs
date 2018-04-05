@@ -40,7 +40,7 @@ namespace TheAnimalKingdom
             graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(15f, 15f));
             
             StaticEntity s1 = new StaticEntity(new Vector2D(0, 0), this); // the entity with ID=0 always follow the cursor so it has to be at the start.
-            Gazelle g1 = new Gazelle(new Vector2D(0, 0), this);
+            Gazelle g1 = new Gazelle(new Vector2D(20f, 20f), this);
  
             Entities.AddRange(new List<BaseGameEntity>()
             {
@@ -142,9 +142,9 @@ namespace TheAnimalKingdom
         public void StartPathFollowing(Vector2D target)
         {
             var entity = (MovingEntity)Entities[1];
-//            entity.HashTagLifeGoal.AddSubgoal(new GoalMoveToPosition(entity, target));
+            //entity.HashTagLifeGoal.AddSubgoal(new GoalMoveToPosition(entity, target));
             var staticObject = new StaticEntity(target, this);
-            entity.SteeringBehaviours.SeekOn(target, 1.0f);
+            entity.SteeringBehaviours.ArriveOn(target, 1.0f);
             entity.DMaxForce = 20.0f;
         }
 
