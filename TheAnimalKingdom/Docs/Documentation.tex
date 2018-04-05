@@ -1,17 +1,24 @@
 % Preamble
-\documentclass[11pt]{extarticle}
+\documentclass[11pt]{article}
 
 % Packages
 \usepackage{a4wide}
-
+\usepackage{graphicx}
+\usepackage{url}
+\graphicspath{{images/}}
+\usepackage[nottoc]{tocbibind}
+\usepackage{listings}
 
 % Author
 \author{Van Dam, Thijs\\
 \and
 Bos, Sander\\
 }
-\title{\huge The Game of Life}
+\title{\huge The Animal Kingdom}
 \date{April 2018}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
 
 % Document
 
@@ -22,7 +29,6 @@ Bos, Sander\\
     \newpage
     \setcounter{page}{1}
     \section{Introduction}\label{sec:introduction}
-    Bla bla bladiebla
     \begin{itemize}
         \item Steering
         \item Path planning
@@ -39,15 +45,46 @@ Bos, Sander\\
     \newpage
     %-----------------------------------------------------------------------------------------
     \section{Path planning}\label{sec:pathPlanning}
+    This section contains all information about the path planning algorithms and structure used in 'The Animal Kingdom'.
+    \subsection{Structure}\label{subsec:pathstructure}
+    Buckland\cite{pgaie} describes a well-structured approach to splitting logic for the pathfinding.
+    This same structure is what we used in our application, although we have made some changes to fit our own needs.
+    The application contains one instance of a \textbf{PathManager} and each (moving) entity contains a \textbf{PathPlanner}.
+    The \textbf{PathPlanner} is what is used to request a new search with the specified algorithm (A* or Dijkstra).
+    When a request is done, the \textbf{PathPlanner} registers itself in the \textbf{PathManager}.
+    Using a \textbf{PathManager} makes it possible to manage and control all search requests from one place.
+    This is especially useful when you want to implement time-slicing or other logic that restricts the amount of search cycles per update.
+    The latter case is what we use it for.
+    \textbf{PathManager} contains a function \textit{UpdateSearches} which lets each \textbf{PathPlanner} do one or more cycle depending on the maximum cycles set while instantiating the \textbf{PathManager}.
+    What a cycle does, will be discussed in section \ref{subsec:pathalgorithms}.\par
+    The class diagram below shows the structure of the pathfinding logic including the \textbf{PathManager} and \textbf{PathPlanner}.
+    
+    \subsection{Creating a graph}\label{subsec:pathgraphcreation}
+    
+    \subsection{Algorithms}\label{subsec:pathalgorithms}
+    
+    \subsubsection{Dijkstra}\label{sec:pathDijkstra}
 
+    
+    \subsubsection{A*}\label{sec:pathAstar}
+    
+    \subsection{Performance}\label{subsec:pathperformance}
+    
     \newpage
     %-----------------------------------------------------------------------------------------
     \section{Behaviour}\label{sec:behaviour}
-
+    
     \newpage
     %-----------------------------------------------------------------------------------------
     \section{Fuzzy logic}\label{sec:fuzzyLogic}
 
     \newpage
     %-----------------------------------------------------------------------------------------
+    \section{Conclusion}\label{sec:conclusion}
+
+    \newpage
+    %-----------------------------------------------------------------------------------------
+
+    \bibliographystyle{unsrt}
+    \bibliography{sources}
 \end{document}
