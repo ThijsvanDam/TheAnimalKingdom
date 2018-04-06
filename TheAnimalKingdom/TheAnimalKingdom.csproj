@@ -135,6 +135,7 @@
   <ItemGroup>
     <Content Include="Docs\behaviours.tex" />
     <Content Include="Docs\Documentation.tex" />
+    <Content Include="Docs\fuzzy-logic.tex" />
     <Content Include="Docs\images\Floodfill.png" />
     <Content Include="Docs\images\BehavioursClassDiagram.PNG" />
     <Content Include="Docs\images\PathFinding.jpg" />

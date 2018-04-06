@@ -49,57 +49,6 @@ Bos, Sander\\
     \newpage
     %-----------------------------------------------------------------------------------------
     \section{Fuzzy logic}\label{sec:fuzzyLogic}
-    \subsection{FLV Graphs}
+    \input{fuzzy-logic}
 
-    \subsection{Rulesets}
-    These are the rulesets used in our program.
-    They only portray the two decisions of a gazelle, namely wanna eat and wanna run.
-    The horizontal values (close, middle and far) are aimed at the distance between the gazelle and a lion.
-    The vertical values (full, couldeat and hungry) are aimed at the hunger the gazelle experiences.
-    Based on these values, the gazelle should be able to choose if gathering food is undesirable, desirable or verydesirable.
-    \begin{table}[ht]
-        \centering
-        \label{my-label}
-        \begin{tabular}{|l|l|l|l|}
-            \hline
-            & \textbf{Close}       & \textbf{Middle}        & \textbf{Far}           \\ \hline
-            \textbf{Full}     & Undesirable & Undesirable   & Desirable     \\ \hline
-            \textbf{CouldEat} & Undesirable & Desirable     & VeryDesirable \\ \hline
-            \textbf{Hungry}   & Undesirable & VeryDesirable & VeryDesirable \\ \hline
-        \end{tabular}
-        \caption{GazelleWannaEat}
-    \end{table}
-
-    \begin{table}[ht]
-        \centering
-        \label{my-label2}
-        \begin{tabular}{|l|l|l|l|}
-            \hline
-            & \textbf{Close}       & \textbf{Middle}        & \textbf{Far}           \\ \hline
-            \textbf{Full}     & VeryDesirable & VeryDesirable   & Undesirable     \\ \hline
-            \textbf{CouldEat} & VeryDesirable & Desirable     & Undesirable \\ \hline
-            \textbf{Hungry}   & VeryDesirable & Desirable & Undesirable \\ \hline
-        \end{tabular}
-        \caption{GazelleWannaRun}
-    \end{table}
-    
-    \subsection{Calculation}
-    \subsection{Code fragment}
-    
-    \subsection{Class diagram}
-    
-    \begin{figure}[h!]
-        \begin{center}
-            \includegraphics[width=35em]{FuzzyClassDiagram.png}
-        \end{center}
-        \begin{center}
-        \caption{Fuzzy logic class diagram}
-        \\Note: This is imported and edited from the following book \cite{pgaie} %TODO: Should be fixed so reference works.
-        \end{center}
-        \label{fig:FuzzyClassDiagram}
-    \end{figure}
-
-
-    \newpage
-    %-----------------------------------------------------------------------------------------
 \end{document}
