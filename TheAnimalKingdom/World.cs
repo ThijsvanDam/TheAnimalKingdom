@@ -37,6 +37,7 @@ namespace TheAnimalKingdom
         {
             FillObstaclesWithArray(GetFunPlayField());
             graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(50f, 50f));
+            GraphGenerator.SetNearestItems(this);
             
             Lion l1 = new Lion(new Vector2D(50f, 50f), this);
             Lion l2 = new Lion(new Vector2D(60f, 60f), this);

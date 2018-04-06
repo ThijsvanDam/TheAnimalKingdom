@@ -19,6 +19,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
         public override Status Process()
         {
             ActivateIfInactive();
+            Owner.Energy -= 0.01;
             return Status;
         }
 

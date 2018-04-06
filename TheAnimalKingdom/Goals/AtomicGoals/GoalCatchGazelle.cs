@@ -3,19 +3,20 @@ using TheAnimalKingdom.Goals.Base;
 
 namespace TheAnimalKingdom.Goals.AtomicGoals
 {
-    public class GoalEscapeLion : AtomicGoal
+    public class GoalCatchGazelle : AtomicGoal
     {
-        private MovingEntity _enemy;
+        private Gazelle _prey;
         
-        public GoalEscapeLion(MovingEntity owner, MovingEntity enemy) : base(owner, "EscapeLion")
+        public GoalCatchGazelle(MovingEntity owner, Gazelle prey) : base(owner, "CatchGazelle")
         {
-            _enemy = enemy;
+            _prey = prey;
         }
-
+        
         public override void Activate()
         {
-            Owner.DMaxSpeed += 7f;
-            Owner.SteeringBehaviours.FleeOn(_enemy, 1.0f);
+            Status = Status.Active;
+            
+            Owner.SteeringBehaviours.SeekOn(_prey, 2.0f);
         }
 
         public override Status Process()
@@ -23,12 +24,12 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
             ActivateIfInactive();
             Owner.Energy -= 0.05;
 
-            return Status.Active;
+            return Status;
         }
 
         public override void Terminate()
         {
-            Owner.SteeringBehaviours.FleeOff();
+            Owner.SteeringBehaviours.SeekOff();
         }
     }
 }

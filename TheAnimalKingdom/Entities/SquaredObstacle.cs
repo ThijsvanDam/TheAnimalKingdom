@@ -7,7 +7,7 @@ namespace TheAnimalKingdom.Entities
 {
     public class SquaredObstacle : ObstacleEntity
     {
-        public static Color BaseColor;
+        public Color BaseColor;
         public readonly ItemType Type;
         public Image Image;
 

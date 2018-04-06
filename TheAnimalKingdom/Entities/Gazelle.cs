@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using TheAnimalKingdom.Goals.CompositeGoals;
 using TheAnimalKingdom.Util;
@@ -7,7 +8,7 @@ namespace TheAnimalKingdom.Entities
 {
     public class Gazelle : Animal
     {   
-        public Gazelle(Vector2D position, World world) : base(position, world, false)
+        public Gazelle(Vector2D position, World world) : base(position, world)
         {
             Color = Color.SandyBrown;
             Bradius = 5;
@@ -17,7 +18,7 @@ namespace TheAnimalKingdom.Entities
             DDeceleration = 3;
             DMaxForce = 10;
             
-            HashTagLifeGoal = new GoalThink(this);
+            HashTagLifeGoal = new GoalThinkGazelle(this);
         }
 
         public override void Render(Graphics g)
@@ -31,15 +32,41 @@ namespace TheAnimalKingdom.Entities
             base.Render(g);
         }
 
+        public override void Update(float time_elapsed)
+        {
+            if (IsCloseToFood())
+            {
+                Hunger -= 0.05;
+
+            }
+            else
+            {
+                Hunger += 0.02;
+
+            }
+            
+            base.Update(time_elapsed);
+        }
+
+        public bool IsCloseToFood()
+        {
+            foreach (var entity in World.Entities.Where(x => x.GetType() == typeof(SquaredObstacle)))
+            {
+                var obstacle = (SquaredObstacle) entity;
+
+                if (Vector2D.DistanceSquared(VPos, entity.VPos) <= 500 && obstacle.Type != ItemType.None)
+                    return true;
+            }
+
+            return false;
+        }
+
         public override MovingEntity IsScaredOf()
         {
-            foreach (var entity in World.Entities.Where(x => x.GetType() == typeof(MovingEntity)))
+            foreach (var entity in World.Entities.Where(x => x.GetType() == typeof(Lion)))
             {
-                var possibleEnemy = (MovingEntity) entity;
-                    if (!possibleEnemy.IsPredator) continue;
-                
-                    if (Vector2D.DistanceSquared(VPos, entity.VPos) <= 800)
-                        return possibleEnemy;
+                if (Vector2D.DistanceSquared(VPos, entity.VPos) <= 5000)
+                    return (MovingEntity)entity;
             }
 
             return null;

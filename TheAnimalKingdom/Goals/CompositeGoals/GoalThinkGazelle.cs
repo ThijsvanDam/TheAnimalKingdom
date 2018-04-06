@@ -1,18 +1,21 @@
-﻿using TheAnimalKingdom.Entities;
+﻿using System;
+using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Goals.AtomicGoals;
 using TheAnimalKingdom.Goals.Base;
 
 namespace TheAnimalKingdom.Goals.CompositeGoals
 {
-    public class GoalThink: CompositeGoal
+    public class GoalThinkGazelle: CompositeGoal
     {
         private bool _sleeping;
         private bool _fleeing;
+        private bool _seekingFood;
         
-        public GoalThink(MovingEntity owner) : base(owner: owner, name: "Think")
+        public GoalThinkGazelle(MovingEntity owner) : base(owner: owner, name: "Think")
         {
             _sleeping = false;
             _fleeing = false;
+            _seekingFood = false;
         }
         
         public override void Activate()
@@ -24,26 +27,22 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 
         public override Status Process()
         {
-            ActivateIfInactive();
+            var enemy = Owner.IsScaredOf();
             
-            if (Owner.Energy == 0 && !_sleeping)
+            ActivateIfInactive();
+                        
+            if (Owner.Hunger >= 3 && !_fleeing && !_seekingFood)
             {
-                _sleeping = true;
-                RemoveAllSubgoals();
-                AddSubgoal(new GoalSleep(Owner));
-            } 
-            else if (Owner.Energy == 10 && _sleeping)
-            {
-                _sleeping = false;
-                RemoveAllSubgoals();
-            }
-            else if (Owner.Hunger == 10)
-            {
+                _seekingFood = true;
                 RemoveAllSubgoals();
                 AddSubgoal(new GoalGatherFood(Owner));
             }
 
-            var enemy = Owner.IsScaredOf();
+            if (Owner.Hunger <= 0 && _seekingFood)
+            {
+                _seekingFood = false;
+                RemoveAllSubgoals();
+            }
             
             if (enemy != null && !_fleeing)
             {

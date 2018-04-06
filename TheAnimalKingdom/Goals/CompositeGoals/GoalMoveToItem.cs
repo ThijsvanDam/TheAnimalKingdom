@@ -54,6 +54,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         public override void Terminate()
         {
             Console.WriteLine("Terminate MoveToItem");
+            Owner.PathPlanner.AbortRequest();
             base.Terminate();
         }
     }

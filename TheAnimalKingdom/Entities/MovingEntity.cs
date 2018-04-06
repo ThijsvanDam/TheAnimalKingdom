@@ -19,14 +19,12 @@ namespace TheAnimalKingdom.Entities
         
         public double Energy { get; set; }
         public double Hunger { get; set; }
-        public bool IsPredator { get; }
 
-        public MovingEntity(Vector2D position, World world, bool isPredator) : base(position, world)
+        public MovingEntity(Vector2D position, World world) : base(position, world)
         {
             SteeringBehaviours = new SteeringBehaviours(this);
-            HashTagLifeGoal = new GoalThink(this);
+            HashTagLifeGoal = null;
             PathPlanner = new PathPlanner(this);
-            IsPredator = isPredator;
 
             Energy = 10;
             Hunger = 0;
@@ -55,7 +53,7 @@ namespace TheAnimalKingdom.Entities
 
         public override void Update(float time_elapsed)
         {
-            HashTagLifeGoal.Process();
+            HashTagLifeGoal?.Process();
 
             Vector2D steeringForce = SteeringBehaviours.Calculate();
             Vector2D acceleration = steeringForce.Divide(DMass);
