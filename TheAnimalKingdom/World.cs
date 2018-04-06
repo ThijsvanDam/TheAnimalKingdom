@@ -14,7 +14,6 @@ namespace TheAnimalKingdom
 {
     public class World
     {
-        public static int Intensity = 0;
         public static int MouseX = 0;
         public static int MouseY = 0;
         public static bool GodMode { get; set; }
@@ -27,138 +26,16 @@ namespace TheAnimalKingdom
         public PathManager PathManager { get; }
         
         public SparseGraph graph;
-        public FuzzyModule gazelle;
 
         public World(int w, int h)
         {
             Width = w;
             Height = h;
             
-            PathManager = new PathManager(numCyclesPerUpdate:200);
+            PathManager = new PathManager(numCyclesPerUpdate:50);
             _populate();
 
             GodMode = false;
-        }
-
-        public FuzzyModule CreateBaseLionModule()
-        {
-            FuzzyModule lionFuzzyModule = new FuzzyModule();
-            
-            // Antecedent
-            FuzzyVariable hunger = lionFuzzyModule.CreateFLV("Hunger");
-            hunger.AddLeftShoulderSet("Full", 0, 50, 75);
-            hunger.AddTriangularSet("CouldEat", 50, 75, 100);
-            hunger.AddRightShoulderSet("Hungry", 75, 100, 150);
-
-
-            FuzzyVariable distanceToEnemy = lionFuzzyModule.CreateFLV("DistanceToFood");
-            distanceToEnemy.AddLeftShoulderSet("Close", 0, 100, 150);
-            distanceToEnemy.AddTriangularSet("Middle", 100, 150, 200);
-            distanceToEnemy.AddRightShoulderSet("Far", 150, 200, 600);
-            
-            return lionFuzzyModule;
-        }
-
-        public FuzzyModule CreateBaseGazelleModule()
-        {
-            FuzzyModule gazelleFuzzyModule = new FuzzyModule();
-            
-            // Antecedent
-            FuzzyVariable hunger = gazelleFuzzyModule.CreateFLV("Hunger");
-            hunger.AddLeftShoulderSet("Full", 0, 50, 75);
-            hunger.AddTriangularSet("CouldEat", 50, 75, 100);
-            hunger.AddRightShoulderSet("Hungry", 75, 100, 150);
-
-
-            FuzzyVariable distanceToEnemy = gazelleFuzzyModule.CreateFLV("DistanceToEnemy");
-            distanceToEnemy.AddLeftShoulderSet("Close", 0, 100, 150);
-            distanceToEnemy.AddTriangularSet("Middle", 100, 150, 200);
-            distanceToEnemy.AddRightShoulderSet("Far", 150, 200, 600);
-            
-            return gazelleFuzzyModule;
-        }
-
-
-        public FuzzyModule GazelleWannaRun(FuzzyModule gazelleFuzzyModule)
-        {
-            // Get the antecedents
-            FuzzyVariable hunger = gazelleFuzzyModule.GetVariable("Hunger");
-            FuzzyTermSet Full = new FuzzyTermSet(hunger.MemberSets["Full"]);
-            FuzzyTermSet CouldEat = new FuzzyTermSet(hunger.MemberSets["CouldEat"]);
-            FuzzyTermSet Hungry = new FuzzyTermSet(hunger.MemberSets["Hungry"]);
-            
-            FuzzyVariable distanceToEnemy = gazelleFuzzyModule.GetVariable("DistanceToEnemy");
-            FuzzyTermSet Close = new FuzzyTermSet(distanceToEnemy.MemberSets["Close"]);
-            FuzzyTermSet Middle = new FuzzyTermSet(distanceToEnemy.MemberSets["Middle"]);
-            FuzzyTermSet Far = new FuzzyTermSet(distanceToEnemy.MemberSets["Far"]);
-            
-            // Create the consequent
-            FuzzyVariable run = gazelleFuzzyModule.CreateFLV("RunDesirability");
-            
-            FuzzyTermSet Undesirable = run.AddLeftShoulderSet("Undesirable", 0, 10, 20);
-            FuzzyTermSet Desirable = run.AddTrapezoidSet("Desirable", 10, 20, 30, 50);
-            FuzzyTermSet VeryDesirable = run.AddRightShoulderSet("VeryDesirable", 30, 50, 150);
-            
-            // We need 9 of these with HUNGER + DISTANCE = DESIRABILITY
-            //          Close      Middle     Far
-            // Full       VD         VD        UD
-            // CouldEat   VD         D         UD
-            // Hungry     VD         D         UD 
-            
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Full, Close), VeryDesirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Full, Middle), VeryDesirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Full, Far), Undesirable);
-            
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(CouldEat, Close), VeryDesirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(CouldEat, Middle), Desirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(CouldEat, Far), Undesirable);
-            
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Hungry, Close), VeryDesirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Hungry, Middle), Desirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Hungry, Far), Undesirable);
-
-            return gazelleFuzzyModule;
-        }
-
-        public FuzzyModule GazelleWannaEat(FuzzyModule gazelleFuzzyModule)
-        {
-            // Get the antecedents
-            FuzzyVariable hunger = gazelleFuzzyModule.GetVariable("Hunger");
-            FuzzyTermSet Full = new FuzzyTermSet(hunger.MemberSets["Full"]);
-            FuzzyTermSet CouldEat = new FuzzyTermSet(hunger.MemberSets["CouldEat"]);
-            FuzzyTermSet Hungry = new FuzzyTermSet(hunger.MemberSets["Hungry"]);
-            
-            FuzzyVariable distanceToEnemy = gazelleFuzzyModule.GetVariable("DistanceToEnemy");
-            FuzzyTermSet Close = new FuzzyTermSet(distanceToEnemy.MemberSets["Close"]);
-            FuzzyTermSet Middle = new FuzzyTermSet(distanceToEnemy.MemberSets["Middle"]);
-            FuzzyTermSet Far = new FuzzyTermSet(distanceToEnemy.MemberSets["Far"]);
-            
-            // Create the consequent
-            FuzzyVariable graze = gazelleFuzzyModule.CreateFLV("EatDesirability");
-            
-            FuzzyTermSet Undesirable = graze.AddLeftShoulderSet("Undesirable", 0, 10, 20);
-            FuzzyTermSet Desirable = graze.AddTrapezoidSet("Desirable", 10, 20, 50, 60);
-            FuzzyTermSet VeryDesirable = graze.AddRightShoulderSet("VeryDesirable", 50, 60, 150);
-            
-            // We need 9 of these with HUNGER + DISTANCE = DESIRABILITY
-            //          Close      Middle     Far
-            // Full       UD         UD        D
-            // CouldEat   UD         D         VD
-            // Hungry     UD         VD        VD 
-            
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Full, Close), Undesirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Full, Middle), Undesirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Full, Far), Desirable);
-            
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(CouldEat, Close), Undesirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(CouldEat, Middle), Desirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(CouldEat, Far), VeryDesirable);
-            
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Hungry, Close), Undesirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Hungry, Middle), VeryDesirable);
-            gazelleFuzzyModule.AddRule(new FuzzyTermAND(Hungry, Far), VeryDesirable);
-
-            return gazelleFuzzyModule;
         }
 
         private void _populate()
@@ -175,31 +52,18 @@ namespace TheAnimalKingdom
  
             Entities.AddRange(new List<MovingEntity>()
             {
-                g1, l1, g2, l2
+                g1, 
+                l1, 
+                g2, 
+                l2
             });
-            
-            
-            
-            double distanceBetweenAnimals = 140; // Could be 0 - 150
-            double gazelleHunger = 80; // Could be 0 - 150
 
+            Random r = new Random();
+            for (int i = 0; i < 1; i++)
+            {
+                Entities.Add(new Gazelle(new Vector2D(r.Next(200, 400), r.Next(200, 400)), this));
+            }
 
-            gazelle = CreateBaseGazelleModule();
-
-            GazelleWannaRun(gazelle);
-            double dWannaRun = CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "RunDesirability");
-            
-            GazelleWannaEat(gazelle);
-            double dWannaEat = CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "EatDesirability");
-
-        }
-        
-        public double CalculateDesirability(FuzzyModule fm, double distance, double hunger, string desirability)
-        {
-            fm.Fuzzify("Hunger", hunger);
-            fm.Fuzzify("DistanceToEnemy", distance);
-
-            return fm.Defuzzify(desirability, DefuzzifyMethod.MaxAV);
         }
         
         public void Update(float timeElapsed)
@@ -268,7 +132,7 @@ namespace TheAnimalKingdom
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  1  }, // 3
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  1  }, // 4
                 {  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 5
-                {  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 6
+                {  1,  1,  1,  1,  1,  1,  2,  2,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 6
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 7
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 8
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 9
@@ -288,14 +152,14 @@ namespace TheAnimalKingdom
 
         public void Render(Graphics g)
         {
-            if (GodMode)
-            {
-                graph.Render(g);
-            }
 
             foreach (ObstacleEntity obstacleEntity in Obstacles)
             {
                 obstacleEntity.Render(g);
+            }
+            if (GodMode)
+            {
+                graph.Render(g);
             }
             foreach (BaseGameEntity baseGameEntity in Entities)
             {

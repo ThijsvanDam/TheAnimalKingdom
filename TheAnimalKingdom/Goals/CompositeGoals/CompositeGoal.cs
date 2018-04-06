@@ -37,6 +37,29 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         {
             _subgoals.Push(goal);
         }
+        
+        public string GetGoalDescription()
+        {
+            string rstr;
+            switch (_subgoals.Peek().GName)
+            {
+                case("GatherFood"):
+                    rstr = "This is better grass than bob marley ever tasted!";
+                    break;
+                case("EscapeLion"):
+                    rstr = "Hey I think that lion is loo.... WHAT THE FUCK I AM GETTING ATTACKED.";
+                    break;
+                case("Wander"):
+                    rstr = "I am sooooooo bored.";
+                    break;
+                default:
+                    rstr = "Not sure what I be doin'.";
+                    break;
+            }
+
+            return rstr;
+        }
+        
 
         public Status ProcessSubgoals()
         {           
@@ -50,7 +73,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             {
                 Status statusOfSubgoals = _subgoals.Peek().Process();
 
-                if (statusOfSubgoals == Status.Completed && _subgoals.Count > 1)
+                if (statusOfSubgoals == Status.Completed && _subgoals.Count >= 1)
                 {
                     return Status.Active;
                 }

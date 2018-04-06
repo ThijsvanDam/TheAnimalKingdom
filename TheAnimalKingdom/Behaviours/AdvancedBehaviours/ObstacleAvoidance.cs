@@ -125,7 +125,7 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
                                 
                 double minAllowedDist = (RectangleDistance * 2) + obstacle.Bradius;
 
-                if (distanceToObstacle < minAllowedDist * minAllowedDist)
+                if (distanceToObstacle < minAllowedDist * minAllowedDist && obstacle.Type == ItemType.Block)
                 {   
                     obstaclesWithinRange.Add(obstacle);
                 }

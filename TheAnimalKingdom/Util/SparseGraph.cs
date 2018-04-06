@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using TheAnimalKingdom.Entities;
 
 namespace TheAnimalKingdom.Util
 {
@@ -177,9 +178,17 @@ namespace TheAnimalKingdom.Util
             {
                 var left = (int)node.Position.X - 2;
                 var top = (int)node.Position.Y - 2;
-                
-                g.FillEllipse(new SolidBrush(Color.Black), left, top, 4, 4);
 
+
+                if (node.NearbyEntity == ItemType.Grass)
+                {
+                    g.FillEllipse(new SolidBrush(Color.Green), left -4, top -4, 8, 8);
+                }
+                else
+                {
+                    g.FillEllipse(new SolidBrush(Color.Black), left, top, 4, 4);
+                }
+                
                 if (node.IsTarget)
                 {
                     target = node;
@@ -194,7 +203,7 @@ namespace TheAnimalKingdom.Util
 
             if (target != null)
             {
-                g.FillEllipse(new SolidBrush(Color.Red), (int)target.Position.X - 3, (int)target.Position.Y - 3, 6, 6);
+                g.FillEllipse(new SolidBrush(Color.Red), (int)target.Position.X - 10, (int)target.Position.Y - 10, 20, 20);
             }
         }
         #endregion

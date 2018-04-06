@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TheAnimalKingdom.Entities;
 
 namespace TheAnimalKingdom.Util
@@ -70,7 +71,8 @@ namespace TheAnimalKingdom.Util
             foreach (var point in neighbouringPoints)
             {
                 // Do not add node if it collides with obstacle and skip to next node
-                if (IsObjectInRange(obstacles: world.Obstacles, point: point)) continue;
+                var obstacle = IsObjectInRange(obstacles: world.Obstacles, point: point);
+                if (obstacle?.Type == ItemType.Block) continue;
                 
                 // Also skip this node if it is outside of the world boundaries
                 if (point.X < 0 || point.Y < 0 || point.X > world.Width || point.Y > world.Height) continue;
@@ -90,16 +92,23 @@ namespace TheAnimalKingdom.Util
                 if (!graph.EdgeList.Exists(x => x.From == node.Index && x.To == neighbour.Index))
                 {
                     // But also check if the edge doesn't through an object, otherwise it shouldn't be drawn
-                    if (!IsObjectInRange(
-                        obstacles: world.Obstacles, 
+                    var obstacleForEdge = IsObjectInRange(
+                        obstacles: world.Obstacles,
                         point: new Vector2D(
-                            node.Position.X + ((neighbour.Position.X - node.Position.X) / 2), // Take the X-coordinate in the middle of the edge
-                            node.Position.Y + ((neighbour.Position.Y - node.Position.Y) / 2)// Take the Y-coordinate in the middle of the edge
-                            )
-                        ))
-                    // Add edge in both directions
-                    graph.AddEdge(new GraphEdge(from: node.Index, to: neighbour.Index));
-                    graph.AddEdge(new GraphEdge(from: neighbour.Index, to: node.Index));
+                            node.Position.X +
+                            ((neighbour.Position.X - node.Position.X) /
+                             2), // Take the X-coordinate in the middle of the edge
+                            node.Position.Y +
+                            ((neighbour.Position.Y - node.Position.Y) /
+                             2) // Take the Y-coordinate in the middle of the edge
+                        ));
+                    
+                    if (obstacleForEdge == null || obstacleForEdge?.Type != ItemType.Block)
+                    {
+                        // Add edge in both directions
+                        graph.AddEdge(new GraphEdge(from: node.Index, to: neighbour.Index));
+                        graph.AddEdge(new GraphEdge(from: neighbour.Index, to: node.Index));
+                    }
                 }
 
                 // Go on with the neighbour node, if it didn't exist yet, otherwise skip to the next node
@@ -112,21 +121,19 @@ namespace TheAnimalKingdom.Util
         {
             foreach (var entity in world.Obstacles)
             {
-                if (entity.GetType() == typeof(SquaredObstacle))
-                {
-                    var obstacle = (SquaredObstacle)entity;
-                    var node = world.graph.FindNearestNode(entity.VPos).Index;
-                    world.graph.NodeList[node].NearbyEntity = obstacle.Type;
-                }
+                var obstacle = entity;
+                var node = world.graph.FindNearestNode(entity.VPos).Index;
+                world.graph.NodeList[node].NearbyEntity = obstacle.Type;
             }
         }
 
-        private static bool IsObjectInRange(List<ObstacleEntity> obstacles, Vector2D point){
-            return obstacles.Exists(o => 
+        private static ObstacleEntity IsObjectInRange(List<ObstacleEntity> obstacles, Vector2D point){
+            var result = obstacles.FirstOrDefault(o => 
                     point.X >= o.VPos.X - o.Bradius && point.X <= o.VPos.X + o.Bradius
                     &&
                     point.Y >= o.VPos.Y - o.Bradius && point.Y <= o.VPos.Y + o.Bradius
                 );
+            return result;
         }
     }
 }

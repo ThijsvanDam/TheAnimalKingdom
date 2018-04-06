@@ -20,7 +20,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
         {
             ActivateIfInactive();
             
-            return Status;
+            return Status.Active;
         }
 
         public override void Terminate()

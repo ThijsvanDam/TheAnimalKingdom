@@ -2,8 +2,8 @@
 {
     public enum ItemType
     {
+        Block,
         Grass,
-        Water,
-        None
+        Water
     }
 }

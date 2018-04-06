@@ -11,6 +11,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
     {
         private bool _running;
         private bool _eating;
+        private bool _wandering;
         
         public GoalThinkGazelle(MovingEntity owner) : base(owner: owner, name: "Think")
         {
@@ -31,7 +32,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             ActivateIfInactive();
 
 
-            double distanceBetweenAnimals = Owner.DistanceToClosestLion() / (6000 /150); // Could be 0 - 150
+            double distanceBetweenAnimals = Owner.DistanceToClosestEnemy() / (6000 /150); // Could be 0 - 150
             double gazelleHunger = Owner.Hunger; // Could be 0 - 150
 
 
@@ -67,32 +68,43 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
     
                 Console.WriteLine("Run: " + dWannaRun + ", Eat: " + dWannaEat + ", Wander: " + dWannaWander);
             }
-            
-//            if(dWannaRun > dWannaEat && dWannaRun > dWannaWander)
-//                Console.WriteLine(@"THE GERMANS! THE GERMAN Palatine Lion IS CHASIN' ME BUTT AROUND");
-            
-//            if(dWannaEat >  dWannaRun && dWannaEat > dWannaWander)
-//                Console.WriteLine(@"Look at that! Delicious green gold!");
-            
-//            if(dWannaWander >  dWannaRun && dWannaWander > dWannaEat)
-//                Console.WriteLine(@"Look at that! Delicious green gold!");
-//            
 
+            if (!_running)
+            {
+                if (dWannaRun > dWannaEat && dWannaRun > dWannaWander)
+                {
+                    _running = true;
+                    _eating = false;
+                    _wandering = false;
+                    RemoveAllSubgoals();
+                    AddSubgoal(new GoalEscapeLion(Owner, enemy));
+                }
+            }
 
-            if (dWannaEat > dWannaRun && !_eating)
+            if (!_eating)
             {
-                _eating = true;
-                _running = false;
-                RemoveAllSubgoals();
-                AddSubgoal(new GoalGatherFood(Owner));
+                if (dWannaEat > dWannaRun && dWannaEat > dWannaWander)
+                {   
+                    _eating = true;
+                    _running = false;
+                    _wandering = false;
+                    RemoveAllSubgoals();
+                    AddSubgoal(new GoalGatherFood(Owner));
+                }
             }
-            if (dWannaEat < dWannaRun && !_running)
+
+            if (!_wandering)
             {
-                _running = true;
-                _eating = false;
-                RemoveAllSubgoals();
-                AddSubgoal(new GoalEscapeLion(Owner, enemy));
-            }
+                if (dWannaWander > dWannaRun && dWannaWander > dWannaEat)
+                {
+                
+                    _eating = false;
+                    _running = false;
+                    _wandering = true;
+                    RemoveAllSubgoals();
+                    AddSubgoal(new GoalWander(Owner));
+                }
+            } 
 
             var status = ProcessSubgoals();
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TheAnimalKingdom.Behaviours;
+using TheAnimalKingdom.Goals.AtomicGoals;
 using TheAnimalKingdom.Goals.Base;
 using TheAnimalKingdom.Goals.CompositeGoals;
 using TheAnimalKingdom.Util;
@@ -51,6 +52,7 @@ namespace TheAnimalKingdom.Entities
             return (squaredDistance < 100);
         }
 
+
         public override void Update(float time_elapsed)
         {
             HashTagLifeGoal?.Process();
@@ -91,6 +93,6 @@ namespace TheAnimalKingdom.Entities
             return null;
         }
 
-        public abstract double DistanceToClosestLion();
+        public abstract double DistanceToClosestEnemy();
     }
 }

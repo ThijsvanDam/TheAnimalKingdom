@@ -4,14 +4,11 @@ using TheAnimalKingdom.Util;
 namespace TheAnimalKingdom.Entities
 {
     public class StaticEntity : BaseGameEntity
-    {
-        public ItemType ItemType { get; set; }
-        
+    {       
         public StaticEntity(Vector2D position, World world) : base(position, world)
         {
             Color = Color.Green;
             Bradius = 3;
-            ItemType = ItemType.None;
         }
 
         public override void Update(float time_elapsed)

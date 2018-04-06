@@ -10,11 +10,13 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
     {
         private bool _sleeping;
         private bool _fleeing;
+        private bool _goingToSleep;
         
         public GoalThinkLion(MovingEntity owner) : base(owner: owner, name: "Think")
         {
             _sleeping = false;
             _fleeing = false;
+            _goingToSleep = false;
         }
         
         public override void Activate()
@@ -30,26 +32,37 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
                         
             if (Owner.Energy <= 1 && !_sleeping)
             {
-                _sleeping = true;
-                RemoveAllSubgoals();
-                AddSubgoal(new GoalMoveToPosition(Owner, new Vector2D(50f, 50f)));
-                AddSubgoal(new GoalSleep(Owner));
+                var lair = new Vector2D(50f, 50f);
+                if (_goingToSleep && Vector2D.DistanceSquared(lair, Owner.VPos) < 500)
+                {
+                    _sleeping = true;
+                    RemoveAllSubgoals();
+                    AddSubgoal(new GoalSleep(Owner));
+                }
+                else if(!_goingToSleep)
+                {
+                    _goingToSleep = true;
+                    RemoveAllSubgoals();
+                    var lion = (Lion) Owner;
+                    AddSubgoal(new GoalMoveToPosition(Owner, lion.HomePosition));
+                }
+                
             } 
             else if (Owner.Energy >= 99 && _sleeping)
             {
                 _sleeping = false;
-                RemoveAllSubgoals();
             }
             else if (Owner.Hunger >= 50 && !_sleeping)
             {
-                RemoveAllSubgoals();
                 var me = (Lion) Owner;
                 var prey = me.SeekPrey();
+                RemoveAllSubgoals();
                 AddSubgoal(new GoalCatchGazelle(Owner, prey));
             }
 
             if (_subgoals.Count == 0)
             {
+                RemoveAllSubgoals();
                 AddSubgoal(new GoalWander(Owner));
             }
             

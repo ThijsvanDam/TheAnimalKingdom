@@ -4,6 +4,8 @@ namespace TheAnimalKingdom.Entities
 {
     public abstract class ObstacleEntity : BaseGameEntity
     {
+        public ItemType Type { get; set; }
+        
         protected ObstacleEntity(Vector2D position, float size, World world) : base(position, world)
         {
             Bradius = (size * 25) / 2;

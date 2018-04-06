@@ -8,10 +8,9 @@ namespace TheAnimalKingdom.Entities
     public class SquaredObstacle : ObstacleEntity
     {
         public Color BaseColor;
-        public readonly ItemType Type;
         public Image Image;
 
-        public SquaredObstacle(Vector2D position, float size, World world, ItemType type = ItemType.None) : base(position, size, world)
+        public SquaredObstacle(Vector2D position, float size, World world, ItemType type = ItemType.Block) : base(position, size, world)
         {
             if (type == ItemType.Grass)
             {
@@ -25,7 +24,7 @@ namespace TheAnimalKingdom.Entities
                 Image = Resources.water;
             }
 
-            if (type == ItemType.None)
+            if (type == ItemType.Block)
             {
                 BaseColor = Color.FromArgb(240, 43, 30, 22);
                 Image = null;

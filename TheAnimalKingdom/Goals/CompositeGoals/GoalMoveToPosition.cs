@@ -36,7 +36,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             {
                 _routeFound = true;
                 Owner.Route = Owner.PathPlanner.Route;
-                RemoveAllSubgoals();
                 AddSubgoal(new GoalFollowPath(Owner, Owner.Route));
             }
 

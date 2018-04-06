@@ -60,7 +60,7 @@ namespace TheAnimalKingdom.Util
             var currentLocation = _copiedNodes[nodeTo].Position;
             return Math.Abs(_targetLocation.X - currentLocation.X) +
                    Math.Abs(_targetLocation.Y - currentLocation.Y) /
-                   15f; // ToDo: Remove this magic number (*Width set in generator)
+                   15f;
         }
     }
 }

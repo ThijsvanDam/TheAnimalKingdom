@@ -8,8 +8,11 @@ namespace TheAnimalKingdom.Entities
 {
     public class Lion : Animal
     {
+        public Vector2D HomePosition { get; }
+        
         public Lion(Vector2D position, World world) : base(position, world)
         {
+            HomePosition = position;
             Color = Color.Orange;
             Bradius = 5;
             VVelocity = new Vector2D(0, 0);
@@ -60,9 +63,17 @@ namespace TheAnimalKingdom.Entities
             base.Render(g);
         }
 
-        public override double DistanceToClosestLion()
+        public override double DistanceToClosestEnemy()
         {
-            return 0.0;
+            double nearestDistance = double.MaxValue;
+            foreach (var entity in World.Entities.Where(x => x.GetType() == typeof(Gazelle)))
+            {
+
+                var dist = Vector2D.DistanceSquared(VPos, entity.VPos);
+                if (dist < nearestDistance)
+                    nearestDistance = dist;
+            }
+            return nearestDistance;
         }
 
         public Gazelle SeekPrey()

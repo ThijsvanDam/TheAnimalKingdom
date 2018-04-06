@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Security;
 using System.Windows.Forms.VisualStyles;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Util;
@@ -16,6 +17,8 @@ namespace TheAnimalKingdom.Goals.Base
         protected MovingEntity Owner;
         protected readonly GoalType Type;
         protected readonly string Name;
+
+        public string GName => Name;
 
         public Goal(MovingEntity owner, GoalType type, string name)
         {

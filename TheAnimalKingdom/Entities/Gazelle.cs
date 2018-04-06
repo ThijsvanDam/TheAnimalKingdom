@@ -7,7 +7,7 @@ using TheAnimalKingdom.Util;
 namespace TheAnimalKingdom.Entities
 {
     public class Gazelle : Animal
-    {   
+    {
         public Gazelle(Vector2D position, World world) : base(position, world)
         {
             Color = Color.SandyBrown;
@@ -17,7 +17,7 @@ namespace TheAnimalKingdom.Entities
             DMaxSpeed = 7;
             DDeceleration = 3;
             DMaxForce = 10;
-            
+
             HashTagLifeGoal = new GoalThinkGazelle(this);
         }
 
@@ -26,8 +26,14 @@ namespace TheAnimalKingdom.Entities
             double left = VPos.X - Bradius;
             double top = VPos.Y - Bradius;
             double size = Bradius * 2;
-            g.FillEllipse(new SolidBrush(Color), (int)left, (int)top, (int)size, (int)size);
-            g.DrawString("G", new Font(new FontFamily("Times New Roman"), 6f), new SolidBrush(Color.Black), (float)left, (float)top);
+            g.FillEllipse(new SolidBrush(Color), (int) left, (int) top, (int) size, (int) size);
+            g.DrawString("G", new Font(new FontFamily("Times New Roman"), 6f), new SolidBrush(Color.Black),
+                (float) left, (float) top);
+
+
+            g.DrawString(HashTagLifeGoal.GetGoalDescription(), new Font(new FontFamily("Times New Roman"), 8f),
+                new SolidBrush(Color.Black), (float) left + 10, (float) top);
+
 
             base.Render(g);
         }
@@ -38,14 +44,13 @@ namespace TheAnimalKingdom.Entities
             {
                 Hunger -= 0.5 * time_elapsed;
                 if (Hunger < 0) Hunger = 0;
-
             }
             else
             {
-                Hunger += 0.1 * time_elapsed;
+                Hunger += 0.5 * time_elapsed;
                 if (Hunger > 150) Hunger = 150;
             }
-            
+
             base.Update(time_elapsed);
         }
 
@@ -55,23 +60,23 @@ namespace TheAnimalKingdom.Entities
             {
                 var obstacle = (SquaredObstacle) entity;
 
-                if (Vector2D.DistanceSquared(VPos, entity.VPos) <= 500 && obstacle.Type != ItemType.None)
+                if (Vector2D.DistanceSquared(VPos, entity.VPos) <= 500 && obstacle.Type != ItemType.Block)
                     return true;
             }
 
             return false;
         }
 
-        public override double DistanceToClosestLion()
+        public override double DistanceToClosestEnemy()
         {
             double nearestDistance = double.MaxValue;
             foreach (var entity in World.Entities.Where(x => x.GetType() == typeof(Lion)))
             {
-
                 var dist = Vector2D.DistanceSquared(VPos, entity.VPos);
                 if (dist < nearestDistance)
                     nearestDistance = dist;
             }
+
             return nearestDistance;
         }
 
