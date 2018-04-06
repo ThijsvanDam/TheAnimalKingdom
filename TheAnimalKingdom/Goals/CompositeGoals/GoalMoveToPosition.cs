@@ -30,8 +30,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         
         public override Status Process()
         {
-            Console.WriteLine("Process MoveToPosition");
-
             ActivateIfInactive();
 
             if (Owner.FindPathResult == PathResult.Found && !_routeFound)
@@ -50,12 +48,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             var status = ProcessSubgoals();
 
             return status;
-        }
-
-        public override void Terminate()
-        {
-            Console.WriteLine("Terminate MoveToPosition");
-            base.Terminate();
         }
     }
 }

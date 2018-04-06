@@ -21,7 +21,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         {
             ActivateIfInactive();
 
-            return Status.Active;
+            return ProcessSubgoals();
         }
     }
 }

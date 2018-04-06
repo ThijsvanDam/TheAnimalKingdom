@@ -8,6 +8,9 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 {
     public class GoalThinkGazelle : CompositeGoal
     {
+        private bool _running;
+        private bool _eating;
+        
         public GoalThinkGazelle(MovingEntity owner) : base(owner: owner, name: "Think")
         {
         }
@@ -42,13 +45,17 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
                 FuzzyManager.CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "EatDesirability");
 
 
-            if (dWannaEat > dWannaRun)
+            if (dWannaEat > dWannaRun && !_eating)
             {
+                _eating = true;
+                _running = false;
                 RemoveAllSubgoals();
                 AddSubgoal(new GoalGatherFood(Owner));
             }
-            else
+            if (dWannaEat < dWannaRun && !_running)
             {
+                _running = true;
+                _eating = false;
                 RemoveAllSubgoals();
                 AddSubgoal(new GoalEscapeLion(Owner, enemy));
             }

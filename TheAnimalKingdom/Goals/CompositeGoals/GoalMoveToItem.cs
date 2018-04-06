@@ -29,8 +29,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         
         public override Status Process()
         {
-            Console.WriteLine("Process MoveToItem");
-
             ActivateIfInactive();
 
             if (Owner.FindPathResult == PathResult.Found && !_routeFound)
@@ -53,7 +51,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 
         public override void Terminate()
         {
-            Console.WriteLine("Terminate MoveToItem");
             Owner.PathPlanner.AbortRequest();
             base.Terminate();
         }

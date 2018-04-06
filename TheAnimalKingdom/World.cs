@@ -19,7 +19,7 @@ namespace TheAnimalKingdom
         public static int MouseY = 0;
         public static bool GodMode { get; set; }
 
-        public List<BaseGameEntity> Entities = new List<BaseGameEntity>();
+        public List<MovingEntity> Entities = new List<MovingEntity>();
         public List<ObstacleEntity> Obstacles = new List<ObstacleEntity>();
         public int Width { get; set; }
         public int Height { get; set; }
@@ -173,7 +173,7 @@ namespace TheAnimalKingdom
             Gazelle g1 = new Gazelle(new Vector2D(200f, 200f), this);
             Gazelle g2 = new Gazelle(new Vector2D(250f, 250f), this);
  
-            Entities.AddRange(new List<BaseGameEntity>()
+            Entities.AddRange(new List<MovingEntity>()
             {
                 g1, l1, g2, l2
             });
@@ -286,17 +286,16 @@ namespace TheAnimalKingdom
             };
         }
 
-        public void StartPathFollowing(Vector2D target)
-        {
-            if (!GodMode) return;
-            var entity = (MovingEntity)Entities[1];
-            entity.SteeringBehaviours.ArriveOn(target, 2.0f);
-            entity.DMaxForce = 20.0f;
-        }
-
         public void Render(Graphics g)
         {
-            if (GodMode)graph.Render(g);
+            if (GodMode)
+            {
+                graph.Render(g);
+                foreach (var entity in Entities)
+                {
+                    entity.RenderRoute(g);
+                }
+            }
 
             foreach (ObstacleEntity obstacleEntity in Obstacles)
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Goals.Base;
@@ -81,7 +82,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 
             double depth = 10;
 
-            foreach (var goal in _subgoals)
+            foreach (var goal in _subgoals.ToList())
             {
                 goal.DrawGoal(g, new Vector2D(position.X + 5, position.Y + depth));
                 depth += 5;

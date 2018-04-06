@@ -110,12 +110,13 @@ namespace TheAnimalKingdom.Util
 
         public static void SetNearestItems(World world)
         {
-            foreach (var entity in world.Entities)
+            foreach (var entity in world.Obstacles)
             {
                 if (entity.GetType() == typeof(SquaredObstacle))
                 {
-                    var obstacle = (StaticEntity) entity;
-                    world.graph.FindNearestNode(entity.VPos).NearbyEntity = obstacle.ItemType;
+                    var obstacle = (SquaredObstacle)entity;
+                    var node = world.graph.FindNearestNode(entity.VPos).Index;
+                    world.graph.NodeList[node].NearbyEntity = obstacle.Type;
                 }
             }
         }

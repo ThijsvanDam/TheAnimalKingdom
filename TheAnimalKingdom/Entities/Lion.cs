@@ -25,12 +25,12 @@ namespace TheAnimalKingdom.Entities
         {
             if (IsCloseToFood())
             {
-                Hunger -= 0.05;
+                Hunger -= 5;
 
             }
             else
             {
-                Hunger += 0.02;
+                Hunger += 2;
 
             }
             

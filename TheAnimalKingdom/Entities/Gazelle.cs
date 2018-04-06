@@ -36,12 +36,12 @@ namespace TheAnimalKingdom.Entities
         {
             if (IsCloseToFood())
             {
-                Hunger -= 0.05;
+                Hunger -= 5;
 
             }
             else
             {
-                Hunger += 0.02;
+                Hunger += 2;
 
             }
             
@@ -50,7 +50,7 @@ namespace TheAnimalKingdom.Entities
 
         public bool IsCloseToFood()
         {
-            foreach (var entity in World.Entities.Where(x => x.GetType() == typeof(SquaredObstacle)))
+            foreach (var entity in World.Obstacles.Where(x => x.GetType() == typeof(SquaredObstacle)))
             {
                 var obstacle = (SquaredObstacle) entity;
 

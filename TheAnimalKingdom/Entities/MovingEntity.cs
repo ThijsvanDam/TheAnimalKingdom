@@ -83,6 +83,7 @@ namespace TheAnimalKingdom.Entities
         
         public void RenderRoute(Graphics g)
         {
+            if (Route == null) return;
             Stack<NavGraphNode> copiedRoute = new Stack<NavGraphNode>(Route.Reverse());
             
             while (copiedRoute.Count > 1)
