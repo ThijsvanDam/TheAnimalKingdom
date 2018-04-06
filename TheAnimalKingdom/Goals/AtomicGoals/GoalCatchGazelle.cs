@@ -16,13 +16,14 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
         {
             Status = Status.Active;
             
-            Owner.SteeringBehaviours.SeekOn(_prey, 2.0f);
+            Owner.SteeringBehaviours.SeekOn(_prey, 0.5f);
         }
 
         public override Status Process()
         {
             ActivateIfInactive();
-            Owner.Energy -= 0.05;
+            
+            if (Owner.Energy > 0)  Owner.Energy -= 0.04;
 
             return Status;
         }

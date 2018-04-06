@@ -34,8 +34,8 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 
             if (Owner.FindPathResult == PathResult.Found && !_routeFound)
             {
-                Owner.Route = Owner.PathPlanner.Route;
                 _routeFound = true;
+                Owner.Route = Owner.PathPlanner.Route;
                 RemoveAllSubgoals();
                 AddSubgoal(new GoalFollowPath(Owner, Owner.Route));
             }

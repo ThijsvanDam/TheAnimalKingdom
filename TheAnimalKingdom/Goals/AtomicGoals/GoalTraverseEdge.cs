@@ -25,7 +25,6 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
             }
             else
             {
-                Owner.SteeringBehaviours.AllOff();
                 Owner.SteeringBehaviours.SeekOn(_destination, 1.0);
             }
             Status = Status.Active;

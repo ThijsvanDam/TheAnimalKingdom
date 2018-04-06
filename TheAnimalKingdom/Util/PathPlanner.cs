@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using TheAnimalKingdom.Entities;
@@ -14,7 +15,6 @@ namespace TheAnimalKingdom.Util
 
         private GraphSearch _search;
         private readonly MovingEntity _owner;
-        private Stack<NavGraphNode> _route;
 
         public PathPlanner(MovingEntity owner)
         {
@@ -26,7 +26,6 @@ namespace TheAnimalKingdom.Util
             var sourceNodeIndex = _owner.World.graph.FindNearestNode(_owner.VPos).Index;
             var targetNodeIndex = _owner.World.graph.FindNearestNode(target).Index;
             _search = new AStarSearch(graph: _owner.World.graph, source: sourceNodeIndex, target: targetNodeIndex);
-            _route = null;
             _owner.FindPathResult = PathResult.InProgress;
             _owner.World.PathManager.Register(this);
         }
@@ -35,7 +34,6 @@ namespace TheAnimalKingdom.Util
         {
             var sourceNodeIndex = _owner.World.graph.FindNearestNode(_owner.VPos).Index;
             _search = new DijkstraSearch(graph: _owner.World.graph, source: sourceNodeIndex, type: itemType);
-            _route = null;
             _owner.FindPathResult = PathResult.InProgress;
             _owner.World.PathManager.Register(this);
         }

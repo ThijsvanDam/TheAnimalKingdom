@@ -291,10 +291,6 @@ namespace TheAnimalKingdom
             if (GodMode)
             {
                 graph.Render(g);
-                foreach (var entity in Entities)
-                {
-                    entity.RenderRoute(g);
-                }
             }
 
             foreach (ObstacleEntity obstacleEntity in Obstacles)

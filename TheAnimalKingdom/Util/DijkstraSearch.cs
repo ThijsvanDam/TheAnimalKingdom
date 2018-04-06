@@ -6,6 +6,7 @@ namespace TheAnimalKingdom.Util
 {
     public class DijkstraSearch : GraphSearch
     {
+        public int cycles = 0;
         private readonly ItemType _requestedEntityType;
         
         public DijkstraSearch(SparseGraph graph, int source, ItemType type) : base(graph, source, 0)
@@ -15,18 +16,18 @@ namespace TheAnimalKingdom.Util
 
         public override PathResult CycleOnce()
         {
+            cycles++;
+            Console.WriteLine(cycles);
+            
             var current = Lowest();
-
-            if (current == _target) return PathResult.Found;
 
             if (current == -1) return PathResult.NotFound;
             
-
             if (IsTerminationConditionSatisfied(current))
             {
                 _target = current;
                 return PathResult.Found;
-            }   
+            }
 
             var connectedEdges = _edges.Where(x => x.From == current);
                 

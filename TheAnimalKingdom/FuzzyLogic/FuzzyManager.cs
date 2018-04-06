@@ -24,9 +24,14 @@ namespace TheAnimalKingdom.FuzzyLogic
 
 
             FuzzyVariable distanceToEnemy = gazelleFuzzyModule.CreateFLV("DistanceToEnemy");
-            distanceToEnemy.AddLeftShoulderSet("Close", 0, 100, 150);
-            distanceToEnemy.AddTriangularSet("Middle", 100, 150, 200);
-            distanceToEnemy.AddRightShoulderSet("Far", 150, 200, 600);
+//            distanceToEnemy.AddLeftShoulderSet("Close", 0, 100, 150);
+//            distanceToEnemy.AddTriangularSet("Middle", 100, 150, 200);
+//            distanceToEnemy.AddRightShoulderSet("Far", 150, 200, 600);
+            
+            
+            distanceToEnemy.AddLeftShoulderSet("Close", 0, 2000, 2500);
+            distanceToEnemy.AddTriangularSet("Middle", 2000, 2500, 4000);
+            distanceToEnemy.AddRightShoulderSet("Far", 2500, 4000, 6000);
             
             return gazelleFuzzyModule;
         }

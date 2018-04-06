@@ -15,13 +15,12 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
         public override void Activate()
         {
             Owner.DMaxSpeed += 7f;
-            Owner.SteeringBehaviours.FleeOn(_enemy, 1.0f);
+            Owner.SteeringBehaviours.FleeOn(_enemy, 0.5f);
         }
 
         public override Status Process()
         {
             ActivateIfInactive();
-            Owner.Energy -= 0.05;
 
             return Status.Active;
         }

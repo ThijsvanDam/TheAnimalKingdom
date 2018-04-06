@@ -44,7 +44,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             double dWannaEat =
                 FuzzyManager.CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "EatDesirability");
 
-
             if (dWannaEat > dWannaRun && !_eating)
             {
                 _eating = true;

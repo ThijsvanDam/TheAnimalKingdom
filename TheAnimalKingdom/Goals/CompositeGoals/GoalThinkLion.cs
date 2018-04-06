@@ -28,19 +28,18 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         {            
             ActivateIfInactive();
                         
-            if (Owner.Energy <= 0 && !_sleeping)
+            if (Owner.Energy <= 1 && !_sleeping)
             {
                 _sleeping = true;
                 RemoveAllSubgoals();
-                AddSubgoal(new GoalMoveToPosition(Owner, new Vector2D(50f, 50f)));
                 AddSubgoal(new GoalSleep(Owner));
             } 
-            else if (Owner.Energy >= 10 && _sleeping)
+            else if (Owner.Energy >= 99 && _sleeping)
             {
                 _sleeping = false;
                 RemoveAllSubgoals();
             }
-            else if (Owner.Hunger >= 10)
+            else if (Owner.Hunger >= 50 && !_sleeping)
             {
                 RemoveAllSubgoals();
                 var me = (Lion) Owner;

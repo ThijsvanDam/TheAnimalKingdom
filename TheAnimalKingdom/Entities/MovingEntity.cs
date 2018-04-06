@@ -26,10 +26,10 @@ namespace TheAnimalKingdom.Entities
             HashTagLifeGoal = null;
             PathPlanner = new PathPlanner(this);
 
-            Energy = 10;
+            Energy = 100;
             Hunger = 0;
             
-            SteeringBehaviours.ObstacleAvoidanceOn(5.0);
+            SteeringBehaviours.ObstacleAvoidanceOn(1.0);
         }
 
         public Vector2D VVelocity;
@@ -75,23 +75,14 @@ namespace TheAnimalKingdom.Entities
         {
             if (World.GodMode)
             {
+                double left = VPos.X - Bradius;
+                double top = VPos.Y - Bradius;
+                double size = Bradius * 2;
+                g.DrawString("H: " + (int)Hunger, new Font(new FontFamily("Times New Roman"), 10f), new SolidBrush(Color.White), (float)left + (float)size + 5f, (float)top - 5f);
+                g.DrawString("E: " + (int)Energy, new Font(new FontFamily("Times New Roman"), 10f), new SolidBrush(Color.White), (float)left + (float)size + 5f, (float)top - 15f);
+                
                 SteeringBehaviours.DrawBehaviors(g);
                 HashTagLifeGoal.DrawGoal(g);
-                if (Route?.Count > 0) RenderRoute(g);
-            }
-        }
-        
-        public void RenderRoute(Graphics g)
-        {
-            if (Route == null) return;
-            Stack<NavGraphNode> copiedRoute = new Stack<NavGraphNode>(Route.Reverse());
-            
-            while (copiedRoute.Count > 1)
-            {
-                var nodeFrom = copiedRoute.Pop();
-                var nodeTo = copiedRoute.Peek();
-                
-                g.DrawLine(new Pen(Color.Yellow), nodeFrom.Position.ToPoint(), nodeTo.Position.ToPoint());
             }
         }
 
@@ -101,26 +92,5 @@ namespace TheAnimalKingdom.Entities
         }
 
         public abstract double DistanceToClosestLion();
-        
-
-        private void CheckOutOfScreen()
-        {
-            if (VPos.X < 0)
-            {
-                VPos.X = 600;
-            }
-            if (VPos.X > 600)
-            {
-                VPos.X = 0;
-            }
-            if (VPos.Y < 0)
-            {
-                VPos.Y = 500;
-            }
-            if (VPos.Y > 500)
-            {
-                VPos.Y = 0;
-            }
-        }
     }
 }

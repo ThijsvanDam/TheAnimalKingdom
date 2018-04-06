@@ -36,13 +36,14 @@ namespace TheAnimalKingdom.Entities
         {
             if (IsCloseToFood())
             {
-                Hunger -= 5;
+                Hunger -= 0.5 * time_elapsed;
+                if (Hunger < 0) Hunger = 0;
 
             }
             else
             {
-                Hunger += 2;
-
+                Hunger += 0.1 * time_elapsed;
+                if (Hunger > 150) Hunger = 150;
             }
             
             base.Update(time_elapsed);
@@ -79,7 +80,7 @@ namespace TheAnimalKingdom.Entities
             foreach (var entity in World.Entities.Where(x => x.GetType() == typeof(Lion)))
             {
                 if (Vector2D.DistanceSquared(VPos, entity.VPos) <= 5000)
-                    return (MovingEntity)entity;
+                    return entity;
             }
 
             return null;
