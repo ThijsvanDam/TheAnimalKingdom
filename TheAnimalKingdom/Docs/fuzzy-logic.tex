@@ -22,8 +22,8 @@ Based on these values, the gazelle should be able to choose if gathering food is
     \begin{tabular}{|l|l|l|l|}
         \hline
         & \textbf{Close}       & \textbf{Middle}        & \textbf{Far}           \\ \hline
-        \textbf{Full}     & Undesirable & Undesirable   & Desirable     \\ \hline
-        \textbf{CouldEat} & Undesirable & Desirable     & VeryDesirable \\ \hline
+        \textbf{Full}     & Undesirable & Undesirable   & Undesirable   \\ \hline
+        \textbf{CouldEat} & Undesirable & Desirable     & Desirable     \\ \hline
         \textbf{Hungry}   & Undesirable & VeryDesirable & VeryDesirable \\ \hline
     \end{tabular}
     \caption{GazelleWannaEat}
@@ -34,9 +34,9 @@ Based on these values, the gazelle should be able to choose if gathering food is
     \begin{tabular}{|l|l|l|l|}
         \hline
         & \textbf{Close}       & \textbf{Middle}        & \textbf{Far}           \\ \hline
-        \textbf{Full}     & VeryDesirable & VeryDesirable   & Undesirable     \\ \hline
-        \textbf{CouldEat} & VeryDesirable & Desirable     & Undesirable \\ \hline
-        \textbf{Hungry}   & VeryDesirable & Desirable & Undesirable \\ \hline
+        \textbf{Full}     & VeryDesirable & Desirable       & Undesirable     \\ \hline
+        \textbf{CouldEat} & VeryDesirable & Undesirable     & Undesirable \\ \hline
+        \textbf{Hungry}   & VeryDesirable & Undesirable     & Undesirable \\ \hline
     \end{tabular}
     \caption{GazelleWannaRun}
 \end{table}
@@ -51,24 +51,44 @@ For the first situation we pick two variables for the antecedents, namely 140 fo
     \label{fig:FuzzyLogicCaseOne}
 \end{figure}
 As you see, we drew a line on the value of 80 in the Hunger FLV, and a line on the value of 140 on the DistanceToEnemy FLV\@.
+
 Right now, we can determine that for the first flv:
-{\em Full(80)} is {\em 0} \\
-{\em CouldEat(80)} is approx {\em  0.8} \\
-{\em Hungry(80)} is approx {\em 0.2} \\
+
+\begin{equation}
+    Hunger_{Full}(80) = 0
+\end{equation}
+
+\begin{equation}
+                  Hunger_{CouldEat}(80) = 0.8
+\end{equation}
+
+\begin{equation}
+                  Hunger_{Hungry}(80) = 0.2
+\end{equation}
+
+
 And for the second FLV:
-{\em Close(140)} is {\em 0.2} \\
-{\em Middle(140)} is approx {\em 0.8} \\
-{\em Far(140)} is approx {\em 0} \\
+
+\begin{equation}
+    DistanceToEnemy_{Close}(140) = 0
+\end{equation}
+\begin{equation}
+    DistanceToEnemy_{Middle}(140) = 0
+\end{equation}
+\begin{equation}
+    DistanceToEnemy_{Far}(140) = 1
+\end{equation}
+
 Now, for both consequents we can fill in the table.
 \begin{table}[ht]
     \centering
     \label{EatDesirabilityCaseOne}
     \begin{tabular}{|l|l|l|l|}
         \hline
-        & \textbf{Close}    & \textbf{Middle}     & \textbf{Far}           \\ \hline
-        \textbf{Full}     & Undesirable (0)   & Undesirable   (0)   & Desirable     (0) \\ \hline
-        \textbf{CouldEat} & Undesirable (0.2) & Desirable     (0.8) & VeryDesirable (0) \\ \hline
-        \textbf{Hungry}   & Undesirable (0.2) & VeryDesirable (0.2) & VeryDesirable (0) \\ \hline
+                          & \textbf{Close}    & \textbf{Middle}     & \textbf{Far}           \\ \hline
+        \textbf{Full}     & Undesirable (0)   & Undesirable   (0)   & Desirable     (0)   \\ \hline
+        \textbf{CouldEat} & Undesirable (0)   & Desirable     (0)   & VeryDesirable (0.8) \\ \hline
+        \textbf{Hungry}   & Undesirable (0)   & VeryDesirable (0)   & VeryDesirable (0.2) \\ \hline
     \end{tabular}
     \caption{EatDesirability}
 \end{table}
@@ -78,9 +98,9 @@ Now, for both consequents we can fill in the table.
     \begin{tabular}{|l|l|l|l|}
         \hline
                           & \textbf{Close}      & \textbf{Middle}     & \textbf{Far}\\ \hline
-        \textbf{Full}     & VeryDesirable (0)   & VeryDesirable (0)   & Undesirable (0) \\ \hline
-        \textbf{CouldEat} & VeryDesirable (0.2) & Desirable     (0.8) & Undesirable (0) \\ \hline
-        \textbf{Hungry}   & VeryDesirable (0.2) & Desirable     (0.2) & Undesirable (0) \\ \hline
+        \textbf{Full}     & VeryDesirable (0)   & VeryDesirable (0)   & Undesirable (0)   \\ \hline
+        \textbf{CouldEat} & VeryDesirable (0)   & Desirable     (0)   & Undesirable (0.8) \\ \hline
+        \textbf{Hungry}   & VeryDesirable (0)   & Desirable     (0)   & Undesirable (0.2) \\ \hline
     \end{tabular}
     \caption{RunDesirability}
 \end{table}
@@ -90,9 +110,9 @@ This can be calculated into a max value for all FuzzySets.
     \label{InferedConclusionsEatDesirability}
     \begin{tabular}{|l|l|}
         \hline
-        \textbf{Undesirable}   & 0.2 \\ \hline
-        \textbf{Desirable}     & 0.8 \\ \hline
-        \textbf{VeryDesirable} & 0.2 \\ \hline
+        \textbf{Undesirable}   & 0   \\ \hline
+        \textbf{Desirable}     & 0   \\ \hline
+        \textbf{VeryDesirable} & 0.8 \\ \hline
     \end{tabular}
     \caption{Infered conclusions EatDesirability}
 \end{table}
@@ -101,9 +121,9 @@ This can be calculated into a max value for all FuzzySets.
     \label{InferedConclusionsRunDesirability}
     \begin{tabular}{|l|l|}
         \hline
-        \textbf{Undesirable}   & 0.2   \\ \hline
-        \textbf{Desirable}     & 0.8 \\ \hline
-        \textbf{VeryDesirable} & 0.3 \\ \hline
+        \textbf{Undesirable}   & 0.8   \\ \hline
+        \textbf{Desirable}     & 0     \\ \hline
+        \textbf{VeryDesirable} & 0     \\ \hline
     \end{tabular}
     \caption{Infered conclusions RunDesirability}
 \end{table}
@@ -114,33 +134,36 @@ For this, we have to calculate the maxima of both consequent FLV's.
 You can check this in the graph above, right now I just took the values we chose to draw the graphs.
 In the EatDesirability consequent, the maxima are:
 \begin{equation}
-    Eat_{Undesirable} = \frac{0 + 10}2 = 5
+    Eat_{Undesirable} = \frac{0 + 30}2 = 15
 \end{equation}
 \begin{equation}
-    Eat_{Desirable} = \frac{20 + 50}2 = 35
+    Eat_{Desirable} = \frac{40 + 60}2 = 50
 \end{equation}
 \begin{equation}
-    Eat_{VeryDesirable} = \frac{60 + 150}2 = 105
+    Eat_{VeryDesirable} = \frac{70 + 150}2 = 110
 \end{equation}
 And now defuzzify with MaxAV through the following formula:
 \begin{equation}
-    MaxAV = \frac{5 * 0.2 + 35 * 0.8 + 105 * 0.2}{0.2 + 0.8 + 0.2} = 41.7
+    MaxAV = \frac{15 * 0 + 50 * 0 + 110 * 0.8}{0.8} = 88
 \end{equation}
 In the RunDesirability consequent, the maxima are:
 \begin{equation}
-    Run_{Undesirable} = \frac{0 + 10}2 = 5
+    Run_{Undesirable} = \frac{0 + 30}2 = 15
 \end{equation}
 \begin{equation}
-    Run_{Desirable} = \frac{20 + 30}2 = 25
+    Run_{Desirable} = \frac{40 + 60}2 = 50
 \end{equation}
 \begin{equation}
-    Run_{VeryDesirable} = \frac{50 + 150}2 = 100
+    Run_{VeryDesirable} = \frac{70 + 150}2 = 110
 \end{equation}
 And now defuzzify with MaxAV through the following formula:
 \begin{equation}
-    MaxAV = \frac{5 * 0.2 + 25 * 0.8 + 100 * 0.3}{0.2 + 0.8 + 0.3} = 39.2
+    MaxAV = \frac{15 * 0.8 + 50 * 0 + 110 * 0}{0.8} = 12
 \end{equation}
 \subsection{Code fragment}
+These are actually not the same values as the above calculations.
+This is because we changed the program later to fit our fuzzy system better, but we didn't have time to change the docs.
+Fuzzy logic works just fine and you can calculate it through the application.
 Right now we will do the exact calculation as above, but then with our code.
 First, we will create a fuzzy module with two antecedents.
 \newpage
