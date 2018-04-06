@@ -180,23 +180,26 @@ namespace TheAnimalKingdom
             
             
             
+            double distanceBetweenAnimals = 140; // Could be 0 - 150
             double gazelleHunger = 80; // Could be 0 - 150
 
 
             gazelle = CreateBaseGazelleModule();
 
             GazelleWannaRun(gazelle);
-            double a = CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "RunDesirability");
-            Console.WriteLine("Run: " + a);
-            Console.WriteLine("----");
+            double dWannaRun = CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "RunDesirability");
             
             GazelleWannaEat(gazelle);
-            double b = CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "EatDesirability");
-            Console.WriteLine("Eat: " + b);
-            Console.WriteLine("----");
+            double dWannaEat = CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "EatDesirability");
 
-            Console.WriteLine(a > b ? "I am going to RUUNN!!!" : "Omnomnom, that food be lookin' goood!");
+        }
+        
+        public double CalculateDesirability(FuzzyModule fm, double distance, double hunger, string desirability)
+        {
+            fm.Fuzzify("Hunger", hunger);
+            fm.Fuzzify("DistanceToEnemy", distance);
 
+            return fm.Defuzzify(desirability, DefuzzifyMethod.MaxAV);
         }
         
         public void Update(float timeElapsed)

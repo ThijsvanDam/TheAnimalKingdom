@@ -58,7 +58,12 @@ namespace TheAnimalKingdom.Entities
 
             base.Render(g);
         }
-        
+
+        public override double DistanceToClosestLion()
+        {
+            return 0.0;
+        }
+
         public Gazelle SeekPrey()
         {
             double distanceClosestGazelle = double.MaxValue;

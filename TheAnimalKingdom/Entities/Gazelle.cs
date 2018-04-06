@@ -61,6 +61,19 @@ namespace TheAnimalKingdom.Entities
             return false;
         }
 
+        public override double DistanceToClosestLion()
+        {
+            double nearestDistance = double.MaxValue;
+            foreach (var entity in World.Entities.Where(x => x.GetType() == typeof(Lion)))
+            {
+
+                var dist = Vector2D.DistanceSquared(VPos, entity.VPos);
+                if (dist < nearestDistance)
+                    nearestDistance = dist;
+            }
+            return nearestDistance;
+        }
+
         public override MovingEntity IsScaredOf()
         {
             foreach (var entity in World.Entities.Where(x => x.GetType() == typeof(Lion)))

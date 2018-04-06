@@ -87,7 +87,6 @@ namespace TheAnimalKingdom.FuzzyLogic
             foreach (KeyValuePair<string, FuzzySet> set in MemberSets)
             {
                 set.Value.DOM = set.Value.CalculateDOM(value);
-                Console.WriteLine(set.Key + " is " + set.Value.DOM);
             }
         }
 

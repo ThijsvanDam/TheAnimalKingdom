@@ -99,6 +99,7 @@ namespace TheAnimalKingdom.Entities
             return null;
         }
 
+        public abstract double DistanceToClosestLion();
         
 
         private void CheckOutOfScreen()

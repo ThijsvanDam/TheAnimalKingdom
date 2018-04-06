@@ -1,23 +1,17 @@
 ﻿using System;
 using TheAnimalKingdom.Entities;
+using TheAnimalKingdom.FuzzyLogic;
 using TheAnimalKingdom.Goals.AtomicGoals;
 using TheAnimalKingdom.Goals.Base;
 
 namespace TheAnimalKingdom.Goals.CompositeGoals
 {
-    public class GoalThinkGazelle: CompositeGoal
+    public class GoalThinkGazelle : CompositeGoal
     {
-        private bool _sleeping;
-        private bool _fleeing;
-        private bool _seekingFood;
-        
         public GoalThinkGazelle(MovingEntity owner) : base(owner: owner, name: "Think")
         {
-            _sleeping = false;
-            _fleeing = false;
-            _seekingFood = false;
         }
-        
+
         public override void Activate()
         {
             Status = Status.Active;
@@ -25,44 +19,42 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             AddSubgoal(new GoalWander(Owner));
         }
 
+
         public override Status Process()
         {
             var enemy = Owner.IsScaredOf();
-            
+
             ActivateIfInactive();
-                        
-            if (Owner.Hunger >= 3 && !_fleeing && !_seekingFood)
+
+
+            double distanceBetweenAnimals = Owner.DistanceToClosestLion(); // Could be 0 - 600
+            double gazelleHunger = Owner.Hunger; // Could be 0 - 150
+
+
+            FuzzyModule gazelle = FuzzyManager.CreateBaseGazelleModule();
+
+            FuzzyManager.GazelleWannaRun(gazelle);
+            double dWannaRun =
+                FuzzyManager.CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "RunDesirability");
+
+            FuzzyManager.GazelleWannaEat(gazelle);
+            double dWannaEat =
+                FuzzyManager.CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "EatDesirability");
+
+
+            if (dWannaEat > dWannaRun)
             {
-                _seekingFood = true;
                 RemoveAllSubgoals();
                 AddSubgoal(new GoalGatherFood(Owner));
             }
-
-            if (Owner.Hunger <= 0 && _seekingFood)
+            else
             {
-                _seekingFood = false;
-                RemoveAllSubgoals();
-            }
-            
-            if (enemy != null && !_fleeing)
-            {
-                _fleeing = true;
                 RemoveAllSubgoals();
                 AddSubgoal(new GoalEscapeLion(Owner, enemy));
-            } 
-            else if (enemy == null && _fleeing)
-            {
-                RemoveAllSubgoals();
-                _fleeing = false;
             }
 
-            if (_subgoals.Count == 0)
-            {
-                AddSubgoal(new GoalWander(Owner));
-            }
-            
             var status = ProcessSubgoals();
-            
+
             return status;
         }
     }
