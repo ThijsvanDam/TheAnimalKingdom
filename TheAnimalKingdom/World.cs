@@ -45,7 +45,7 @@ namespace TheAnimalKingdom
             GraphGenerator.SetNearestItems(this);
             
             Lion l1 = new Lion(new Vector2D(50f, 50f), this);
-            Lion l2 = new Lion(new Vector2D(60f, 60f), this);
+            Lion l2 = new Lion(new Vector2D(100f, 100f), this);
             
             Gazelle g1 = new Gazelle(new Vector2D(200f, 200f), this);
             Gazelle g2 = new Gazelle(new Vector2D(250f, 250f), this);
@@ -63,7 +63,6 @@ namespace TheAnimalKingdom
             {
                 Entities.Add(new Gazelle(new Vector2D(r.Next(200, 400), r.Next(200, 400)), this));
             }
-
         }
         
         public void Update(float timeElapsed)
@@ -132,7 +131,7 @@ namespace TheAnimalKingdom
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  1  }, // 3
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  1  }, // 4
                 {  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 5
-                {  1,  1,  1,  1,  1,  1,  2,  2,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 6
+                {  1,  1,  1,  1,  1,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1  }, // 6
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 7
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 8
                 {  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  1,  0,  0,  1  }, // 9

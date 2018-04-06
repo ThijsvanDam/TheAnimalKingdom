@@ -23,7 +23,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
         {
             ActivateIfInactive();
             
-            if (Owner.Energy > 0)  Owner.Energy -= 0.04;
+            if (Owner.Energy > 0)  Owner.Energy -= 0.08;
 
             return Status;
         }

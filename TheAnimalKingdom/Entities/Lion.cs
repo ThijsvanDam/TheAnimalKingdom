@@ -12,7 +12,7 @@ namespace TheAnimalKingdom.Entities
         
         public Lion(Vector2D position, World world) : base(position, world)
         {
-            HomePosition = position;
+            HomePosition = position.Clone();
             Color = Color.Orange;
             Bradius = 5;
             VVelocity = new Vector2D(0, 0);

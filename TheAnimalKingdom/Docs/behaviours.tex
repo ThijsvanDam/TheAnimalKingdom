@@ -20,13 +20,16 @@ The class diagram below shows the structure (fig.\ref{fig:behaviourClassDiagram}
 
 
 \subsection{Goals}\label{subsec:behaviourGoals}
-To give each entity a specific behaviour, we have created a couple of (composite) goals with some underlying atomic goals.
+To give each entity a specific behaviour, we have created a couple of (composite) goals with some underlying atomic goals
+and add them to the \textit{GoalThink} of the instance when needed.
+Choosing a subgoal for the lion is done with some simple if-statements.
+For the gazelle we use fuzzy logic (see \ref{sec:fuzzyLogic}) to specify which strategy-level goal should set.
 These goals wil be discussed below.
 
-\subsubsection{Gather Food}\label{sec:behaviourFood}
-Both the gazelles and the lions will have to gather food if they want to survive.
-For gazelles it will mean that they have to find (\textit{GoalMoveToPosition}) grass or water and start eating.
-Lions do not like grass, so they will have to chase (\textit{GoalChase}) a gazelle and eat it.
+\subsubsection{Gather Food/CatchGazelle}\label{sec:behaviourFood}
+Both lions and gazelles will have to gather food if they want to survive.
+For gazelles it means that they have to find (\textit{GoalMoveToPosition}) grass and start eating.
+Lions do not like grass, so they will have to chase (\textit{GoalCatchGazelle}) a gazelle and eat it.
 The gazelle will then try to escape (\textit{GoalEscapeLion}) which we will discuss in the next part.
 If a lion caught a gazelle, the lion will eat (\textit{GoalEat}) the poor animal.
 
@@ -46,7 +49,7 @@ Lions are actually lazy animals.
 Once they had a nice meal, they want to sleep.
 Gazelles will be very happy once that happens and they can relax for a while.
 They will probably start grazing again as that is what they do most of the time.
-If a lion sleeps, it won't do anything for a while, until he is fully back to strength.
+If a lion sleeps, it will go back to its lair and does nothing for a while, until he is fully back to strength.
 
 This is a pretty simple goal, but very important for the lions.
 It will temporarily disable all steering behaviour for the lion entity.

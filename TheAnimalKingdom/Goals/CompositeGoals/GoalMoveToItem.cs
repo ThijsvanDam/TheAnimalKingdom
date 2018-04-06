@@ -48,5 +48,11 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             
             return status;
         }
+
+        public override void Terminate()
+        {
+            Owner.PathPlanner.AbortRequest();
+            base.Terminate();
+        }
     }
 }

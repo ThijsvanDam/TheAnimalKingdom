@@ -25,7 +25,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             
             Owner.PathPlanner.RequestPathToTarget(_destination);
 
-            AddSubgoal(new GoalSeekToPosition(Owner, _destination));
+            //AddSubgoal(new GoalSeekToPosition(Owner, _destination));
         }
         
         public override Status Process()
@@ -47,6 +47,12 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             var status = ProcessSubgoals();
 
             return status;
+        }
+        
+        public override void Terminate()
+        {
+            Owner.PathPlanner.AbortRequest();
+            base.Terminate();
         }
     }
 }

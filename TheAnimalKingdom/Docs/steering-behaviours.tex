@@ -1,22 +1,22 @@
 We implemented all the simple steering behaviours that were provided.
 These are \textbf{seek}, \textbf{flee}, \textbf{arrive} and \textbf{wander}.
-Last but not least we implemented two advanced steering behaviour: \textbf{obstacle avoidance} and \textbf{explore}.
+Last but not least we implemented an advanced steering behaviour: \textbf{obstacle avoidance}.
 Firstly, we will discuss every behaviour we implemented a little.
 \subsection[Describing the steering behaviours]{Behaviours}\label{subsec:behaviours}
 In this section I will talk about every behaviour slightly.
 We will discuss our way of implementing each behaviour and how it works.
 \subsubsection{Seek}
 This was the first behaviour we implemented, simply because we thought this was the easiest behaviour to implement.
-We couldn't have been more right.
+We could not have been more right.
 The seek algorithm simply moves towards a goal at max speed, and will still be moving at max speed when arriving at the target.
-Since it doesn't slow down, it just passes the goal, and then turns around to, again, reach towards this goal at max speed.
+Since it does not slow down, it just passes the goal, and then turns around to, again, reach towards this goal at max speed.
 This results in moving bach and forth, through the goal.
 \paragraph{Implementation}
 Thus, the algorithm needs a goal (\textit{BaseGameEntity}), and a user, which we called movingEntity (\textit{MovingEntity}).
 Having this goal, we could determine which direction the movingEntity should go to, in order to reach this goal.
 Now, we can return a force (\textit{Vector2D}), equal to the max possible force for the current movingEntity.
 To finish his behaviour, only the velocity our movingEntity currently has, has to be substracted from this force.
-This way our entity won't make a sharp, but a smooth turn.
+This way our entity will not make a sharp, but a smooth turn.
 \subsubsection{Flee}
 The flee behaviour is not much more than the seeking behaviour, but reversed.
 With this I mean that in stead of moving towards a target at max speed, the entity moves away from a target at max speed.
@@ -24,7 +24,7 @@ One addition is that when there is an obstacle in between the target and our ent
 Unfortunately, the last part is not implemented yet.
 \paragraph{Implementation}
 First, we check if in between the entity and the goal is an obstacle present, if there is: do nothing!
-If there isn't, go on with your calculation.
+If there is no obstacle, go on with your calculation.
 The calculation of the fleeing behaviour is almost exactly the same as the calculation of the seek behaviour.
 Only, when you have found the direction you want to go in, you turn it around.
 This is simply done by creating a new desired velocity, called newDesiredVelocity (\textit{Vector2D}), and inverting the X and the Y of the already found velocity.
@@ -68,7 +68,7 @@ First, you calculate the direction the entity currently goes to.
 Somewhere inbetween you can change the angle to a new angle.
 Since this should happen randomly, add or substract (chosen randomly) the turning angle from/to the previous angle.
 Determine the middle of the circle and calculate the angle of where the piont should be.
-Now just return the vector towards that point and you're done.
+Now just return the vector towards that point and you are done.
 \subsubsection{Obstacle avoidance}\label{sec:ObstacleAvoidance}
 All in all we spent the most time finding a solution to obstacle avoidance.
 We will only explain how this behaviour works, and in a later part of this document we will talk about our problem.
@@ -94,21 +94,20 @@ After you have translated these obstacles, rotate them according to the directio
 If you have done this, all obstacles with a negative X value will be 'behind you'. (since, for the axial system, you rotated them relative to the right of our current entity)
 For each obstacle in front of you and within your range, check if this obstacle is inside our rectangle.
 If the obstacle collides with our rectangle, generate a force in the opposite direction of the obstacle relative to our rectangle.
-\subsubsection{Explore}
-%TODO: finish
+
 \subsection[Problems we had during implementing these behaviours]{Problems}\label{subsec:problems}
 There were some major problems we came across during the implementation of some behaviours.
-Though, all in all, we didn't have that many and we got the behaviours working pretty fast.
+Though, all in all, we did not have that many and we got the behaviours working pretty fast.
 Some minor mistakes we made were mixing up a vector for indication a position, and for indicating a direction and speed.
 Since both are just \textit{Vector2D}'s, this could be confusing.
-This wasn't much of a hassle to fix and mixing these up only resulted in some strange outcomes, which actually cost some time.
+This was not much of a hassle to fix and mixing these up only resulted in some strange outcomes, which actually cost some time.
 The one major problem we had was with (\ref{sec:ObstacleAvoidance}) Obstacle voidance.
 On calculating the local space of an object, we had an issue rotating it.
 We only found a way to calculate the angle to rotate with, with \textit{Math.Atan(X/Y)}.
 The problem with this is that it it returns the exact same value with both the X and Y negative, as with both the X and Y positive.
 This is also the case with a negative X and a positive Y, as with a positive X and a negative Y.
-Now, resulting our obstacles to be rotated by the same value if its in front of our entity, as when it's behind our entity.
-Messing around with this, we couldn't come up with a good, clean solution to fix this.
+Now, resulting our obstacles to be rotated by the same value if its in front of our entity, as when it is behind our entity.
+Messing around with this, we could not come up with a good, clean solution to fix this.
 After a while, we found the \textit{Math.Atan2(double input)} function, which actually returns different values for the edgecases as described before.
 Our big solution to this problem!
 \subsection[How the steering behaviours are combined]{Combining behaviours}\label{subsec:combiningBehaviours}
@@ -121,6 +120,7 @@ There is the \textit{Calculate()}-method, calling all the calculates for the dif
 It creates a vector (\textit{Vector2D}) and adds all the forces gained by the behaviours up, and finally truncates it with the max force (\textit{MovingEntity.DMaxForce}) of the current entity.
 Then, there is the \textit{DrawBehaviours()}-method, doing exactly as it says.
 Inside each behaviour we inserted a \textit{DrawBehaviours()}-method as well, to give a visual representation of the forces and methods working for this behaviour.
+\newpage
 \subsection[The class diagram of our behaviour system]{Class diagram}
 \begin{figure}[h!]
     \begin{center}

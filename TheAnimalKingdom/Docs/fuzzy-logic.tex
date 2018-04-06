@@ -2,7 +2,7 @@
 The beneath diagram shows the 4 fuzzy linguistic variables for a gazelle.
 These follow the rules of the next subsection.
 As you can see, there is two factors a gazelle can use in order to determine if it wants to run or it wants to eat.
-We also implemented fuzzy logic for the lion, but we won't describe it in this document.
+We also implemented fuzzy logic for the lion, but we will not describe it in this document.
 \begin{figure}[ht]
     \begin{center}
         \includegraphics[width=25em]{FuzzyLogic.PNG}
@@ -108,7 +108,7 @@ This can be calculated into a max value for all FuzzySets.
     \caption{Infered conclusions RunDesirability}
 \end{table}
 Now we have these infered conclusions, we can defuzzify the consequents!
-We'll use MaxAV, since MaxAV is mainly used in our program.
+We will use MaxAV, since MaxAV is mainly used in our program.
 Also, centroid is implemented, but we wont discuss that in this documentation.
 For this, we have to calculate the maxima of both consequent FLV's.
 You can check this in the graph above, right now I just took the values we chose to draw the graphs.
@@ -140,10 +140,11 @@ And now defuzzify with MaxAV through the following formula:
 \begin{equation}
     MaxAV = \frac{5 * 0.2 + 25 * 0.8 + 100 * 0.3}{0.2 + 0.8 + 0.3} = 39.2
 \end{equation}
+
+\newpage
 \subsection{Code fragment}
 Right now we will do the exact calculation as above, but then with our code.
 First, we will create a fuzzy module with two antecedents.
-\newpage
 \begin{figure}[ht]
     \begin{center}
         \includegraphics[width=40em]{FuzzyModuleGazelle.PNG}

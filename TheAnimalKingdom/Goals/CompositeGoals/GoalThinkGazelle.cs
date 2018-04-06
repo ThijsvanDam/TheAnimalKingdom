@@ -20,7 +20,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         public override void Activate()
         {
             Status = Status.Active;
-            Owner.SteeringBehaviours.ObstacleAvoidanceOn(1.0f);
+            Owner.SteeringBehaviours.ObstacleAvoidanceOn(1.5f);
             AddSubgoal(new GoalWander(Owner));
         }
 
@@ -49,25 +49,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             FuzzyManager.GazelleWannaWander(gazelle);
             double dWannaWander =
                 FuzzyManager.CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "WanderDesirability");
-
-
-            if (Owner.ID == 204 && false)
-            {
-                
-                if(dWannaRun >= dWannaEat && dWannaRun >= dWannaWander)
-                    Console.Write(@"[RUN]: ");
-                
-                else if(dWannaEat >=  dWannaRun && dWannaEat >= dWannaWander)
-                    Console.Write(@"[EAT]: ");
-                
-                else if(dWannaWander >=  dWannaRun && dWannaWander >= dWannaEat)
-                    Console.Write(@"[WAN]: ");
-                else
-                    Console.Write(@"[---]: ");
-    //            
-    
-                Console.WriteLine("Run: " + dWannaRun + ", Eat: " + dWannaEat + ", Wander: " + dWannaWander);
-            }
 
             if (!_running)
             {

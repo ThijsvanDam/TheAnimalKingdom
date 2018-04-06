@@ -22,7 +22,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         public override void Activate()
         {
             Status = Status.Active;
-            Owner.SteeringBehaviours.ObstacleAvoidanceOn(1.0f);
+            Owner.SteeringBehaviours.ObstacleAvoidanceOn(1.5f);
             AddSubgoal(new GoalWander(Owner));
         }
 
@@ -36,6 +36,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
                 if (_goingToSleep && Vector2D.DistanceSquared(lair, Owner.VPos) < 500)
                 {
                     _sleeping = true;
+                    _goingToSleep = false;
                     RemoveAllSubgoals();
                     AddSubgoal(new GoalSleep(Owner));
                 }
@@ -44,20 +45,22 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
                     _goingToSleep = true;
                     RemoveAllSubgoals();
                     var lion = (Lion) Owner;
+                    Console.WriteLine(lion.HomePosition);
                     AddSubgoal(new GoalMoveToPosition(Owner, lion.HomePosition));
                 }
                 
             } 
-            else if (Owner.Energy >= 99 && _sleeping)
-            {
-                _sleeping = false;
-            }
             else if (Owner.Hunger >= 50 && !_sleeping)
             {
                 var me = (Lion) Owner;
                 var prey = me.SeekPrey();
                 RemoveAllSubgoals();
                 AddSubgoal(new GoalCatchGazelle(Owner, prey));
+            }
+            else if (Owner.Energy >= 99 && _sleeping)
+            {
+                RemoveAllSubgoals();
+                _sleeping = false;
             }
 
             if (_subgoals.Count == 0)
