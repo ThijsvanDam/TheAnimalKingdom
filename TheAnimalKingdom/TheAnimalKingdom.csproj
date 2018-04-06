@@ -160,7 +160,6 @@
     <Content Include="Docs\fuzzy-logic.tex" />
     <Content Include="Docs\images\Floodfill.png" />
     <Content Include="Docs\images\BehavioursClassDiagram.PNG" />
-    <Content Include="Docs\images\PathFinding.jpg" />
     <Content Include="Docs\Documentation.tex" />
     <Content Include="Docs\images\Goals.png" />
     <Content Include="Docs\images\ObstacleAvoidance.png" />
