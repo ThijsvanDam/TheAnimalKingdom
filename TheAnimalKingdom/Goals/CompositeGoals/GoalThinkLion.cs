@@ -29,11 +29,11 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         public override Status Process()
         {            
             ActivateIfInactive();
+            var me = (Lion) Owner;
                         
             if (Owner.Energy <= 1 && !_sleeping)
             {
-                var lair = new Vector2D(50f, 50f);
-                if (_goingToSleep && Vector2D.DistanceSquared(lair, Owner.VPos) < 500)
+                if (_goingToSleep && Vector2D.DistanceSquared(me.HomePosition, Owner.VPos) < 500)
                 {
                     _sleeping = true;
                     _goingToSleep = false;
@@ -44,15 +44,11 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
                 {
                     _goingToSleep = true;
                     RemoveAllSubgoals();
-                    var lion = (Lion) Owner;
-                    Console.WriteLine(lion.HomePosition);
-                    AddSubgoal(new GoalMoveToPosition(Owner, lion.HomePosition));
-                }
-                
+                    AddSubgoal(new GoalMoveToPosition(Owner, me.HomePosition));
+                } 
             } 
             else if (Owner.Hunger >= 50 && !_sleeping)
             {
-                var me = (Lion) Owner;
                 var prey = me.SeekPrey();
                 RemoveAllSubgoals();
                 AddSubgoal(new GoalCatchGazelle(Owner, prey));
