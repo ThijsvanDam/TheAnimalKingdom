@@ -20,7 +20,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         public override void Activate()
         {
             Status = Status.Active;
-            Owner.SteeringBehaviours.ObstacleAvoidanceOn(1.5f);
+            Owner.SteeringBehaviours.ObstacleAvoidanceOn(1.0f);
             AddSubgoal(new GoalWander(Owner));
         }
 

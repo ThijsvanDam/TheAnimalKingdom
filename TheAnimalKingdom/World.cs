@@ -45,24 +45,20 @@ namespace TheAnimalKingdom
             GraphGenerator.SetNearestItems(this);
             
             Lion l1 = new Lion(new Vector2D(50f, 50f), this);
-            Lion l2 = new Lion(new Vector2D(100f, 100f), this);
+            Lion l2 = new Lion(new Vector2D(120, 100f), this);
             
             Gazelle g1 = new Gazelle(new Vector2D(200f, 200f), this);
             Gazelle g2 = new Gazelle(new Vector2D(250f, 250f), this);
+            Gazelle g3 = new Gazelle(new Vector2D(300f, 300f), this);
  
             Entities.AddRange(new List<MovingEntity>()
             {
                 g1, 
                 l1, 
-                g2, 
+                g2,
+                g3,
                 l2
             });
-
-            Random r = new Random();
-            for (int i = 0; i < 1; i++)
-            {
-                Entities.Add(new Gazelle(new Vector2D(r.Next(200, 400), r.Next(200, 400)), this));
-            }
         }
         
         public void Update(float timeElapsed)
