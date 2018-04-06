@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace TheAnimalKingdom.Util
 {
    
@@ -106,6 +107,7 @@ namespace TheAnimalKingdom.Util
             return new Vector2D(this.X, this.Y);
         }
         
+
         public static Vector2D operator +(Vector2D left, Vector2D right)
         {
             return new Vector2D(left.X + right.X, left.Y + right.Y, 1);

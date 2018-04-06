@@ -1,4 +1,6 @@
-﻿namespace TheAnimalKingdom
+﻿using System.Drawing;
+
+namespace TheAnimalKingdom
 {
     partial class Form1
     {
@@ -35,7 +37,8 @@
             // _dbPanel1
             // 
             this._dbPanel1.BackColor = System.Drawing.Color.White;
-            this._dbPanel1.BackgroundImage = global::TheAnimalKingdom.Properties.Resources.sand;
+//            this._dbPanel1.BackgroundImage = global::TheAnimalKingdom.Properties.Resources.sand;
+            this._dbPanel1.BackColor = Color.DimGray;
             this._dbPanel1.Location = new System.Drawing.Point(8, 6);
             this._dbPanel1.Name = "_dbPanel1";
             this._dbPanel1.Size = new System.Drawing.Size(800, 600);
