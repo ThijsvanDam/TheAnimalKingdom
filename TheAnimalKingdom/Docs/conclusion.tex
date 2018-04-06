@@ -1,0 +1,37 @@
+\subsection[Reflection on the end result]{Reflecion}\label{subsec:reflection}
+Looking back at this project I think we did a pretty good job.
+Since it was a school exercise we wanted to get it done really fast, and sometimes the development lacked of some testing.
+Yet, we tested it good enough to pass working parts of the program to eachother.
+So, actually, the not testing wasn't really in our way!
+It mainly left some insecurities and we had to hope for the code to work.
+
+Then we wanted to implement everything on the best, neatest possible way and I think that was in our way sometimes.
+This way we lost a lot of time thinking things through that actually were finished already.
+
+In the beginning we did a lot of paired programming and I think this cost a lot of time as well.
+Mostly since you simply don't have the producing code of two programmers, but of only one.
+
+Looking at these point, you may notice that there was a severe lack of time.
+We actually spent a lot of hours on this project, but it was really hard work to get it done in time.
+
+\subsection[Improvements of our project]{Improvements}\label{subsec:improvements}
+There are some big improvements that can be done to our game.
+This is mainly aimed at the looks of the game, the use of sprites and the behaviours of the animals.
+
+Currently we only used images and not really sprites to represent our entities, this could be a lot better if we just used sprites!
+Once again, this was mainly because the lack of time we had.
+
+Then the behaviour of the animals.
+With this I mean that we had a limit to how many fuzzy modules / sets we could implement.
+The currently implemented fuzzy logic only handles if a gazelle wants to eat or to run from a lion.
+The lion can't even decide if it goes after a gazelle yet!
+That is a big bummer, because it would be a lot more interactive if this did work.
+
+We also didn't take into account that entities wont flee from another entity if there is an obstacle inbetween.
+Right now, we just run from the other entity no matter what.
+This would be a pretty easy, but quite essential modification.
+Mostly since the gazelle would actually hide behind something and this would look pretty realistic.
+
+The last big improvement I can think of, is some better implementation of the FuzzyLogic into the GoalManager.
+Right now we just created a static FuzzyManager to get all configurations for the FuzzyLogic.
+We could've implemented this inside the GoalManager much more beautiful (for \textbf{instance} (hehe..) a non-static class).
