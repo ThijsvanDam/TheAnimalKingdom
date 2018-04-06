@@ -136,7 +136,7 @@ namespace TheAnimalKingdom.FuzzyLogic
 
         public void Render(Graphics g, Point graphStart)
         {
-            int graphBaseWidth = 150;
+            int graphBaseWidth = 400;
             int graphRange = (int) Math.Abs(MinRange - MaxRange);
             int graphHeight = 80;
             Pen graphColor = new Pen(Color.DeepPink, 3);
@@ -144,9 +144,25 @@ namespace TheAnimalKingdom.FuzzyLogic
             g.DrawLine(graphColor, graphStart.X, graphStart.Y, graphStart.X, graphStart.Y + graphHeight);
             g.DrawLine(graphColor, graphStart.X, graphStart.Y + graphHeight, graphStart.X + graphBaseWidth, graphStart.Y + graphHeight);
 
+
             foreach (KeyValuePair<string, FuzzySet> f in MemberSets)
             {
                 f.Value.Render(g, graphStart, graphBaseWidth, graphHeight, graphRange);
+            }
+            for (int i = 0; i < 11; i++)
+            {
+
+                g.DrawEllipse(new Pen(Color.Red), graphStart.X + (i * (graphBaseWidth / 10)) - 1, graphStart.Y + graphHeight - 1, 2, 2);
+                g.DrawLine(new Pen(Color.Red), graphStart.X + (i * (graphBaseWidth / 10)), graphStart.Y + graphHeight, graphStart.X + (i * (graphBaseWidth / 10)), graphStart.Y);
+                string drawString = ((graphRange / 10) * i).ToString();
+                System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 8);
+                System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
+                float x = graphStart.X + (i * (graphBaseWidth / 10));
+                float y = graphStart.Y + graphHeight + 7;
+                System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
+                g.DrawString(drawString, drawFont, drawBrush, x, y, drawFormat);
+                drawFont.Dispose();
+                drawBrush.Dispose();
             }
         }
     }
