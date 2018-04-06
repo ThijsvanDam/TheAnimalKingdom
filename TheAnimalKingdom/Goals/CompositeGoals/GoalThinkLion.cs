@@ -32,6 +32,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             {
                 _sleeping = true;
                 RemoveAllSubgoals();
+                AddSubgoal(new GoalMoveToPosition(Owner, new Vector2D(50f, 50f)));
                 AddSubgoal(new GoalSleep(Owner));
             } 
             else if (Owner.Energy >= 99 && _sleeping)

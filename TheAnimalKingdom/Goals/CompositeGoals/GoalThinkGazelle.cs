@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.FuzzyLogic;
 using TheAnimalKingdom.Goals.AtomicGoals;
@@ -30,7 +31,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             ActivateIfInactive();
 
 
-            double distanceBetweenAnimals = Owner.DistanceToClosestLion(); // Could be 0 - 600
+            double distanceBetweenAnimals = Owner.DistanceToClosestLion() / (6000 /150); // Could be 0 - 150
             double gazelleHunger = Owner.Hunger; // Could be 0 - 150
 
 
@@ -43,6 +44,40 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             FuzzyManager.GazelleWannaEat(gazelle);
             double dWannaEat =
                 FuzzyManager.CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "EatDesirability");
+
+            FuzzyManager.GazelleWannaWander(gazelle);
+            double dWannaWander =
+                FuzzyManager.CalculateDesirability(gazelle, distanceBetweenAnimals, gazelleHunger, "WanderDesirability");
+
+
+            if (Owner.ID == 204 && false)
+            {
+                
+                if(dWannaRun >= dWannaEat && dWannaRun >= dWannaWander)
+                    Console.Write(@"[RUN]: ");
+                
+                else if(dWannaEat >=  dWannaRun && dWannaEat >= dWannaWander)
+                    Console.Write(@"[EAT]: ");
+                
+                else if(dWannaWander >=  dWannaRun && dWannaWander >= dWannaEat)
+                    Console.Write(@"[WAN]: ");
+                else
+                    Console.Write(@"[---]: ");
+    //            
+    
+                Console.WriteLine("Run: " + dWannaRun + ", Eat: " + dWannaEat + ", Wander: " + dWannaWander);
+            }
+            
+//            if(dWannaRun > dWannaEat && dWannaRun > dWannaWander)
+//                Console.WriteLine(@"THE GERMANS! THE GERMAN Palatine Lion IS CHASIN' ME BUTT AROUND");
+            
+//            if(dWannaEat >  dWannaRun && dWannaEat > dWannaWander)
+//                Console.WriteLine(@"Look at that! Delicious green gold!");
+            
+//            if(dWannaWander >  dWannaRun && dWannaWander > dWannaEat)
+//                Console.WriteLine(@"Look at that! Delicious green gold!");
+//            
+
 
             if (dWannaEat > dWannaRun && !_eating)
             {
