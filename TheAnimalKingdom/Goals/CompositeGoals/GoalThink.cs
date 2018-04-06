@@ -18,7 +18,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         public override void Activate()
         {
             Status = Status.Active;
-            Owner.SteeringBehaviours.ObstacleAvoidanceOn(5.0f);
+            Owner.SteeringBehaviours.ObstacleAvoidanceOn(1.0f);
             AddSubgoal(new GoalWander(Owner));
         }
 
@@ -26,7 +26,6 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         {
             ActivateIfInactive();
             
-            //ToDo: Change to fuzzy logic
             if (Owner.Energy == 0 && !_sleeping)
             {
                 _sleeping = true;

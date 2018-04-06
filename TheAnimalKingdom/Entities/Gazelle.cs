@@ -38,7 +38,7 @@ namespace TheAnimalKingdom.Entities
                 var possibleEnemy = (MovingEntity) entity;
                     if (!possibleEnemy.IsPredator) continue;
                 
-                    if (Vector2D.DistanceSquared(VPos, entity.VPos) <= 400)
+                    if (Vector2D.DistanceSquared(VPos, entity.VPos) <= 800)
                         return possibleEnemy;
             }
 

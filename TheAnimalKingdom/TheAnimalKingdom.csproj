@@ -148,7 +148,9 @@
     <Content Include="Docs\images\PathFinding.png" />
     <Content Include="Docs\images\WanderBehaviour.png" />
     <Content Include="Docs\path-planning.tex" />
+    <Content Include="Resources\grass.png" />
     <Content Include="Resources\seamless-sand-textures.jpg" />
+    <Content Include="Resources\water.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
