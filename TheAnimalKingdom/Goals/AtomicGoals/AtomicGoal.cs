@@ -6,7 +6,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
 {
     public abstract class AtomicGoal : Goal
     {
-        public AtomicGoal(MovingEntity owner) : base(owner: owner, type: GoalType.Atomic)
+        public AtomicGoal(MovingEntity owner, string name) : base(owner: owner, type: GoalType.Atomic, name: name)
         {
         }
 

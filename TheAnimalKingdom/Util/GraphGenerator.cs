@@ -108,6 +108,18 @@ namespace TheAnimalKingdom.Util
             }
         }
 
+        public static void SetNearestItems(World world)
+        {
+            foreach (var entity in world.Entities)
+            {
+                if (entity.GetType() == typeof(SquaredObstacle))
+                {
+                    var obstacle = (StaticEntity) entity;
+                    world.graph.FindNearestNode(entity.VPos).NearbyEntity = obstacle.ItemType;
+                }
+            }
+        }
+
         private static bool IsObjectInRange(List<ObstacleEntity> obstacles, Vector2D point){
             return obstacles.Exists(o => 
                     point.X >= o.VPos.X - o.Bradius && point.X <= o.VPos.X + o.Bradius

@@ -6,14 +6,15 @@ using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Goals.CompositeGoals
 {
-    public class GoalMoveToPosition : CompositeGoal
+    public class GoalMoveToItem: CompositeGoal
     {
+        private ItemType _item;
         private Vector2D _destination;
         private bool _routeFound;
         
-        public GoalMoveToPosition(MovingEntity owner, Vector2D destination) : base(owner, "MoveToPosition")
+        public GoalMoveToItem(MovingEntity owner, ItemType item) : base(owner, "MoveToItem")
         {
-            _destination = destination;
+            _item = item;
             _routeFound = false;
         }
         
@@ -23,14 +24,12 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
             
             RemoveAllSubgoals();
             
-            Owner.PathPlanner.RequestPathToTarget(_destination);
-
-            AddSubgoal(new GoalSeekToPosition(Owner, _destination));
+            Owner.PathPlanner.RequestPathToItem(_item);
         }
         
         public override Status Process()
         {
-            Console.WriteLine("Process MoveToPosition");
+            Console.WriteLine("Process MoveToItem");
 
             ActivateIfInactive();
 
@@ -54,7 +53,8 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 
         public override void Terminate()
         {
-            Console.WriteLine("Terminate MoveToPosition");
+            Console.WriteLine("Terminate MoveToItem");
+            Owner.PathPlanner.AbortRequest();
             base.Terminate();
         }
     }

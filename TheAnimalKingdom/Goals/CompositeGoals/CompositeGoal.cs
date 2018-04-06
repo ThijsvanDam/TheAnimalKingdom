@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Runtime.Remoting.Messaging;
 using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Goals.Base;
+using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Goals.CompositeGoals
 {
@@ -8,7 +12,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
     {
         protected Stack<Goal> _subgoals;
 
-        public CompositeGoal(MovingEntity owner) : base(owner: owner, type: GoalType.Composite)
+        public CompositeGoal(MovingEntity owner, string name) : base(owner: owner, type: GoalType.Composite, name: name)
         {
             _subgoals = new Stack<Goal>();;
         }
@@ -67,6 +71,21 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
                 _subgoals.Pop();
             }
             _subgoals.Clear();
+        }
+
+        public override void DrawGoal(Graphics g, Vector2D position = null)
+        {
+            if (position == null) position = Owner.VPos;
+
+            base.DrawGoal(g, position);
+
+            double depth = 10;
+
+            foreach (var goal in _subgoals)
+            {
+                goal.DrawGoal(g, new Vector2D(position.X + 5, position.Y + depth));
+                depth += 5;
+            }
         }
     }
 }

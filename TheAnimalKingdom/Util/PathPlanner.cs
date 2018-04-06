@@ -39,6 +39,11 @@ namespace TheAnimalKingdom.Util
             _owner.FindPathResult = PathResult.InProgress;
             _owner.World.PathManager.Register(this);
         }
+
+        public void AbortRequest()
+        {
+            _owner.World.PathManager.UnRegister(this);
+        }
         
         public PathResult CycleOnce()
         {

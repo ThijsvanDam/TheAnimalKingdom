@@ -76,7 +76,10 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Goals\AtomicGoals\AtomicGoal.cs" />
+    <Compile Include="Goals\AtomicGoals\GoalCatchGazelle.cs" />
+    <Compile Include="Goals\AtomicGoals\GoalEscapeLion.cs" />
     <Compile Include="Goals\AtomicGoals\GoalSeekToPosition.cs" />
+    <Compile Include="Goals\AtomicGoals\GoalSleep.cs" />
     <Compile Include="Goals\AtomicGoals\GoalTraverseEdge.cs" />
     <Compile Include="Goals\AtomicGoals\GoalWander.cs" />
     <Compile Include="Goals\Base\Goal.cs" />
@@ -84,8 +87,11 @@
     <Compile Include="Goals\Base\Status.cs" />
     <Compile Include="Goals\CompositeGoals\CompositeGoal.cs" />
     <Compile Include="Goals\CompositeGoals\GoalFollowPath.cs" />
+    <Compile Include="Goals\CompositeGoals\GoalGatherFood.cs" />
+    <Compile Include="Goals\CompositeGoals\GoalMoveToItem.cs" />
     <Compile Include="Goals\CompositeGoals\GoalMoveToPosition.cs" />
-    <Compile Include="Goals\CompositeGoals\GoalThink.cs" />
+    <Compile Include="Goals\CompositeGoals\GoalThinkGazelle.cs" />
+    <Compile Include="Goals\CompositeGoals\GoalThinkLion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\AStarSearch.cs" />
@@ -134,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docs\behaviours.tex" />
+    <Content Include="Docs\conclusion.tex" />
     <Content Include="Docs\Documentation.tex" />
     <Content Include="Docs\fuzzy-logic.tex" />
     <Content Include="Docs\images\Floodfill.png" />
@@ -148,7 +155,9 @@
     <Content Include="Docs\images\WanderBehaviour.png" />
     <Content Include="Docs\path-planning.tex" />
     <Content Include="Docs\steering-behaviours.tex" />
+    <Content Include="Resources\grass.png" />
     <Content Include="Resources\seamless-sand-textures.jpg" />
+    <Content Include="Resources\water.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

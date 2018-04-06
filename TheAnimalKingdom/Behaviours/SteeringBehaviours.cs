@@ -175,6 +175,15 @@ namespace TheAnimalKingdom.Behaviours
             _followPath = null;
             _dFollowPath = 0;
         }
+        
+        public void AllOff()
+        {
+            WanderOff();
+            SeekOff();
+            FleeOff();
+            ArriveOff();
+            FollowPathOff();
+        }
 
         #endregion
 
