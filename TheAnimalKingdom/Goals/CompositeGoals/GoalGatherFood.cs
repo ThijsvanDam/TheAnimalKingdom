@@ -6,7 +6,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
 {
     public class GoalGatherFood : CompositeGoal
     {        
-        public GoalGatherFood(MovingEntity owner) : base(owner)
+        public GoalGatherFood(MovingEntity owner) : base(owner, "GatherFood")
         {
         }
 

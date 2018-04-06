@@ -12,7 +12,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         private Vector2D _destination;
         private bool _routeFound;
         
-        public GoalMoveToItem(MovingEntity owner, ItemType item) : base(owner)
+        public GoalMoveToItem(MovingEntity owner, ItemType item) : base(owner, "MoveToItem")
         {
             _item = item;
             _routeFound = false;

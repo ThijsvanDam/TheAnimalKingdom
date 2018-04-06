@@ -9,7 +9,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
         private bool _sleeping;
         private bool _fleeing;
         
-        public GoalThink(MovingEntity owner) : base(owner: owner)
+        public GoalThink(MovingEntity owner) : base(owner: owner, name: "Think")
         {
             _sleeping = false;
             _fleeing = false;
@@ -44,7 +44,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
                 AddSubgoal(new GoalGatherFood(Owner));
             }
 
-            var enemy = Owner.IsScaredOf;
+            var enemy = Owner.IsScaredOf();
             
             if (enemy != null && !_fleeing)
             {

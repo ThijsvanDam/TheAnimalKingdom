@@ -7,7 +7,7 @@ namespace TheAnimalKingdom.Entities
     {
         public Lion(Vector2D position, World world) : base(position, world, true)
         {
-            Color = Color.Beige;
+            Color = Color.Orange;
             Bradius = 5;
             VVelocity = new Vector2D(0, 0);
             DMass = 15;
@@ -22,6 +22,7 @@ namespace TheAnimalKingdom.Entities
             double top = VPos.Y - Bradius;
             double size = Bradius * 3;
             g.FillEllipse(new SolidBrush(Color), (int)left, (int)top, (int)size, (int)size);
+            g.DrawString("L", new Font(new FontFamily("Times New Roman"), 10f), new SolidBrush(Color.Black), (float)left, (float)top);
 
             base.Render(g);
         }

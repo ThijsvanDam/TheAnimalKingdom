@@ -53,7 +53,7 @@ namespace TheAnimalKingdom
         {
             switch (e.KeyValue)
             {
-                case 68: //D
+                case 71: //G
                     World.GodMode = !World.GodMode;
                     break;
             }

@@ -9,7 +9,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
     {
         private Vector2D _destination;
         
-        public GoalSeekToPosition(MovingEntity owner, Vector2D position) : base(owner)
+        public GoalSeekToPosition(MovingEntity owner, Vector2D position) : base(owner, "SeekToPosition")
         {
             _destination = position;
         }

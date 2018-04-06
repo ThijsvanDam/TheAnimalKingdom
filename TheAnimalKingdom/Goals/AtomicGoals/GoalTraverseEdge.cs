@@ -11,7 +11,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
         private bool _isFinalEdge;
         
         
-        public GoalTraverseEdge(MovingEntity owner, Vector2D destination, bool isFinalEdge) : base(owner)
+        public GoalTraverseEdge(MovingEntity owner, Vector2D destination, bool isFinalEdge) : base(owner, "TraverseEdge")
         {
             _destination = destination;
             _isFinalEdge = isFinalEdge;

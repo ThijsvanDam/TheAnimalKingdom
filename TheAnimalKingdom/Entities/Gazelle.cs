@@ -9,7 +9,7 @@ namespace TheAnimalKingdom.Entities
     {   
         public Gazelle(Vector2D position, World world) : base(position, world, false)
         {
-            Color = Color.Coral;
+            Color = Color.SandyBrown;
             Bradius = 5;
             VVelocity = new Vector2D(0, 0);
             DMass = 10;
@@ -26,11 +26,12 @@ namespace TheAnimalKingdom.Entities
             double top = VPos.Y - Bradius;
             double size = Bradius * 2;
             g.FillEllipse(new SolidBrush(Color), (int)left, (int)top, (int)size, (int)size);
+            g.DrawString("G", new Font(new FontFamily("Times New Roman"), 6f), new SolidBrush(Color.Black), (float)left, (float)top);
 
             base.Render(g);
         }
 
-        public new MovingEntity IsScaredOf()
+        public override MovingEntity IsScaredOf()
         {
             foreach (var entity in World.Entities.Where(x => x.GetType() == typeof(MovingEntity)))
             {

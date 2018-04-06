@@ -5,7 +5,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
 {
     public class GoalSleep : AtomicGoal
     {
-        public GoalSleep(MovingEntity owner) : base(owner)
+        public GoalSleep(MovingEntity owner) : base(owner, "Sleep")
         {
         }
 
@@ -19,7 +19,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
         {
             ActivateIfInactive();
 
-            Owner.Energy += 1;
+            Owner.Energy += 0.02;
 
             return Status.Active;
         }

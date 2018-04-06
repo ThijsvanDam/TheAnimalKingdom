@@ -38,12 +38,15 @@ namespace TheAnimalKingdom
             FillObstaclesWithArray(GetFunPlayField());
             graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(50f, 50f));
             
-            Gazelle g1 = new Gazelle(new Vector2D(50f, 50f), this);
-            Lion l1 = new Lion(new Vector2D(200f, 200f), this);
+            Lion l1 = new Lion(new Vector2D(50f, 50f), this);
+            Lion l2 = new Lion(new Vector2D(60f, 60f), this);
+            
+            Gazelle g1 = new Gazelle(new Vector2D(200f, 200f), this);
+            Gazelle g2 = new Gazelle(new Vector2D(250f, 250f), this);
  
             Entities.AddRange(new List<BaseGameEntity>()
             {
-                g1, l1
+                g1, l1, g2, l2
             });
         }
 

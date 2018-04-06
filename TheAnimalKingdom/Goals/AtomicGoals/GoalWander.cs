@@ -6,7 +6,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
 {
     public class GoalWander : AtomicGoal
     {
-        public GoalWander(MovingEntity owner) : base(owner)
+        public GoalWander(MovingEntity owner) : base(owner, "Wander")
         {
         }
 

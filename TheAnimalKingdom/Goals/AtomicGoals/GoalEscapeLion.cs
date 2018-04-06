@@ -7,7 +7,7 @@ namespace TheAnimalKingdom.Goals.AtomicGoals
     {
         private MovingEntity _enemy;
         
-        public GoalEscapeLion(MovingEntity owner, MovingEntity enemy) : base(owner)
+        public GoalEscapeLion(MovingEntity owner, MovingEntity enemy) : base(owner, "EscapeLion")
         {
             _enemy = enemy;
         }

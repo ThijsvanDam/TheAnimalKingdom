@@ -17,10 +17,9 @@ namespace TheAnimalKingdom.Entities
         public CompositeGoal HashTagLifeGoal { get; set; }
         public Stack<NavGraphNode> Route { get; set; }
         
-        public int Energy { get; set; }
-        public int Hunger { get; set; }
+        public double Energy { get; set; }
+        public double Hunger { get; set; }
         public bool IsPredator { get; }
-        public MovingEntity IsScaredOf => null;
 
         public MovingEntity(Vector2D position, World world, bool isPredator) : base(position, world)
         {
@@ -79,6 +78,7 @@ namespace TheAnimalKingdom.Entities
             if (World.GodMode)
             {
                 SteeringBehaviours.DrawBehaviors(g);
+                HashTagLifeGoal.DrawGoal(g);
                 if (Route?.Count > 0) RenderRoute(g);
             }
         }
@@ -95,6 +95,12 @@ namespace TheAnimalKingdom.Entities
                 g.DrawLine(new Pen(Color.Yellow), nodeFrom.Position.ToPoint(), nodeTo.Position.ToPoint());
             }
         }
+
+        public virtual MovingEntity IsScaredOf()
+        {
+            return null;
+        }
+
         
 
         private void CheckOutOfScreen()
