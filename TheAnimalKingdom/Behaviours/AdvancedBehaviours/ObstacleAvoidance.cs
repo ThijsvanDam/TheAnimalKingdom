@@ -79,14 +79,14 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
                 if (objectToLocalSpace.Y > 0)
                 {
                     // All obstacles that are within range AND in front of the moving entity                                       
-                    var severity = 10 / (Vector2D.DistanceSquared(new Vector2D(0,0), objectToLocalSpace)) * speed;
+                    var severity = RectangleDistance * (1 / Vector2D.DistanceSquared(new Vector2D(0,0), objectToLocalSpace));
                     
                     // Calculate the forces that should be added to change direction
                     var forceX = - objectToLocalSpace.X * severity;
                     var forceY = - objectToLocalSpace.Y * severity;
             
                     //And add it to the total force
-                    totalForce.Add(new Vector2D(forceX ,forceY));
+                    totalForce.Add(ToWorldSpace(new Vector2D(forceX ,forceY), agentHeading));
                 }
             }
             return totalForce;
@@ -138,6 +138,14 @@ namespace TheAnimalKingdom.Behaviours.AdvancedBehaviours
         {
             Vector2D positionInLocalSpace = worldPosition.Clone().Substract(MovingEntity.VPos);
             Vector2D positionAndHeadingInLocalSpace = positionInLocalSpace.Rotate(agentHeading);
+
+            return positionAndHeadingInLocalSpace;
+        }
+
+        private Vector2D ToWorldSpace(Vector2D localPosition, double agentHeading)
+        {
+            Vector2D positionInLocalSpace = localPosition.Clone().Add(MovingEntity.VPos);
+            Vector2D positionAndHeadingInLocalSpace = positionInLocalSpace.Rotate(-agentHeading);
 
             return positionAndHeadingInLocalSpace;
         }

@@ -1,31 +1,32 @@
-﻿using System;
-using TheAnimalKingdom.Entities;
+﻿using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Goals.Base;
 
 namespace TheAnimalKingdom.Goals.AtomicGoals
 {
-    public class GoalWander : AtomicGoal
+    public class GoalSleep : AtomicGoal
     {
-        public GoalWander(MovingEntity owner) : base(owner, "Wander")
+        public GoalSleep(MovingEntity owner) : base(owner, "Sleep")
         {
         }
 
         public override void Activate()
         {
             Status = Status.Active;
-            Owner.SteeringBehaviours.WanderOn(1.0);
+            Owner.SteeringBehaviours.AllOff();
         }
 
         public override Status Process()
         {
             ActivateIfInactive();
-            Owner.Energy -= 0.01;
-            return Status;
+
+            Owner.Energy += 0.02;
+
+            return Status.Active;
         }
 
         public override void Terminate()
         {
-            Owner.SteeringBehaviours.WanderOff();
+            Owner.SteeringBehaviours.WanderOn(1.0f);
         }
     }
 }

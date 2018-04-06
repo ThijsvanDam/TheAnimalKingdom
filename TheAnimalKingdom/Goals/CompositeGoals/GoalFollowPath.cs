@@ -11,7 +11,7 @@ namespace TheAnimalKingdom.Goals.CompositeGoals
     {
         private Stack<NavGraphNode> _path;
         
-        public GoalFollowPath(MovingEntity owner, Stack<NavGraphNode> path) : base(owner: owner)
+        public GoalFollowPath(MovingEntity owner, Stack<NavGraphNode> path) : base(owner: owner, name: "FollowPath")
         {
             _path = path;
         }

@@ -17,16 +17,19 @@ namespace TheAnimalKingdom.Entities
         public CompositeGoal HashTagLifeGoal { get; set; }
         public Stack<NavGraphNode> Route { get; set; }
         
-        public int Energy { get; set; }
-        public int Hunger { get; set; }
+        public double Energy { get; set; }
+        public double Hunger { get; set; }
 
         public MovingEntity(Vector2D position, World world) : base(position, world)
         {
             SteeringBehaviours = new SteeringBehaviours(this);
-            HashTagLifeGoal = new GoalThink(this);
+            HashTagLifeGoal = null;
             PathPlanner = new PathPlanner(this);
+
+            Energy = 10;
+            Hunger = 0;
             
-            SteeringBehaviours.ObstacleAvoidanceOn(1.0);
+            SteeringBehaviours.ObstacleAvoidanceOn(5.0);
         }
 
         public Vector2D VVelocity;
@@ -50,7 +53,7 @@ namespace TheAnimalKingdom.Entities
 
         public override void Update(float time_elapsed)
         {
-            HashTagLifeGoal.Process();
+            HashTagLifeGoal?.Process();
 
             Vector2D steeringForce = SteeringBehaviours.Calculate();
             Vector2D acceleration = steeringForce.Divide(DMass);
@@ -73,6 +76,7 @@ namespace TheAnimalKingdom.Entities
             if (World.GodMode)
             {
                 SteeringBehaviours.DrawBehaviors(g);
+                HashTagLifeGoal.DrawGoal(g);
                 if (Route?.Count > 0) RenderRoute(g);
             }
         }
@@ -89,6 +93,12 @@ namespace TheAnimalKingdom.Entities
                 g.DrawLine(new Pen(Color.Yellow), nodeFrom.Position.ToPoint(), nodeTo.Position.ToPoint());
             }
         }
+
+        public virtual MovingEntity IsScaredOf()
+        {
+            return null;
+        }
+
         
 
         private void CheckOutOfScreen()

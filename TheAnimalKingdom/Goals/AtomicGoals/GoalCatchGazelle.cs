@@ -1,29 +1,29 @@
-﻿using System;
-using TheAnimalKingdom.Entities;
+﻿using TheAnimalKingdom.Entities;
 using TheAnimalKingdom.Goals.Base;
-using TheAnimalKingdom.Util;
 
 namespace TheAnimalKingdom.Goals.AtomicGoals
 {
-    public class GoalSeekToPosition : AtomicGoal
+    public class GoalCatchGazelle : AtomicGoal
     {
-        private Vector2D _destination;
+        private Gazelle _prey;
         
-        public GoalSeekToPosition(MovingEntity owner, Vector2D position) : base(owner, "SeekToPosition")
+        public GoalCatchGazelle(MovingEntity owner, Gazelle prey) : base(owner, "CatchGazelle")
         {
-            _destination = position;
+            _prey = prey;
         }
-
+        
         public override void Activate()
         {
-            Owner.SteeringBehaviours.SeekOn(_destination, 0.7f);
             Status = Status.Active;
+            
+            Owner.SteeringBehaviours.SeekOn(_prey, 2.0f);
         }
 
         public override Status Process()
         {
             ActivateIfInactive();
-                        
+            Owner.Energy -= 0.05;
+
             return Status;
         }
 

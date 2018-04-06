@@ -64,9 +64,7 @@ namespace TheAnimalKingdom.Util
         {
             var nearbyEntity = _copiedNodes[nodeIndex].NearbyEntity;
 
-            if (nearbyEntity == null) return false;
-
-            return (nearbyEntity.ItemType == _requestedEntityType);
+            return (nearbyEntity == _requestedEntityType);
         }
     }
 }

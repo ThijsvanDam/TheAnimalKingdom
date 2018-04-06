@@ -165,13 +165,17 @@ namespace TheAnimalKingdom
         {
             FillObstaclesWithArray(GetFunPlayField());
             graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(50f, 50f));
+            GraphGenerator.SetNearestItems(this);
             
-            Gazelle g1 = new Gazelle(new Vector2D(50f, 50f), this);
-            Lion l1 = new Lion(new Vector2D(100f, 100f), this);
+            Lion l1 = new Lion(new Vector2D(50f, 50f), this);
+            Lion l2 = new Lion(new Vector2D(60f, 60f), this);
+            
+            Gazelle g1 = new Gazelle(new Vector2D(200f, 200f), this);
+            Gazelle g2 = new Gazelle(new Vector2D(250f, 250f), this);
  
             Entities.AddRange(new List<BaseGameEntity>()
             {
-                g1, l1
+                g1, l1, g2, l2
             });
             
             
@@ -281,7 +285,7 @@ namespace TheAnimalKingdom
 
         public void StartPathFollowing(Vector2D target)
         {
-            
+            if (!GodMode) return;
             var entity = (MovingEntity)Entities[1];
             entity.SteeringBehaviours.ArriveOn(target, 2.0f);
             entity.DMaxForce = 20.0f;
@@ -289,10 +293,7 @@ namespace TheAnimalKingdom
 
         public void Render(Graphics g)
         {
-            if (GodMode)
-            {
-                graph.Render(g);
-            }
+            if (GodMode)graph.Render(g);
 
             foreach (ObstacleEntity obstacleEntity in Obstacles)
             {
