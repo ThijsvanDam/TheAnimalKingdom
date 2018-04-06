@@ -39,7 +39,7 @@ namespace TheAnimalKingdom
             graph = GraphGenerator.FloodFill(world: this, startPosition: new Vector2D(50f, 50f));
             
             Gazelle g1 = new Gazelle(new Vector2D(50f, 50f), this);
-            Lion l1 = new Lion(new Vector2D(100f, 100f), this);
+            Lion l1 = new Lion(new Vector2D(200f, 200f), this);
  
             Entities.AddRange(new List<BaseGameEntity>()
             {

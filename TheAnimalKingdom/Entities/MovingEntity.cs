@@ -32,7 +32,7 @@ namespace TheAnimalKingdom.Entities
             Energy = 10;
             Hunger = 0;
             
-            SteeringBehaviours.ObstacleAvoidanceOn(1.0);
+            SteeringBehaviours.ObstacleAvoidanceOn(5.0);
         }
 
         public Vector2D VVelocity;

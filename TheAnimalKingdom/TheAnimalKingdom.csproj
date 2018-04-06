@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Docs\behaviours.tex" />
+    <Content Include="Docs\conclusion.tex" />
     <Content Include="Docs\Documentation.tex" />
     <Content Include="Docs\images\Floodfill.png" />
     <Content Include="Docs\Documentation.tex" />
